@@ -1,0 +1,8 @@
+
+IF
+	Global("save","Locals",0)
+THEN
+	RESPONSE #100
+		SaveGame(0)
+		SetGlobal("save","Locals",1)
+END

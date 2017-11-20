@@ -1,0 +1,24 @@
+IF 
+	!GlobalTimerNotExpired("castspell","LOCALS")
+  GlobalTimerExpired("chasetimer","LOCALS")
+  !GlobalTimerNotExpired("teleportpursuetimer","LOCALS")
+  !Global("chasePC","LOCALS",0)
+  !Detect([PC])
+  CheckStatGT(Myself,12,LEVEL)
+  GlobalLT("teleportpursue","LOCALS",3)
+  !HasItem("dw#notel",Myself)
+  OR(6)
+    InMyArea(Player1)
+    InMyArea(Player2)
+    InMyArea(Player3)
+    InMyArea(Player4)
+    InMyArea(Player5)
+    InMyArea(Player6)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("teleportpursuetimer","LOCALS",THREE_ROUNDS)
+    IncrementGlobal("teleportpursue","LOCALS",1)
+    DisplayString(Myself,62975)
+    DisplayString(Myself,57171)
+    SpellNoDecRES("wwundead",Myself)
+END

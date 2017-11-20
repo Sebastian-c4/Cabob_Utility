@@ -1,0 +1,23 @@
+
+/* //////////////////////////////////// */
+/* 杂项设置 */
+/* 合成升级 */
+/* //////////////////////////////////// */
+
+//使克伦威尔和塞斯潘纳只使用小块伊利希银合成碎魔+2，青空之锋依然使用整块伊利希银作为材料
+COPY_EXISTING wsmith01.dlg override botsmith.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~misc5k~ ~empty~
+	END
+BUT_ONLY
+
+//修正塞斯潘纳合成对话存在跳过物品的错误
+COPY_EXISTING botsmith.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~dw#abyds~ ~empty~
+	END
+BUT_ONLY
+
+//合成调整和修正
+COMPILE ~%SCRIPTS%/alter_item_compound.d~
+

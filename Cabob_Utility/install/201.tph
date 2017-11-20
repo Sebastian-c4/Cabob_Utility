@@ -1,0 +1,223 @@
+
+/* //////////////////////////////////// */
+/* 物品相关 */
+/* 说明和效果修正 */
+/* //////////////////////////////////// */
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	//棍棒说明 借用cdtweaks机制并汉化
+	SPRINT unusable_regexp (AT 20105)
+	SPRINT unusable_replacement (AT 20106)
+	SPRINT class_regexp (AT 20107)
+  PATCH_IF (SOURCE_SIZE > 0x71) BEGIN
+    READ_BYTE 0x31 "prof" ELSE 0
+    READ_SHORT 0x1c type
+    READ_ASCII 0x22 anim (2)
+    PATCH_IF (prof = 115) OR ("%anim%" STRING_COMPARE_CASE "cl" = 0) BEGIN
+      READ_BYTE 0x1f "fighter"
+      PATCH_IF (("%fighter%" BAND "0b00001000") = "0b00000000") BEGIN
+        READ_BYTE  0x20 "mage"
+        WRITE_BYTE 0x20 ("%mage%" BAND "0b11111011")        
+        PATCH_FOR_EACH offset IN
+          ~0x50~
+          ~0x54~
+        BEGIN
+          READ_LONG ~%offset%~ desc_strref
+          PATCH_IF (desc_strref >= 0 && desc_strref < 2147483646) BEGIN
+            READ_STRREF ~%offset%~ desc
+            LPF ~REMOVE_CLASS_LINE_FROM_USABILITIES~
+              STR_VAR
+								desc
+                unusable_regexp
+                unusable_replacement
+                class_regexp
+								class_prefix = ~~
+            END
+          END
+        END
+      END
+    END
+  END
+	
+	//修正物品效果中错误的时间类型和几率设置
+	LPF ALTER_EFFECT INT_VAR silent=1 match_probability1=0 match_probability2=0 probability1=100 END
+	LPF ALTER_EFFECT INT_VAR silent=1 match_probability1=100 match_probability2=100 probability2=0 END
+	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_timing=1 timing=2 END
+			
+	//非以天计次的物品设置可充能，用完后消失；以天计次的确保可充能
+	READ_SHORT 0x1c type
+	LPF item_flag RET moveable END
+	PATCH_IF moveable
+		AND (type=0 OR type=9 OR type=0xb OR type=0x23)
+	BEGIN
+		SET header=1
+		GET_OFFSET_ARRAY headers ITM_V10_HEADERS
+		PHP_EACH headers AS int => offset BEGIN
+			READ_SHORT offset+0x22 charge
+			READ_SHORT offset+0x24 chargemode
+			PATCH_IF charge>0 && chargemode !=3 BEGIN
+				LPF ALTER_ITEM_HEADER INT_VAR drained=1 flag_recharge=0 header END
+			END
+			PATCH_IF charge>0 && chargemode =3 BEGIN
+				LPF ALTER_ITEM_HEADER INT_VAR flag_recharge=1 header END
+			END
+			SET header+=1
+		END
+	END
+
+	//修正功能性物品不可出售的错误
+	LPF item_flag RET moveable END
+	PATCH_IF moveable BEGIN
+		READ_BYTE 0x18 flag
+		PATCH_IF (~%flag%~ BAND 0b00000001)=0b00000001 BEGIN
+			SET usable_ability=0
+			GET_OFFSET_ARRAY header ITM_V10_HEADERS
+			PHP_EACH header AS int => index BEGIN
+				READ_BYTE index type
+				READ_SHORT index+0x22 charges
+				PATCH_IF type=3 && charges>0 BEGIN
+					SET usable_ability=1
+				END
+			END
+			PATCH_IF usable_ability BEGIN
+				WRITE_BYTE 0x18 THIS BAND 0b11111110
+			END
+		END
+	END
+				
+	//修复个别物品可能存在的可用性错误（如矮人之骨戒指）
+	//原因：Refinements将部分宗派Unusable与不死生物猎人叠加
+	READ_BYTE 0x1f usability_2
+	READ_BYTE 0x2f kit_usability_4
+	PATCH_IF 
+				((kit_usability_4 BAND 0b00100000) = 0b00100000) //不死猎人不可用
+		AND	((usability_2 BAND 0b00001000) = 0b00000000) //普通战士可用
+	BEGIN
+		WRITE_BYTE 0x2f THIS BAND 0b11011111 //去掉对不死猎人的限制
+	END
+BUT_ONLY
+
+//物品名字和说明修订
+COPY_EXISTING - DW#ABAMU.itm override
+	READ_LONG 0x54 desc_strref
+	GET_STRREF desc_strref desc
+	SPRINT desc_append (AT 20108)
+	SPRINT desc ~%desc%~^~%desc_append%~	
+	STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+
+COPY_EXISTING - WQXNEC2.itm override
+	READ_LONG 0x0c name
+	STRING_SET_EVALUATE ~%name%~ @20109
+
+COPY_EXISTING - SW1H51.itm override
+	READ_LONG 0x0c name
+	STRING_SET_EVALUATE ~%name%~ @20110
+	LAF file_replace_string INT_VAR offset=0x54 old=20111 new=20112 STR_VAR file=~SW1H51.itm~ END
+
+COPY_EXISTING - AMUL21.itm override
+	READ_LONG 0x0c name
+	STRING_SET_EVALUATE ~%name%~ @20113
+
+COPY_EXISTING - BLUN12.itm override
+	LAF file_replace_string INT_VAR offset=0x54 old=20114 new=20115 STR_VAR file=~BLUN12.itm~ END
+
+/* 修正部分物品错误的价格设置 */
+//全身铠甲+2价值25000金币
+COPY_EXISTING plat19.itm override
+	WRITE_LONG 0x34 25000
+BUT_ONLY
+
+//坚忍之袍价值10000金币
+COPY_EXISTING b#robe02.itm override
+	WRITE_LONG 0x34 10000
+BUT_ONLY
+
+//奇玛德雷的守护拖鞋价值6000金币
+COPY_EXISTING d1boot01.itm override
+	WRITE_LONG 0x34 6000
+BUT_ONLY
+
+//修正召唤法杖可能导致游戏崩溃的问题
+COPY_EXISTING WOLFDISU.cre override
+	WRITE_BYTE 0x18 14
+BUT_ONLY
+
+/* 修正物品错误的的设置为关键物品 */
+ACTION_FOR_EACH item IN d1ring04 d1misc03 misc5e deitm035 BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		WRITE_BYTE 0x18 THIS BAND 0b11111110
+	BUT_ONLY
+END	
+		
+//BG1刷钱物品修正
+COPY_EXISTING SCRL2I.itm override
+	LPF DELETE_ITEM_HEADER INT_VAR header_type=~-1~ END
+	
+COPY_EXISTING_REGEXP GLOB ~.*DRW.*\.itm~ override
+	WRITE_LONG 0x34 0
+BUT_ONLY
+
+//大德鲁伊之棍+2：描述修正
+LAF file_replace_string INT_VAR offset=0x54 old=20101 STR_VAR file=~BW05CLAD.itm~ END
+
+/* 修正蔑视美德+4和神圣祭品+4的属性为正常附魔+4巨剑 */
+COPY_EXISTING b#firbla.itm override b#firfla.itm override
+	WRITE_BYTE 0x18 THIS BOR 0b01000000
+	WRITE_LONG 0x60 4
+BUT_ONLY
+
+/* 修正蔑视美德+4伤害术等技能符合说明 */
+COPY_EXISTING b#firbla.itm override
+	LPF ALTER_ITEM_HEADER INT_VAR header_type=3 target=5 projectile=79 speed=0 END
+	PATCH_FOR_EACH opcode_to_delete IN 50 141 12 BEGIN
+		LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete END
+	END
+	LPF ADD_ITEM_EFFECT INT_VAR header=2 opcode=146 target=2 timing=1 STR_VAR resource=sppr414 END
+	LPF ADD_ITEM_EFFECT INT_VAR header=3 opcode=146 target=2 timing=1 STR_VAR resource=sppr510 END
+	LPF ADD_ITEM_EFFECT INT_VAR header=4 opcode=146 target=2 timing=1 STR_VAR resource=sppr608 END
+BUT_ONLY
+
+/* 恢复在SoA受美德Mod影响而丢失的拉夏之爪+2 */
+COPY_EXISTING trgeni01.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~DeITM070~ ~sw1h23~
+	END
+BUT_ONLY
+
+COPY_EXISTING blank.bcs ~override/ar2014.bcs~
+			
+//修正头环属性
+ACTION_FOR_EACH item IN 02 03 04 BEGIN
+	COPY_EXISTING ~XOBAND%item%.itm~ override
+		PATCH_FOR_EACH match_opcode IN 33 34 35 BEGIN
+			LPF ALTER_EFFECT INT_VAR match_opcode parameter2=0 END
+		END
+		PATCH_FOR_EACH opcode IN 36 37 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=33 opcode END
+		END
+		LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=31 parameter1=10 parameter2=0 END
+	BUT_ONLY
+END
+			
+//修正下水道斗篷
+COPY_EXISTING spcl151.spl ~override/polyback.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=215 timing=0 duration=3 parameter1=0 parameter2=1 STR_VAR resource=POLYBACK END
+
+COPY_EXISTING clck27.itm override
+	LPF DELETE_EFFECT STR_VAR match_resource=spwi491 END
+	LPF DELETE_EFFECT INT_VAR match_opcode=215 END
+	LPF DELETE_EFFECT INT_VAR match_opcode=144 END
+	LPF ADD_ITEM_EFFECT INT_VAR opcode=146 target=1 timing=1 parameter2=1 STR_VAR resource=POLYBACK END
+	// LPF ADD_ITEM_EFFECT INT_VAR opcode=146 target=1 timing=4 duration=120 parameter2=1 STR_VAR resource=POLYBACK END
+	
+ACTION_FOR_EACH weapon IN polyrat plytroll plyjelly BEGIN
+	COPY_EXISTING ~%weapon%.itm~ override
+		LPF ADD_ITEM_HEADER	INT_VAR	target=5 charges=1 STR_VAR icon=~PLYMAN~ name=~@20104~ RET new_header END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=146 target=1 timing=1 parameter2=1 STR_VAR resource=POLYBACK END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%weapon%~ END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=135 target=1 timing=1 END
+		PATCH_FOR_EACH button IN 2 3 4 5 7 BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=144 timing=2 target=1 parameter2=button END
+		END
+END
+					

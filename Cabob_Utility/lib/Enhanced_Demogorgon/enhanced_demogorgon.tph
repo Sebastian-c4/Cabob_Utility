@@ -1,0 +1,129 @@
+
+
+/* 强化狄摩高根战斗 */
+OUTER_TEXT_SPRINT DEMOGORGON ~%LIBS%/Enhanced_Demogorgon~
+
+////////// 狒狒
+//生物
+COPY_EXISTING demogor2.cre override
+	WRITE_SHORT 0x24 897 //hp
+	WRITE_SHORT 0x26 897
+	WRITE_SHORT 0x46 ~-18~ //ac
+	WRITE_SHORT 0x48 ~-18~
+	WRITE_BYTE 0x52 ~-12~ //thac0
+	WRITE_BYTE 0x23c ~21~ //dex
+	WRITE_ASCII SCRIPT_OVERRIDE ~c4demog~ //脚本
+	ADD_CRE_ITEM ~c4#demo2~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~ EQUIP
+BUT_ONLY
+	
+//主手武器
+COPY_EXISTING demogorg.itm override
+	WRITE_LONG 0x60 6
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=0x6d parameter1=6 END
+	LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=6 dicesize=8 damage_bonus=6 END
+BUT_ONLY
+	
+//白板副手	
+COPY_EXISTING demogorg.itm ~override/c4#demo2.itm~
+	LPF DELETE_EFFECT INT_VAR check_headers=0 END
+	WRITE_BYTE 0x18 THIS BAND 0b10111111
+	WRITE_LONG 0x60 0
+
+//狒狒单独召唤
+COPY_EXISTING spin548.spl override
+	LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=0 probability2=0 STR_VAR resource=demosum2 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=19 probability2=0 STR_VAR resource=demosum2 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=20 probability2=20 STR_VAR resource=demosum4 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=39 probability2=20 STR_VAR resource=demosum4 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=40 probability2=40 STR_VAR resource=demosum1 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=64 probability2=40 STR_VAR resource=demosum1 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=65 probability2=65 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=65 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=65 probability2=65 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=65 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=90 probability2=90 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=90 STR_VAR resource=demosum3 END
+
+//狒狒脚本
+COPY_EXISTING demogor2.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		// 必须恶魔全死
+		REPLACE_TEXTUALLY ~HPLT(Myself,30)~ ~HPLT(Myself,30) !NumCreatureGT([ENEMY.0.DEMONIC],1)~
+		// 凝视间隔缩短至1回合
+		REPLACE_TEXTUALLY ~SetGlobalTimer("implosion","LOCALS",.*)$~ ~SetGlobalTimer("implosion","LOCALS",60)~
+		// 防魔武间隔6轮
+		REPLACE_TEXTUALLY ~SetGlobalTimer("proMW","LOCALS",.*)$~ ~SetGlobalTimer("proMW","LOCALS",36)~
+		// 战斗开始时时间停止
+		// REPLACE_TEXTUALLY ~Global("DMWWDemogorgonTS","GLOBAL",1)~ ~Global("DMWWDemogorgonTS","GLOBAL",0)~
+		// 时停间隔2回合
+		// REPLACE_TEXTUALLY ~SetGlobalTimer("timestop","LOCALS",1000)~ ~SetGlobalTimer("timestop","LOCALS",120)~
+	END
+
+//狒狒override
+COPY ~.../inlined/blank.baf~ ~%DEMOGORGON%/c4demog.baf~
+	APPEND_FILE ~%DEMOGORGON%/demogorgon_summon_start.baf~
+	APPEND_FILE ~%DEMOGORGON%/demogorgon_summon_in_battle.baf~
+EXTEND_TOP ~c4demog.bcs~ ~%DEMOGORGON%/c4demog.baf~
+
+////////// 恶魔
+//指定和编译脚本
+OUTER_FOR (i=1;i<5;++i) BEGIN
+	COPY_EXISTING ~demosum%i%.cre~ override
+		WRITE_ASCII SCRIPT_CLASS ~c4demos%i%~
+		//替换坎比翁的时停为终极金钟罩
+		PATCH_IF i=4 BEGIN
+			REMOVE_MEMORIZED_SPELL ~spwi909~
+			REMOVE_KNOWN_SPELL ~spwi909~
+			ADD_MEMORIZED_SPELL ~spwi907~ #8 ~wizard~
+		END
+	EXTEND_TOP ~c4demos%i%.bcs~ ~%DEMOGORGON%/demosum%i%.baf~
+END
+	
+//召唤法术
+//巴洛
+COPY_EXISTING spin548.spl ~override/c4#sum2a.spl~
+	SAY 0x8 @444301
+	LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=14 probability2=0 STR_VAR resource=demosum2 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=34 probability2=15 STR_VAR resource=demosum4 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=64 probability2=35 STR_VAR resource=demosum1 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=65 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=65 STR_VAR resource=demosum3 END
+	
+//坎比翁
+COPY_EXISTING spin548.spl ~override/c4#sum4a.spl~
+	SAY 0x8 @444301
+	LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=24 probability2=0 STR_VAR resource=demosum4 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=25 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=25 STR_VAR resource=demosum3 END
+	
+//六臂
+COPY_EXISTING spin548.spl ~override/c4#sum1a.spl~
+	SAY 0x8 @444301
+	LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=24 probability2=0 STR_VAR resource=demosum1 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=25 STR_VAR resource=demosum3 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 probability1=100 probability2=25 STR_VAR resource=demosum3 END
+	
+//格雷别兹魔
+COPY_EXISTING spin548.spl ~override/c4#sum3a.spl~
+	SAY 0x8 @444301
+	LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 duration=2400 parameter2=2 STR_VAR resource=demosum1 END
+	
+//给自身和狒狒加血
+COPY_EXISTING sppr502.spl ~override/c4#sum2b.spl~
+	WRITE_LONG 0x8 ~-1~
+	LPF ALTER_SPELL_HEADER INT_VAR range=40 END
+	LPF ALTER_EFFECT INT_VAR power=0 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1=14122 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=17 opcode=18 parameter1=75 parameter2=0 dicenumber=0 dicesize=0 END //影响当前
+	// LPF ALTER_EFFECT INT_VAR match_opcode=17 opcode=18 parameter1=75 parameter2=3 dicenumber=0 dicesize=0 END //不影响当前
+	
+COPY_EXISTING c4#sum2b.spl ~override/c4#sum1b.spl~ c4#sum2b.spl ~override/c4#sum4b.spl~
+	LPF ALTER_EFFECT INT_VAR match_opcode=18 parameter1=50 END
+	
+COPY_EXISTING c4#sum2b.spl ~override/c4#sum3b.spl~
+	LPF ALTER_EFFECT INT_VAR match_opcode=18 parameter1=25 END	

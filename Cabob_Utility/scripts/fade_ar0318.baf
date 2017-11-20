@@ -1,0 +1,9 @@
+IF
+	Global("E3FINALQUEST","GLOBAL",3)
+	Global("E3XEKRALSPAWN","GLOBAL",0)
+	Global("GB_LichIsDead","Ar0318",1)
+THEN
+	RESPONSE #100
+		SetGlobal("E3XEKRALSPAWN","GLOBAL",1)
+		CreateCreature("E3XEKRAL",[617.533],2)
+END

@@ -1,0 +1,12 @@
+
+	IF
+		Global("c4#HighedgeSkeletonCreate","ar7100",0)
+		Global("HelpThalantyr","GLOBAL",1)
+	THEN
+		RESPONSE #100
+			CreateCreature("BGSKEL02",[2700.1534],0)
+			CreateCreature("BGSKEL02",[2735.1509],0)
+			CreateCreature("BGSKEL03",[2729.1509],0)
+			GiveItemCreate("MISC50","BGSKEL03",1,0,0)
+			SetGlobal("c4#HighedgeSkeletonCreate","ar7100",1)
+	END

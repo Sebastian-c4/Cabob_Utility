@@ -1,0 +1,10 @@
+
+IF
+	PartyHasItem("%item%")
+  Global("c4RI#IHaveT%tier%N%now%","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT%tier%N%now%","Global",1)
+		IncrementGlobal("c4RI#T%tier%Total","Global",1)
+    Continue()
+END			

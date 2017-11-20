@@ -1,0 +1,10 @@
+
+IF
+  Dead("aran02")
+  Global("B!DeadAranJournal","GLOBAL",0)
+  GlobalGT("B!Alternatives","GLOBAL",5)
+THEN
+  RESPONSE #100
+    SetGlobal("B!DeadAranJournal","GLOBAL",1)
+    AddJournalEntry(@40105,QUEST)
+END

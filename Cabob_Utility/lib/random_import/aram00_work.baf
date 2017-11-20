@@ -1,0 +1,171 @@
+IF
+  Global("BG1DrizztItem","GLOBAL",0)
+  OR(3)
+    PartyHasItem("CHAN06")
+    PartyHasItem("SW1H15")
+    PartyHasItem("SW1H16")
+THEN
+  RESPONSE #100
+    SetGlobal("BG1DrizztItem","GLOBAL",1)
+    Continue()
+END
+
+IF
+	PartyHasItem("PLATWY")
+  Global("c4RI#IHaveT1N1","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT1N1","Global",1)
+		IncrementGlobal("c4RI#T1Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("ECHAN02")
+  Global("c4RI#IHaveT1N2","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT1N2","Global",1)
+		IncrementGlobal("c4RI#T1Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BW05SW1")
+  Global("c4RI#IHaveT1N3","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT1N3","Global",1)
+		IncrementGlobal("c4RI#T1Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("STAFOAK")
+  Global("c4RI#IHaveT1N4","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT1N4","Global",1)
+		IncrementGlobal("c4RI#T1Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("LEATBAL")
+  Global("c4RI#IHaveT1N5","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT1N5","Global",1)
+		IncrementGlobal("c4RI#T1Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BOW08")
+  Global("c4RI#IHaveT2N1","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N1","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BW05PL1")
+  Global("c4RI#IHaveT2N2","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N2","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BRAC06")
+  Global("c4RI#IHaveT2N3","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N3","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BRAC07")
+  Global("c4RI#IHaveT2N4","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N4","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("HAMMLAT")
+  Global("c4RI#IHaveT2N5","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N5","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("ECHAN01")
+  Global("c4RI#IHaveT2N6","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N6","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("THBELT01")
+  Global("c4RI#IHaveT2N7","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N7","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("THBRAC01")
+  Global("c4RI#IHaveT2N8","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N8","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("BRAC10")
+  Global("c4RI#IHaveT2N9","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT2N9","Global",1)
+		IncrementGlobal("c4RI#T2Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("THCLCK03")
+  Global("c4RI#IHaveT3N1","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT3N1","Global",1)
+		IncrementGlobal("c4RI#T3Total","Global",1)
+    Continue()
+END			
+
+IF
+	PartyHasItem("CROWN")
+  Global("c4RI#IHaveT3N2","Global",0)
+THEN
+  RESPONSE #100
+		SetGlobal("c4RI#IHaveT3N2","Global",1)
+		IncrementGlobal("c4RI#T3Total","Global",1)
+    Continue()
+END			

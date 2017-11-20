@@ -1,0 +1,8 @@
+
+ALTER_TRANS bjonel25
+BEGIN 164 165 END
+BEGIN 1 END
+BEGIN 
+	~TRIGGER~ ~!Global("AgreedToGiveSoul","GLOBAL",0)~ 
+END
+	

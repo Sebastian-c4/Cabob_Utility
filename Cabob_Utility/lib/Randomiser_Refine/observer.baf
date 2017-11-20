@@ -1,0 +1,423 @@
+
+IF
+	Global("EndOfBG1","Global",0)
+	Global("fl31tDone","Global",1)
+	Global("c4#EndOfRandomiserBG1","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@99402) //bg1随机完成
+		SetGlobal("c4#EndOfRandomiserBG1","Global",1)
+		Continue()
+END
+
+IF
+	Global("EndOfBG1","Global",2)
+	Global("flkatDone","Global",1)
+	Global("c4#EndOfRandomiserBG2","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@99403) //bg2随机完成
+		SetGlobal("c4#EndOfRandomiserBG2","Global",1)
+		Continue()
+END
+	
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	
+	!Global("fl24tDone","Global",1)
+	!Exists("fltier24")
+	Global("fltier24created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier24created","Locals",1)
+		SetGlobal("fltier24created","Locals",1)
+		// DisplayString(Player1,~skip is Done, create fltier24~)
+    CreateCreatureImpassable("fltier24",[1.1],0)
+    CreateCreatureImpassable("fltier24",[1.1],0)
+    CreateCreatureImpassable("fltier24",[1.1],0)
+    CreateCreatureImpassable("fltier24",[1.1],0)
+    CreateCreatureImpassable("fltier24",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl24tDone","Global",1)
+	!Global("fl25tDone","Global",1)
+	!Exists("fltier25")
+	Global("fltier25created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier25created","Locals",1)
+		SetGlobal("fltier25created","Locals",1)
+		// DisplayString(Player1,~fl24t is Done, create fltier25~)
+    CreateCreatureImpassable("fltier25",[1.1],0)
+    CreateCreatureImpassable("fltier25",[1.1],0)
+    CreateCreatureImpassable("fltier25",[1.1],0)
+    CreateCreatureImpassable("fltier25",[1.1],0)
+    CreateCreatureImpassable("fltier25",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl25tDone","Global",1)
+	!Global("fl26tDone","Global",1)
+	!Exists("fltier26")
+	Global("fltier26created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier26created","Locals",1)
+		SetGlobal("fltier26created","Locals",1)
+		// DisplayString(Player1,~fl25t is Done, create fltier26~)
+    CreateCreatureImpassable("fltier26",[1.1],0)
+    CreateCreatureImpassable("fltier26",[1.1],0)
+    CreateCreatureImpassable("fltier26",[1.1],0)
+    CreateCreatureImpassable("fltier26",[1.1],0)
+    CreateCreatureImpassable("fltier26",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl26tDone","Global",1)
+	!Global("fl27tDone","Global",1)
+	!Exists("fltier27")
+	Global("fltier27created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier27created","Locals",1)
+		SetGlobal("fltier27created","Locals",1)
+		// DisplayString(Player1,~fl26t is Done, create fltier27~)
+    CreateCreatureImpassable("fltier27",[1.1],0)
+    CreateCreatureImpassable("fltier27",[1.1],0)
+    CreateCreatureImpassable("fltier27",[1.1],0)
+    CreateCreatureImpassable("fltier27",[1.1],0)
+    CreateCreatureImpassable("fltier27",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl27tDone","Global",1)
+	!Global("fl28tDone","Global",1)
+	!Exists("fltier28")
+	Global("fltier28created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier28created","Locals",1)
+		SetGlobal("fltier28created","Locals",1)
+		// DisplayString(Player1,~fl27t is Done, create fltier28~)
+    CreateCreatureImpassable("fltier28",[1.1],0)
+    CreateCreatureImpassable("fltier28",[1.1],0)
+    CreateCreatureImpassable("fltier28",[1.1],0)
+    CreateCreatureImpassable("fltier28",[1.1],0)
+    CreateCreatureImpassable("fltier28",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl28tDone","Global",1)
+	!Global("fl29tDone","Global",1)
+	!Exists("fltier29")
+	Global("fltier29created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier29created","Locals",1)
+		SetGlobal("fltier29created","Locals",1)
+		// DisplayString(Player1,~fl28t is Done, create fltier29~)
+    CreateCreatureImpassable("fltier29",[1.1],0)
+    CreateCreatureImpassable("fltier29",[1.1],0)
+    CreateCreatureImpassable("fltier29",[1.1],0)
+    CreateCreatureImpassable("fltier29",[1.1],0)
+    CreateCreatureImpassable("fltier29",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl29tDone","Global",1)
+	!Global("fl30tDone","Global",1)
+	!Exists("fltier30")
+	Global("fltier30created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier30created","Locals",1)
+		SetGlobal("fltier30created","Locals",1)
+		// DisplayString(Player1,~fl29t is Done, create fltier30~)
+    CreateCreatureImpassable("fltier30",[1.1],0)
+    CreateCreatureImpassable("fltier30",[1.1],0)
+    CreateCreatureImpassable("fltier30",[1.1],0)
+    CreateCreatureImpassable("fltier30",[1.1],0)
+    CreateCreatureImpassable("fltier30",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	GlobalLT("EndOfBG1","Global",2)
+	Global("fl30tDone","Global",1)
+	!Global("fl31tDone","Global",1)
+	!Exists("fltier31")
+	Global("fltier31created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier31created","Locals",1)
+		SetGlobal("fltier31created","Locals",1)
+		// DisplayString(Player1,~fl30t is Done, create fltier31~)
+    CreateCreatureImpassable("fltier31",[1.1],0)
+    CreateCreatureImpassable("fltier31",[1.1],0)
+    CreateCreatureImpassable("fltier31",[1.1],0)
+    CreateCreatureImpassable("fltier31",[1.1],0)
+    CreateCreatureImpassable("fltier31",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	
+	!Global("fl1tDone","Global",1)
+	!Exists("fltier1")
+	Global("fltier1created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier1created","Locals",1)
+		SetGlobal("fltier1created","Locals",1)
+		// DisplayString(Player1,~skip is Done, create fltier1~)
+    CreateCreatureImpassable("fltier1",[1.1],0)
+    CreateCreatureImpassable("fltier1",[1.1],0)
+    CreateCreatureImpassable("fltier1",[1.1],0)
+    CreateCreatureImpassable("fltier1",[1.1],0)
+    CreateCreatureImpassable("fltier1",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl1tDone","Global",1)
+	!Global("fl2tDone","Global",1)
+	!Exists("fltier2")
+	Global("fltier2created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier2created","Locals",1)
+		SetGlobal("fltier2created","Locals",1)
+		// DisplayString(Player1,~fl1t is Done, create fltier2~)
+    CreateCreatureImpassable("fltier2",[1.1],0)
+    CreateCreatureImpassable("fltier2",[1.1],0)
+    CreateCreatureImpassable("fltier2",[1.1],0)
+    CreateCreatureImpassable("fltier2",[1.1],0)
+    CreateCreatureImpassable("fltier2",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl2tDone","Global",1)
+	!Global("fl3tDone","Global",1)
+	!Exists("fltier3")
+	Global("fltier3created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier3created","Locals",1)
+		SetGlobal("fltier3created","Locals",1)
+		// DisplayString(Player1,~fl2t is Done, create fltier3~)
+    CreateCreatureImpassable("fltier3",[1.1],0)
+    CreateCreatureImpassable("fltier3",[1.1],0)
+    CreateCreatureImpassable("fltier3",[1.1],0)
+    CreateCreatureImpassable("fltier3",[1.1],0)
+    CreateCreatureImpassable("fltier3",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl3tDone","Global",1)
+	!Global("fl4tDone","Global",1)
+	!Exists("fltier4")
+	Global("fltier4created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier4created","Locals",1)
+		SetGlobal("fltier4created","Locals",1)
+		// DisplayString(Player1,~fl3t is Done, create fltier4~)
+    CreateCreatureImpassable("fltier4",[1.1],0)
+    CreateCreatureImpassable("fltier4",[1.1],0)
+    CreateCreatureImpassable("fltier4",[1.1],0)
+    CreateCreatureImpassable("fltier4",[1.1],0)
+    CreateCreatureImpassable("fltier4",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl4tDone","Global",1)
+	!Global("fl5tDone","Global",1)
+	!Exists("fltier5")
+	Global("fltier5created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier5created","Locals",1)
+		SetGlobal("fltier5created","Locals",1)
+		// DisplayString(Player1,~fl4t is Done, create fltier5~)
+    CreateCreatureImpassable("fltier5",[1.1],0)
+    CreateCreatureImpassable("fltier5",[1.1],0)
+    CreateCreatureImpassable("fltier5",[1.1],0)
+    CreateCreatureImpassable("fltier5",[1.1],0)
+    CreateCreatureImpassable("fltier5",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl5tDone","Global",1)
+	!Global("fl6tDone","Global",1)
+	!Exists("fltier6")
+	Global("fltier6created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier6created","Locals",1)
+		SetGlobal("fltier6created","Locals",1)
+		// DisplayString(Player1,~fl5t is Done, create fltier6~)
+    CreateCreatureImpassable("fltier6",[1.1],0)
+    CreateCreatureImpassable("fltier6",[1.1],0)
+    CreateCreatureImpassable("fltier6",[1.1],0)
+    CreateCreatureImpassable("fltier6",[1.1],0)
+    CreateCreatureImpassable("fltier6",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl6tDone","Global",1)
+	!Global("fl7tDone","Global",1)
+	!Exists("fltier7")
+	Global("fltier7created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier7created","Locals",1)
+		SetGlobal("fltier7created","Locals",1)
+		// DisplayString(Player1,~fl6t is Done, create fltier7~)
+    CreateCreatureImpassable("fltier7",[1.1],0)
+    CreateCreatureImpassable("fltier7",[1.1],0)
+    CreateCreatureImpassable("fltier7",[1.1],0)
+    CreateCreatureImpassable("fltier7",[1.1],0)
+    CreateCreatureImpassable("fltier7",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl9tDone","Global",1)
+	!Global("fl10tDone","Global",1)
+	!Exists("fltier10")
+	Global("fltier10created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier10created","Locals",1)
+		SetGlobal("fltier10created","Locals",1)
+		// DisplayString(Player1,~fl9t is Done, create fltier10~)
+    CreateCreatureImpassable("fltier10",[1.1],0)
+    CreateCreatureImpassable("fltier10",[1.1],0)
+    CreateCreatureImpassable("fltier10",[1.1],0)
+    CreateCreatureImpassable("fltier10",[1.1],0)
+    CreateCreatureImpassable("fltier10",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl10tDone","Global",1)
+	!Global("fl11tDone","Global",1)
+	!Exists("fltier11")
+	Global("fltier11created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier11created","Locals",1)
+		SetGlobal("fltier11created","Locals",1)
+		// DisplayString(Player1,~fl10t is Done, create fltier11~)
+    CreateCreatureImpassable("fltier11",[1.1],0)
+    CreateCreatureImpassable("fltier11",[1.1],0)
+    CreateCreatureImpassable("fltier11",[1.1],0)
+    CreateCreatureImpassable("fltier11",[1.1],0)
+    CreateCreatureImpassable("fltier11",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl11tDone","Global",1)
+	!Global("fl12tDone","Global",1)
+	!Exists("fltier12")
+	Global("fltier12created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier12created","Locals",1)
+		SetGlobal("fltier12created","Locals",1)
+		// DisplayString(Player1,~fl11t is Done, create fltier12~)
+    CreateCreatureImpassable("fltier12",[1.1],0)
+    CreateCreatureImpassable("fltier12",[1.1],0)
+    CreateCreatureImpassable("fltier12",[1.1],0)
+    CreateCreatureImpassable("fltier12",[1.1],0)
+    CreateCreatureImpassable("fltier12",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl12tDone","Global",1)
+	!Global("fl13tDone","Global",1)
+	!Exists("fltier13")
+	Global("fltier13created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("fltier13created","Locals",1)
+		SetGlobal("fltier13created","Locals",1)
+		// DisplayString(Player1,~fl12t is Done, create fltier13~)
+    CreateCreatureImpassable("fltier13",[1.1],0)
+    CreateCreatureImpassable("fltier13",[1.1],0)
+    CreateCreatureImpassable("fltier13",[1.1],0)
+    CreateCreatureImpassable("fltier13",[1.1],0)
+    CreateCreatureImpassable("fltier13",[1.1],0)
+		Continue()
+END
+		
+		
+IF
+	Global("EndOfBG1","Global",2)
+	Global("fl13tDone","Global",1)
+	!Global("flkatDone","Global",1)
+	!Exists("flTIERKA")
+	Global("flTIERKAcreated","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("flTIERKAcreated","Locals",1)
+		SetGlobal("flTIERKAcreated","Locals",1)
+		// DisplayString(Player1,~fl13t is Done, create flTIERKA~)
+    CreateCreatureImpassable("flTIERKA",[1.1],0)
+    CreateCreatureImpassable("flTIERKA",[1.1],0)
+    CreateCreatureImpassable("flTIERKA",[1.1],0)
+    CreateCreatureImpassable("flTIERKA",[1.1],0)
+    CreateCreatureImpassable("flTIERKA",[1.1],0)
+		Continue()
+END
+		
+		

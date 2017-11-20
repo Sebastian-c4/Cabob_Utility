@@ -1,0 +1,263 @@
+
+/* //////////////////////////////////// */
+/* 法术相关 */
+/* 其他法术修订 */
+/* //////////////////////////////////// */
+	
+//油腻术：魔抗有效，豁免惩罚+1	
+COPY_EXISTING SPWI101.spl override
+	PATCH_FOR_EACH match_opcode IN 158 126 142 39 174 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode resist_dispel=1 END
+	END
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_LONG offset+0x24 save
+			PATCH_IF save=2 BEGIN
+				WRITE_LONG offset+0x28 THIS -1
+			END
+		END
+	END
+	LAF file_replace_string INT_VAR offset=0x50 old=30314 new=30315 STR_VAR file=~SPWI101.spl~ END
+	
+//蛛网术：魔抗有效，豁免惩罚+1	
+COPY_EXISTING SPWI215.spl override
+	PATCH_FOR_EACH match_opcode IN 157 109 174 142 139 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode resist_dispel=1 END
+	END
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_LONG offset+0x24 save
+			PATCH_IF save=2 BEGIN
+				WRITE_LONG offset+0x28 THIS -1
+			END
+		END
+	END
+	LAF file_replace_string INT_VAR offset=0x50 old=30316 new=30317 STR_VAR file=~SPWI215.spl~ END
+	
+//明了敌手修改为敌意法术
+ACTION_FOR_EACH spell IN SPPR209 SPWI208 RR#WI208 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		WRITE_BYTE 0x19 THIS BOR 0b00000100
+	BUT_ONLY
+END
+		
+//任意门目标地点无须在视野内，距离1000呎
+COPY_EXISTING SPWI402.spl override
+	WRITE_BYTE 0x19 (THIS BOR 0b00001000)
+	READ_LONG 0x50 desc
+	LAF file_replace_string INT_VAR offset=0x50 old=30301 new=30302 STR_VAR file=~SPWI402.spl~ END
+
+COPY_EXISTING SCRL1V.itm override BGSCRL1V.itm override
+	WRITE_LONG 0x54 desc
+BUT_ONLY
+
+//将对震慑的防护从4级自由行动移动至5级混乱命令
+COPY_EXISTING sppr403.spl override
+	//自由行动添加防震慑
+	PATCH_FOR_EACH match_parameter2 IN 45 210 BEGIN
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=101 match_parameter2 END
+	END
+	LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=169 match_parameter2=55 END
+	LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=240 match_parameter2=55 END
+	LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=267 match_parameter1=1280 END
+	LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=318 match_parameter2=406 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30323 new=30324 STR_VAR file=~sppr403.spl~ END
+	
+COPY_EXISTING sppr508.spl override
+	//混乱命令添加防震慑
+	PATCH_FOR_EACH parameter2 IN 45 210 BEGIN
+		LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 check_headers=0 opcode=101 parameter2 END
+	END
+	LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 check_headers=0 opcode=169 parameter2=55 END
+	LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 check_headers=0 opcode=240 parameter2=55 END
+	LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 check_headers=0 opcode=267 parameter1=1280 END
+	LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 check_headers=0 opcode=318 parameter2=406 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30325 new=30326 STR_VAR file=~sppr508.spl~ END
+	
+//弱智术持续时间改为1回合
+COPY_EXISTING SPWI509.spl override
+	LPF ALTER_EFFECT INT_VAR match_opcode=76 timing=0 duration=60 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=142 timing=0 duration=60 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30303 new=30304 STR_VAR file=~SPWI509.spl~ END
+
+//防护魔法武器持续时间恢复4轮	
+COPY_EXISTING SPWI611.spl override
+	LPF ALTER_EFFECT INT_VAR match_duration=18 duration=24 END
+	READ_LONG 0x50 desc
+	LAF file_replace_string INT_VAR offset=0x50 old=30305 new=30306 STR_VAR file=~SPWI611.spl~ END	
+	
+//伤害术：当受术者-6不利通过对死亡豁免检定时不受影响，龙类和狄摩高根免疫此法术
+LAF file_replace_string INT_VAR offset=0x50 old=30310 new=30311 STR_VAR file=~sppr608.spl~ END	
+LAF file_replace_string INT_VAR offset=0x50 old=30312 new=30313 STR_VAR file=~sppr608.spl~ END	
+
+COPY_EXISTING rr#harm.spl override
+	LPF ALTER_EFFECT INT_VAR match_savingthrow=0 savingthrow=4 savebonus=~-6~ END
+			
+COPY_EXISTING_REGEXP ~.*\.cre~ override
+	READ_LONG 0x28 animation ELSE 0
+	SET patch=0
+	FOR (i=0x1200;i<0x1209;++i) BEGIN
+		PATCH_IF animation=i || animation=0x1300 BEGIN
+			SET patch=1
+		END
+	END
+	PATCH_IF patch BEGIN
+		LPF ADD_CRE_EFFECT INT_VAR opcode=206 target=1 timing=9 STR_VAR resource=rr#harm END
+	END
+
+//修改不死生物操控术为单体法术
+COPY_EXISTING SPPR620.SPL override SPWI720.spl override
+	LPF ALTER_SPELL_HEADER INT_VAR projectile=47 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30308 new=30309 STR_VAR file=~SPPR620.spl~ END
+	LAF file_replace_string INT_VAR offset=0x50 old=30308 new=30309 STR_VAR file=~SPWI720.spl~ END
+
+//虹光喷射：免疫即死的生物不再受绿光的即死效果影响
+COPY_EXISTING spwi714.spl override
+	LPF ALTER_EFFECT INT_VAR match_parameter2=0x200003 opcode=13 parameter1=0 parameter2=512 END
+	
+//允许投影使用天赋技能，无法施放法免预言
+COPY_EXISTING PROJIMAG.spl override
+	LPF DELETE_EFFECT INT_VAR match_parameter2=13 END
+	LPF CLONE_EFFECT INT_VAR parameter1=RESOLVE_STR_REF (@30307) STR_VAR match_resource=spwi703 resource=spwi592b END
+
+/* /////////////////////////////////////////////////// */	
+/* 投影术和拟象术无法通过连锁意外施放 */
+COPY_EXISTING contingx.2da override
+	SET set703=0
+	SET set804=0
+	READ_2DA_ENTRIES_NOW rows 10
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 7 value
+		PATCH_IF ~%value%~ STR_EQ ~****~ && set703=0 BEGIN
+			SET_2DA_ENTRY_LATER new i 7 ~SPWI703~
+			SET set703=1
+		END
+		READ_2DA_ENTRY_FORMER rows i 8 value
+		PATCH_IF ~%value%~ STR_EQ ~****~ && set804=0 BEGIN
+			SET_2DA_ENTRY_LATER new i 8 ~SPWI804~
+			SET set804=1
+		END
+	END
+	SET_2DA_ENTRIES_NOW new 10
+BUT_ONLY
+
+/* /////////////////////////////////////////////////// */	
+/* 愿望术效果调整
+a. 使用投影和拟像进行许愿时智慧设定为10
+b. 强韧效果无法叠加，也无法与战士高阶技能相叠加
+c. 设置全队属性25的效果不影响智慧
+d. 所有许愿效果均会使法师自身智慧-2，持续8小时，效果叠加，智慧低于5时无法许愿 */
+COPY_EXISTING projimag.spl override simulacr.spl override
+	LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=144 opcode=49 parameter1=10 parameter2=1 END
+
+COPY_EXISTING spcl907.spl override
+	LPF CLONE_EFFECT INT_VAR match_opcode=206 parameter1=74011 STR_VAR resource=spwish12 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30318 new=30319 STR_VAR file=~spcl907.spl~ END
+
+COPY_EXISTING spwish12.spl override
+	LPF CLONE_EFFECT INT_VAR match_opcode=86 opcode=206 parameter1=74011 STR_VAR resource=spcl907 insert=last END
+	LPF CLONE_EFFECT INT_VAR match_opcode=86 opcode=206 parameter1=74011 STR_VAR resource=spwish12 insert=last END
+
+COPY_EXISTING spwish08.spl override
+	LPF DELETE_EFFECT INT_VAR match_opcode=49 END
+
+ACTION_DEFINE_ARRAY wish_exclude BEGIN 01 02 03 04 05 06 07 09 15 END
+OUTER_FOR (i=1;i<47;++i) BEGIN
+	OUTER_SET no_change=0
+	ACTION_PHP_EACH wish_exclude AS _ => exclude BEGIN
+		ACTION_IF i=exclude BEGIN
+			OUTER_SET no_change=1
+		END
+	END
+	ACTION_IF no_change=0 BEGIN
+		ACTION_IF i<10 BEGIN
+			OUTER_TEXT_SPRINT num ~0%i%~
+		END ELSE OUTER_TEXT_SPRINT num ~%i%~
+		COPY_EXISTING ~spwish%num%.spl~ override
+			LPF ADD_SPELL_EFFECT INT_VAR opcode=49 target=1 timing=0 duration=2400 parameter1=~-2~ insert_point=0 END
+		BUT_ONLY
+	END
+END
+
+COPY_EXISTING - spwi919.spl override
+	READ_LONG 0x50 desc_strref
+	GET_STRREF desc_strref desc
+	SPRINT desc_add @30320
+	SPRINT desc ~%desc%~^~%desc_add%~
+	INNER_ACTION BEGIN
+		STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+	END
+
+COMPILE ~%SCRIPTS%/wish_fix.d~
+	
+//将召唤使徒/召唤堕落使徒/召唤神界侍者/召唤深渊侍者改为天赋技能
+ACTION_FOR_EACH spell IN SPWI923 SPWI924 SPPR726 SPPR727 BEGIN
+	COPY_EXISTING ~%spell%.spl~ ~override/%spell%B.spl~
+		WRITE_LONG 0x34 1
+		LPF ALTER_SPELL_HEADER INT_VAR header_type=1 location=4 END
+		
+	COPY_EXISTING_REGEXP GLOB ~LU.*\.2da~ override
+		REPLACE_TEXTUALLY ~GA_%spell%~ ~GA_%spell%B~
+	BUT_ONLY
+END
+
+//将敌人使用的法术与修改过的相匹配
+ACTION_DEFINE_ASSOCIATIVE_ARRAY match BEGIN
+	dw#0w215 		=> spwi215
+	dw#mweb 		=> spwi215
+	spdr201 		=> spwi215
+	dw#0w419 		=> spwi419
+	dw#0w513 		=> spwi513
+	DW#0W611		=> SPWI611
+	DW#MLPMW		=> SPWI611
+END
+
+ACTION_PHP_EACH duplicate_spl AS ai => pc BEGIN
+	COPY_EXISTING - ~%ai%.spl~ override
+		READ_LONG 0x8 name
+	COPY_EXISTING ~%pc%.spl~ ~override/%ai%.spl~
+		PATCH_IF name>0 BEGIN
+			WRITE_LONG 0x8 ~%name%~
+		END
+END
+	
+//专职牧师高阶列表添加信仰护盾（即持续1回合的法免防护）作为天赋技能，可选3次
+COPY_EXISTING SPWI590b.spl ~override/C4#CLRSI.spl~
+	FOR (a=1;a<21;++a) BEGIN
+		PATCH_IF a!=10 BEGIN
+			LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=a END
+		END
+	END
+	LPF ALTER_EFFECT INT_VAR match_power=5 power=8 END
+	LPF ALTER_SPELL_HEADER INT_VAR min_level=1 location=4 END
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	SAY 0x08 @30327
+	SAY 0x50 @30328
+	
+//借用refinements里的hla编辑function
+ACTION_FOR_EACH kit IN 
+	CLERIC TALOS HELM LATHANDER
+BEGIN
+	LAF action_add_hla STR_VAR kit_name=~%kit%~ ability=~GA_C4#CLRSI~ num_allowed=~3~ END
+END
+
+//时间停止加入除防护师和术士之外所有专职法师的高阶技能表，不能通过卷轴学习
+LAF file_replace_string INT_VAR offset=0x50 old=30329 new=30330 STR_VAR file=~SPWI909.spl~ END
+
+ACTION_FOR_EACH kit IN 
+	MAGE FIGHTER_MAGE FIGHTER_MAGE_THIEF MAGE_THIEF CLERIC_MAGE FIGHTER_MAGE_CLERIC
+	CONJURER DIVINER ENCHANTER ILLUSIONIST INVOKER NECROMANCER NECROMANCER WILDMAGE
+BEGIN
+	LAF action_add_hla STR_VAR kit_name=~%kit%~ ability=~GA_SPWI909~ num_allowed=~1~ END
+END
+
+//取消卷轴的学习法术效果		
+COPY_EXISTING SCRL9R.itm override
+	LPF ALTER_ITEM_HEADER INT_VAR header=2 new_header_type=44 END
+	LPF DELETE_ITEM_HEADER INT_VAR header_type=44 END
+BUT_ONLY

@@ -1,0 +1,11 @@
+
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,%engine_value_type%,c_BonusStatusOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_status",Myself)
+		Continue()
+END

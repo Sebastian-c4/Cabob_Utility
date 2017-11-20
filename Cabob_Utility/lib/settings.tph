@@ -1,0 +1,125 @@
+
+DEFINE_ACTION_MACRO c4AI_hotkey BEGIN
+
+	<<<<<<<< .../hotkey.baf
+	IF
+		HotKey(%tweak%)
+	THEN
+		RESPONSE #100
+			StartDialogOverride("c4#tweak",Myself)
+	END
+	>>>>>>>>
+
+	COPY_EXISTING_REGEXP GLOB ~dplayer[23].bcs~ override
+		FOR (i=65;i<91;++i) BEGIN
+			INNER_PATCH_SAVE tweak ~~ BEGIN
+				INSERT_BYTES 0 1
+				WRITE_BYTE 0 %i%
+			END
+			R_B_B EVAL ~.../hotkey.baf~ ~.../inlined/blank.baf~ ON_MISMATCH END
+		END
+	BUT_ONLY
+
+	PRINT ~请设置控制台启动热键，注意切勿与游戏内热键冲突。热键必须是字母按键。~
+
+	ACTION_READLN tweak
+	OUTER_SET x = STRING_LENGTH ~%tweak%~
+	OUTER_WHILE (~%tweak%~ STRING_MATCHES_REGEXP ~[A-Za-z]~) || (%x% > 1) BEGIN
+		PRINT ~热键输入错误，请重新输入。~
+		PRINT ~请设置控制台启动热键，注意切勿与游戏内热键冲突。热键必须是字母按键。~
+		ACTION_READLN tweak
+		OUTER_SET x = STRING_LENGTH ~%tweak%~
+	END
+
+	EXTEND_BOTTOM_REGEXP ~DPLAYER[23].BCS~ ~.../hotkey.baf~ EVAL
+	 
+	PRINT ~请设置自身Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+
+	ACTION_READLN selfbuff
+	OUTER_SET x = STRING_LENGTH ~%selfbuff%~
+	OUTER_WHILE (~%selfbuff%~ STRING_MATCHES_REGEXP ~[A-Za-z]~) || (%x% > 1) BEGIN
+		PRINT ~热键输入错误，请重新输入。~
+		PRINT ~请设置自身Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+		ACTION_READLN selfbuff
+		OUTER_SET x = STRING_LENGTH ~%selfbuff%~
+	END
+
+	OUTER_WHILE ~%selfbuff%~ STRING_EQUAL ~%tweak%~ BEGIN
+		PRINT ~与已设置热键冲突，请重新输入。~
+		PRINT ~请设置自身Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+		ACTION_READLN selfbuff
+		OUTER_SET x = STRING_LENGTH ~%selfbuff%~
+	END
+
+	PRINT ~请设置团队Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+
+	ACTION_READLN teambuff
+	OUTER_SET x = STRING_LENGTH ~%teambuff%~
+	OUTER_WHILE (~%teambuff%~ STRING_MATCHES_REGEXP ~[A-Za-z]~) || (%x% > 1) BEGIN
+		PRINT ~热键输入错误，请重新输入。~
+		PRINT ~请设置团队Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+		ACTION_READLN teambuff
+		OUTER_SET x = STRING_LENGTH ~%teambuff%~
+	END
+
+	OUTER_WHILE (~%teambuff%~ STRING_EQUAL ~%tweak%~) || (~%teambuff%~ STRING_EQUAL ~%selfbuff%~) BEGIN
+		PRINT ~与已设置热键冲突，请重新输入。~
+		PRINT ~请设置自身Buff启动热键，注意切勿与游戏内热键或已设热键冲突。热键必须是字母按键。~
+		ACTION_READLN teambuff
+		OUTER_SET x = STRING_LENGTH ~%teambuff%~
+	END
+
+	LOAD_TRA ~c4AI/tra/schinese/game.tra~
+	COMPILE EVAL ~c4AI/baf/c4#buff.baf~
+	COPY_EXISTING c4#all.bcs ~scripts/c4#all.bs~
+
+END
+
+DEFINE_ACTION_MACRO biff_files BEGIN
+	
+	OUTER_SPRINT bifmark c4#bif
+
+	<<<<<<<< .../list-of-files
+	>>>>>>>>
+
+	// this defines a one to eight character regular expression for matching resrefs
+	OUTER_TEXT_SPRINT ~char~ ~[^ %TAB%%WNL%]~
+	OUTER_TEXT_SPRINT ~8char~ ~%char%%char%?%char%?%char%?%char%?%char%?%char%?%char%?~
+	OUTER_TEXT_SPRINT ~9char~ ~%char%%char%%char%%char%%char%%char%%char%%char%%char%%char%*~
+	OUTER_TEXT_SPRINT ext ~\(bmp\|mve\|wav\|wac\|plt\|bam\|wed\|chu\|tis\|mos\|itm\|spl\|bcs\|ids\|cre\|are\|dlg\|2da\|gam\|sto\|wmp\|chr\|eff\|vvc\|vef\|pro\)~
+
+	OUTER_TEXT_SPRINT ~myRegExp~ ~^%8char%\.%ext%$~
+	// OUTER_TEXT_SPRINT ~myRegExp~ ~^[^ ]*\..*$~
+
+	MKDIR ~%MOD_FOLDER%/biffs/0~
+	MKDIR ~%MOD_FOLDER%/biffs/rej~
+
+	OUTER_SET currentTotal = 0
+	OUTER_SET currentFile = 0
+	ACTION_BASH_FOR ~override~ ~%myRegExp%~ BEGIN
+		ACTION_IF (~%BASH_FOR_SIZE%~ + currentTotal > 30000000) /* 30M */ && (currentTotal > 0) && !(~%BASH_FOR_RES%~ STR_EQ ~c4_stat_temp~) BEGIN
+			MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/biffs/%currentFile%~ ~^.*$~ END
+			OUTER_SET currentFile = currentFile + 1
+			OUTER_SET currentTotal = 0
+			MKDIR ~%MOD_FOLDER%/biffs/%currentFile%~
+		END
+		MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/biffs/%currentFile%/%BASH_FOR_FILE%~
+		OUTER_SET currentTotal += BASH_FOR_SIZE
+	END
+		
+	ACTION_IF currentTotal > 0 BEGIN
+		MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/biffs/%currentFile%~ ~^.*$~ END
+	END
+
+	OUTER_TEXT_SPRINT ~myRegExp~ ~^%9char%.%ext%$~
+
+	ACTION_BASH_FOR ~override~ ~%myRegExp%~ BEGIN
+		OUTER_PATCH_SAVE ~8name~ ~%BASH_FOR_FILE%~ BEGIN
+			DELETE_BYTES 8 (INDEX_BUFFER (EXACT_MATCH ~.~) - 8)
+		END
+		ACTION_IF FILE_EXISTS_IN_GAME ~%8name%~ THEN BEGIN
+			MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/biffs/rej/%BASH_FOR_FILE%~
+		END
+	END
+
+END

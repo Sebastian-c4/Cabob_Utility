@@ -1,0 +1,369 @@
+
+/* //////////////////////////////////// */
+/* 物品相关 */
+/* 物品可用性调整 */
+/* //////////////////////////////////// */
+	
+//////限定专属装备只能角色本人使用
+COPY_EXISTING ITEM_USE.2da override
+	PHP_EACH npcitem AS itm => char BEGIN
+		TO_UPPER itm
+		COUNT_2DA_COLS col
+		READ_2DA_ENTRIES_NOW row col
+		INSERT_2DA_ROW row col ~%itm% %char% -1 2 string -1 -1 -1 -1 -1~
+	END
+	REPLACE ~string~ @20201
+BUT_ONLY
+
+COPY_EXISTING NPSW05.itm override NPSW06.itm override
+	LAF file_replace_string INT_VAR offset=0x54 old=20202 new=20203 STR_VAR file=~NPSW05.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20202 new=20203 STR_VAR file=~NPSW06.itm~ END
+	
+//竖琴手别针去掉属性限制
+ACTION_FOR_EACH item IN misc5x u#amul02 BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		PATCH_FOR_EACH minstat IN 0x26 0x28 0x2a 0x2c 0x2e 0x30 0x32 BEGIN
+			WRITE_SHORT ~%minstat%~ 0
+		END
+	IF_EXISTS BUT_ONLY
+END	
+
+//裳提亚的马甲：法师宗派缺失
+COPY_EXISTING D1LEAT01.itm override
+	WRITE_BYTE 0x2d 0
+	WRITE_BYTE 0x2f THIS BAND 0b00000100
+BUT_ONLY
+		
+//////规范护甲的可用性
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF item_flag RET valid moveable END
+	PATCH_IF valid && moveable BEGIN
+		READ_SHORT 	0x1c 	itemtype
+		READ_ASCII 	0x22 	anim (2)
+		PATCH_IF itemtype=0x2 AND ~%anim%~ STRING_COMPARE_REGEXP ~[234][Ww]~ BEGIN
+			armortype=~-1~
+			crushing=0
+			missile=0
+			piercing=0
+			slashing=0
+			LPF ac_type_value INT_VAR type=1 RET crushing=value END
+			LPF ac_type_value INT_VAR type=2 RET missile=value	END
+			LPF ac_type_value INT_VAR type=4 RET piercing=value END
+			LPF ac_type_value INT_VAR type=8 RET slashing=value END
+			PATCH_IF crushing=0			&& missile=~-2~	&& piercing=~-2~	&& slashing=0		BEGIN armortype=1 END //皮甲
+			PATCH_IF crushing=0			&& missile=1		&& piercing=1			&& slashing=2		BEGIN armortype=2 END //皮环甲
+			PATCH_IF crushing=0			&& missile=1		&& piercing=1			&& slashing=3		BEGIN armortype=3 END //鳞甲
+			PATCH_IF crushing=~-2~	&& missile=0		&& piercing=0			&& slashing=2		BEGIN armortype=4 END //锁子甲
+			PATCH_IF crushing=2			&& missile=1		&& piercing=1			&& slashing=0		BEGIN armortype=5 END //直行链甲
+			PATCH_IF crushing=0			&& missile=0		&& piercing=0			&& slashing=3		BEGIN armortype=6 END //铠甲
+			PATCH_IF crushing=0			&& missile=3		&& piercing=3			&& slashing=4		BEGIN armortype=7 END //全身甲
+			
+			//排除职业专属物品以及特别可用性设置的护甲
+			PHP_EACH npcitem AS exclude => npcs BEGIN 
+				PATCH_IF
+					~%SOURCE_RES%~ STR_EQ ~%exclude%~ OR 
+					~%SOURCE_RES%~ STR_EQ CHAN15 		OR 	//乐音锁子甲
+					~%SOURCE_RES%~ STR_EQ X#GARCH		OR 	//吟游诗人锁子甲
+					~%SOURCE_RES%~ STR_EQ LEAT08 		OR 	//影甲
+					~%SOURCE_RES%~ STR_EQ U#LEAT01 	OR 	//皮琴之甲
+					~%SOURCE_RES%~ STR_EQ U#LEAT02			//暗影遮蔽
+				BEGIN armortype=0 END
+			END
+			
+			//统一生物皮做的铠甲为鳞甲
+			PATCH_FOR_EACH scales IN LEAT19 CHAN20 PLAT06 PLAT18 PLATWY PLAT20 S#CHAN01 U#PLAT02 PLATWY CHAN17 BEGIN
+				PATCH_IF ~%SOURCE_RES%~ STR_EQ ~%scales%~ BEGIN
+					LPF ALTER_EFFECT INT_VAR check_headers=0 match_opcode=0 match_parameter2=0x10 opcode=333 END
+					LPF DELETE_EFFECT INT_VAR match_opcode=0 END
+					LPF ALTER_EFFECT INT_VAR opcode=333 match_parameter2=0x10 opcode=0 END
+					LPF CLONE_EFFECT INT_VAR check_headers=0 match_opcode=0 match_parameter2=0x10 parameter1=1 parameter2=2 STR_VAR insert=below END
+					LPF CLONE_EFFECT INT_VAR check_headers=0 match_opcode=0 match_parameter2=0x10 parameter1=1 parameter2=4 STR_VAR insert=below END
+					LPF CLONE_EFFECT INT_VAR check_headers=0 match_opcode=0 match_parameter2=0x10 parameter1=3 parameter2=8 STR_VAR insert=below END
+					armortype=3
+				END
+			END
+			
+			//蛇发女妖铠甲+4：设为铠甲类
+			PATCH_IF ~%SOURCE_RES%~ STR_EQ ~PLAT13~ BEGIN armortype=6 END
+			
+			//可用性设置
+			PATCH_IF armortype>0 BEGIN //剑圣/变形者/法师：无法穿任何铠甲
+				WRITE_BYTE 0x29 THIS BOR 0b00010000 
+				WRITE_BYTE 0x2f THIS BOR 0b00000100
+				WRITE_BYTE 0x29 THIS BAND 0b10111111 //重置野蛮人和弓箭手的可用性
+				WRITE_BYTE 0x2d THIS BAND 0b01111111
+			END
+			
+			PATCH_IF armortype>1 BEGIN //复仇者：只能穿皮甲
+				WRITE_BYTE 0x29 THIS BOR 0b00100000
+			END
+			
+			PATCH_IF armortype>2 BEGIN //潜行者：只能穿皮甲和皮环甲
+				WRITE_BYTE 0x2b THIS BOR 0b00000001
+			END
+			
+			PATCH_IF armortype>3 BEGIN //驯兽师/弓箭手：不能穿金属铠甲
+				WRITE_BYTE 0x2b THIS BOR 0b00000010
+				WRITE_BYTE 0x2d THIS BOR 0b10000000
+			END
+			
+			PATCH_IF armortype>5 BEGIN //野蛮人：不能穿重甲
+				WRITE_BYTE 0x29 THIS BOR 0b01000000
+			END
+			
+			PATCH_IF (armortype=1 OR armortype=2) BEGIN //皮甲/皮环甲: 法师/武僧
+				WRITE_LONG 0x1e THIS BOR 0b00100000000001000000000000000000
+			END
+			
+			PATCH_IF armortype=3 BEGIN //鳞甲: 盗贼/诗人/法师/武僧
+				WRITE_LONG 0x1e 0b00100000010011000000000001000000
+			END
+			
+			PATCH_IF armortype=4 BEGIN //锁子甲: 盗贼/德鲁伊/法师/武僧
+				WRITE_LONG 0x1e THIS BOR 0b01100000010011000000000000000000
+			END
+			
+			PATCH_IF armortype>4 BEGIN //直行链甲/铠甲/全身铠甲: 盗贼/诗人/德鲁伊/法师/武僧
+				WRITE_LONG 0x1e THIS BOR 0b01100000010011000000000001000000
+				PATCH_IF armortype=7 BEGIN armortype=6 END //全身甲可用性和说明同铠甲
+			END			
+			
+			//更新说明
+			PATCH_IF armortype>0 BEGIN
+				PATCH_FOR_EACH offset IN 0x50 0x54 BEGIN
+					READ_LONG offset desc_strref
+					PATCH_IF desc_strref>0 BEGIN
+						GET_STRREF desc_strref desc
+						
+						//清除旧字段
+						INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+							FOR (i=20204;i<20216;++i) BEGIN
+								SPRINT remove (AT i)
+								REPLACE_TEXTUALLY ~%remove%~ ~~
+							END
+						END
+						
+						//插入新字段
+						FOR (j=1;j<7;++j) BEGIN
+							PATCH_IF j=armortype BEGIN
+								new_strref=j+20215
+								SPRINT new_string (AT new_strref)
+								SPRINT desc ~%desc%~^~%new_string%~
+							END
+						END
+						
+						//写入
+						INNER_ACTION BEGIN
+							STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+						END
+					END
+				END
+			END
+			
+			//兼职或转职法师不能穿戴禁用施法技能的铠甲
+			GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+			SET no_arcane=0
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+8 parameter2
+				PATCH_IF opcode=145 && parameter2=0 BEGIN
+					SET no_arcane=1
+				END
+			END
+			PATCH_IF no_arcane=1 BEGIN
+				WRITE_BYTE 0x1f THIS BOR 0b10100001
+				WRITE_BYTE 0x20 THIS BOR 0b00001101
+				PATCH_FOR_EACH strref IN 0x50 0x54 BEGIN
+					READ_LONG ~%strref%~ desc_strref
+					PATCH_IF desc_strref>0 BEGIN
+						GET_STRREF desc_strref desc
+						INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+							SPRINT old (AT 20222)
+							SPRINT new (AT 20223)
+							REPLACE_TEXTUALLY ~%old%~ ~%new%~
+						END
+						INNER_ACTION BEGIN
+							// LAF file_replace_string INT_VAR offset=0x54 old=20222 new=20223 STR_VAR file=~%SOURCE_FILE%~ END
+							STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+						END
+					END
+				END
+			END
+		END	
+	END
+BUT_ONLY
+		
+//////物品冲突
+//无法同时装备AC改善的魔法物品
+COPY_EXISTING_REGEXP - GLOB ~.*\.itm~ override
+	LPF item_flag RET moveable magical END
+	
+	//魔法护甲
+	PATCH_IF moveable && magical BEGIN
+		READ_SHORT 0x1c type
+		READ_ASCII 0x22 anim (2)
+		PATCH_IF type=0x2 && "%anim%" STRING_COMPARE_REGEXP "[234][Ww]" BEGIN
+			SET $itemexcl(~%SOURCE_RES%~) = 1
+		END	
+	END
+	
+	PATCH_IF moveable BEGIN
+		//其他物品
+		READ_SHORT 0x1c type
+		PATCH_FOR_EACH misc IN 0x1 0xa 0x20 BEGIN
+			PATCH_IF type=misc BEGIN			
+				GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+				PHP_EACH effect AS int => offset BEGIN
+					READ_SHORT offset opcode
+					READ_LONG offset+4 parameter1
+					READ_LONG offset+8 parameter2
+					PATCH_IF opcode=0 && parameter2=0 && parameter1>0 BEGIN
+						SET $itemexcl(~%SOURCE_RES%~) = 1
+					END
+				END
+			END
+		END
+		
+		//只能同时装备一个增加法师法术位的戒指
+		PATCH_IF type=0xa BEGIN
+			GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=42 && ~%SOURCE_RES%~ STRING_COMPARE_CASE ~DW#MELRI~ BEGIN
+					SET $add_arcane_slot(~%SOURCE_RES%~)=1				
+				END
+			END
+		END
+			
+		//法师类职业不可同时装备施法加速物品
+		GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			PATCH_IF opcode=189 BEGIN
+				SET $cast_time_mod(~%SOURCE_RES%~)=1
+			END
+		END
+			
+		//幸运加成类物品不可同时装备
+		GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+0x4 parameter1
+			PATCH_IF opcode=22 && parameter1>0 BEGIN
+				SET $luck(~%SOURCE_RES%~)=1
+			END
+		END
+	END
+
+//添加互斥列表
+COPY_EXISTING ITEMEXCL.2da override
+	COUNT_2DA_ROWS 2 rows
+	FOR (i=rows;i>0;i+=~-1~) BEGIN
+		REMOVE_2DA_ROW %i% 2
+	END
+	
+ACTION_PHP_EACH itemexcl AS res => n BEGIN
+	APPEND ITEMEXCL.2da ~%res%%TAB%1~ UNLESS ~%res%~
+END	
+
+//例外物品:    
+//项链（伊尔马特护身符，黑狼护符，强化魔力护符，美观的防御护符）
+//戒指（元素掌握之戒，术士之戒，梅丽珊的巫术之戒，操土之戒，葛斯之戒/强化葛斯之戒，美德国度）
+//斗篷（博德安斗篷，下水道斗篷，蒙特利欧斗篷，塔西娅的冬季斗篷，密林斗篷，狂乱法师斗篷，高级反侦测斗篷，强化博德安斗篷，自然斗篷）
+ACTION_FOR_EACH name IN 
+		C2AMUL01 D1AMUL01 S#AMUL02 WQXNEC2
+		C2RING03 C2RING04 DW#MELRI RING29 RING39 S#RING03 DEITM116
+		CLCK05 CLCK27 CLCK32 LE#TWCLK NPCLCK S#CLCK01 THCLCK01 THCLCK03 U#CLCK04
+BEGIN	
+	COPY_EXISTING ITEMEXCL.2da override
+		COUNT_2DA_ROWS 2 rows
+		FOR (i=rows; i>0; i+=~-1~) BEGIN
+			READ_2DA_ENTRY i 0 2 ~item~
+			PATCH_IF ~%name%~ STR_EQ ~%item%~ BEGIN
+				REMOVE_2DA_ROW %i% 2
+			END
+		END
+	BUT_ONLY
+END
+
+//处理增加法术位戒指冲突
+OUTER_SET	confstr = RESOLVE_STR_REF (@20224)
+ACTION_PHP_EACH add_arcane_slot AS item => num BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		PHP_EACH add_arcane_slot AS item1 => num1 BEGIN
+			LPF DELETE_EFFECT INT_VAR match_opcode=180 STR_VAR match_resource=~%item1%~ END
+			LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=42 opcode=180 target=1 timing=2 parameter1=confstr parameter2=0 STR_VAR resource = ~%item1%~ END
+		END
+	BUT_ONLY
+END
+
+//处理增加幸运装备冲突
+OUTER_SET	confstr = RESOLVE_STR_REF (@20232)
+ACTION_PHP_EACH luck AS item => num BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		PHP_EACH luck AS item1 => num1 BEGIN
+			LPF DELETE_EFFECT INT_VAR match_opcode=180 STR_VAR match_resource=~%item1%~ END
+			LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=22 opcode=180 target=1 timing=2 parameter1=confstr parameter2=0 STR_VAR resource = ~%item1%~ END
+		END
+	BUT_ONLY
+END
+
+//处理施法加速装备冲突
+OUTER_SET eff_num0=1	
+OUTER_SET string= RESOLVE_STR_REF (@20231)
+ACTION_PHP_EACH cast_time_mod AS item => int BEGIN
+	ACTION_IF eff_num0<10 BEGIN 
+		OUTER_SPRINT eff_num ~0%eff_num0%~
+	END ELSE OUTER_SPRINT eff_num ~%eff_num0%~	
+	OUTER_SPRINT eff_name ~ctime%eff_num%~
+	CREATE EFF ~%eff_name%~
+		WRITE_LONG 0x10 180
+		WRITE_LONG 0x14 1
+		WRITE_LONG 0x1c %string%
+		WRITE_SHORT 0x24 2
+		WRITE_SHORT 0x2c 100	
+		WRITE_ASCIIE 0x30 ~%item%~
+	OUTER_SET $cast_time_mod_eff(~%eff_name%~)=1
+	OUTER_SET eff_num0+=1
+END
+		
+ACTION_PHP_EACH cast_time_mod AS item => int BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		PHP_EACH cast_time_mod_eff AS eff_name => int BEGIN	
+			PATCH_FOR_EACH parameter1 IN 1 7 10 13 14 17 19 BEGIN
+				LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 target=1 timing=2 parameter1 parameter2=5 STR_VAR resource=~%eff_name%~ END
+			END
+		END
+	BUT_ONLY	
+END
+			
+//混乱/高等混乱之石和狂法师斗篷可与法术相叠加, 但不可同时装备
+OUTER_SET s1=RESOLVE_STR_REF (@20225)
+OUTER_SET s2=RESOLVE_STR_REF (@20226)
+
+COPY_EXISTING S#CLCK01.itm override
+	READ_LONG 0x54 desc1
+	LPF DELETE_EFFECT INT_VAR match_opcode=206 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=281 opcode=180 target=1 timing=2 parameter1=%s1% STR_VAR resource = u#helm02 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=281 opcode=180 target=1 timing=2 parameter1=%s2% STR_VAR resource = u#helm03 END
+	
+COPY_EXISTING U#HELM02.itm override
+	READ_LONG 0x54 desc2
+	LPF DELETE_EFFECT INT_VAR match_opcode=206 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=281 opcode=180 target=1 timing=2 parameter1=%s1% STR_VAR resource = s#clck01 END
+	
+COPY_EXISTING U#HELM03.itm override
+	READ_LONG 0x54 desc3
+	LPF DELETE_EFFECT INT_VAR match_opcode=206 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=281 opcode=180 target=1 timing=2 parameter1=%s2% STR_VAR resource = s#clck01 END
+	
+ALTER_TLK_LIST BEGIN desc1 desc2 desc3 END BEGIN
+	SPRINT old1 (AT 20227)
+	SPRINT new1 (AT 20228)
+	SPRINT old2 (AT 20229)
+	SPRINT new2 (AT 20230)
+	REPLACE_TEXTUALLY ~%old2%~ ~%new2%~
+	REPLACE_TEXTUALLY ~%old1%~ ~%new1%~
+END
+
+/////////////////物品可用性调整/////////////////

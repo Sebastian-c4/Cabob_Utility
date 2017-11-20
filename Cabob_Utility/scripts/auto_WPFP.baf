@@ -1,0 +1,21 @@
+
+IF
+	Allegiance(Myself,ENEMY)
+	OR(7)
+		Class(Myself,MAGE)
+		Class(Myself,FIGHTER_MAGE)
+		Class(Myself,FIGHTER_MAGE_THIEF)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+		Class(Myself,FIGHTER_MAGE_CLERIC)
+		Class(Myself,SORCERER)
+	See(NearestEnemyOf())
+  HPPercentGT(Myself,0)
+	Global("c_mage_wpfp","Locals",0)
+	!CheckStat(Myself,1,WIZARD_PROTECTION_FROM_PETRIFICATION)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Myself,WIZARD_PROTECTION_FROM_PETRIFICATION)
+    SetGlobal("c_mage_wpfp","Locals",1)
+    Continue()
+END

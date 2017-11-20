@@ -1,0 +1,137 @@
+BACKUP ~PrettySpell\backup~
+AUTHOR ~c4demon@gmail.com~
+
+AUTO_EVAL_STRINGS
+ASK_EVERY_COMPONENT
+
+VERSION ~beta 1~
+
+ALWAYS
+
+	OUTER_SPRINT MOD_FOLDER ~PrettySpell~
+	OUTER_SPRINT anims ~%MOD_FOLDER%/animations~
+	
+	PRINT @0
+	
+END
+
+
+
+LANGUAGE 	~English~ 					
+					~english~
+					~PrettySpell/prompts-%WEIDU_OS%.tra~
+					~PrettySpell/tra/english/setup.tra~
+
+LANGUAGE 	~简体中文~ 					
+					~schinese~
+					~PrettySpell/prompts-%WEIDU_OS%.tra~
+					~PrettySpell/tra/schinese/setup.tra~
+
+
+
+/* Add ifferent refined animations for different types defensive spells/skills(some copied from EE game) */
+/* 为不同类型的防护型法术和能力设置不同的精制动画(部分来自增强版) */
+BEGIN @1
+DESIGNATED 1
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY animations BEGIN
+	// 69		=>	z#splimm
+	197 	=> 	spturni2
+	200 	=> 	spturni2
+	201 	=>	z#splimm
+	204		=>	z#splimm
+	259		=>	spmagglo
+END
+
+COPY ~%anims%/SpellProtections~ override
+
+//法术免疫/消耗性免疫/法术陷阱/消耗性反弹/反弹投射物
+COPY_EXISTING_REGEXP GLOB ~.*\.spl~ override ~.*\.itm~ override
+	PHP_EACH animations AS match_opcode => resource BEGIN
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode opcode=215 parameter1=0 parameter2=1 STR_VAR resource END
+	END
+BUT_ONLY
+
+//防护魔法能量
+ACTION_FOR_EACH spell IN dw#0w606 dw#sw606 spwi606 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=31 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfme END
+	IF_EXISTS BUT_ONLY
+END
+
+//防护能量
+COPY_EXISTING spwi803.spl override
+	LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=31 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfe END
+BUT_ONLY
+
+
+// patch exe file
+ACTION_IF GAME_IS ~soa tob bgt~ BEGIN
+	COPY bgmain.exe bgmain.exe
+		WRITE_ASCII 0x75860c ~~ (8) //法术反转/投射物反弹 bam:spturni2
+		WRITE_ASCII 0x758618 ~~ (8) //法术免疫/消耗性免疫/无法侦测 bam:spmagglo
+		WRITE_ASCII 0x758624 ~~ (8) //法术陷阱 bam:spmagglo
+	BUT_ONLY
+END
+
+ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+	COPY baldur.exe baldur.exe
+		WRITE_ASCII 0x4a1e34 ~~ (8) //法术反转/投射物反弹 bam:spturni2
+		WRITE_ASCII 0x4a1e40 ~~ (8) //法术免疫/消耗性免疫/无法侦测/法术陷阱	bam:spmagglo
+	BUT_ONLY
+END
+
+/* Add unique animations for spells provide protection from melee weapons */
+/* 为各类防护武器的法术添加独有动画 */
+BEGIN @2
+DESIGNATED 2
+
+COPY ~%anims%/MeleeProtections~ override
+ACTION_FOR_EACH spell IN dw#0w611 dw#mlpmw spin686 spwi611 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfmwa END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfmwb END
+	IF_EXISTS BUT_ONLY
+END
+
+ACTION_FOR_EACH spell IN spwi708 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw1a END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw1b END
+	IF_EXISTS BUT_ONLY
+END
+
+ACTION_FOR_EACH spell IN spwi808 dw#mlman  BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw2a END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw2b END
+	IF_EXISTS BUT_ONLY
+END
+
+ACTION_FOR_EACH spell IN spwi907 melspl01  BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw3a END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=120 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=z#pfw3b END
+	IF_EXISTS BUT_ONLY
+END
+
+/* Refine animations for Chromatic Orb, Poison, Fire Ball, Lightning Bolt, Melf's Minute Meteors, Wail of the Banshee and Demilich Howl */
+/* 美化五彩球、毒素、火球术、闪电术、马友夫微流星、女妖之嚎和半神巫妖之嚎的动画 */
+BEGIN @3
+DESIGNATED 3
+
+COPY ~%anims%/Offensive~ override
+
+COPY_EXISTING spwi118.spl override
+	LPF ALTER_EFFECT INT_VAR match_opcode=141 match_parameter2=25 opcode=215 timing=0 duration=1 parameter2=1 STR_VAR resource=z#orb END
+BUT_ONLY
+
+COPY_EXISTING sppr411.spl override
+	LPF ALTER_EFFECT STR_VAR match_resource=poison resource=z#poison END
+BUT_ONLY
+
+ACTION_FOR_EACH spell IN fl#banwa spin681 spin789 spin820 spwi913 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=215 target=1 duration=1 parameter1=0 parameter2=1 STR_VAR resource=z#wail END
+	IF_EXISTS BUT_ONLY
+END

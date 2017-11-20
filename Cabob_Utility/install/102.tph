@@ -1,0 +1,182 @@
+
+/* //////////////////////////////////// */
+/* 生物相关 */
+/* 敌对生物属性调整 */
+/* //////////////////////////////////// */
+
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+	LPF FJ_CRE_VALIDITY RET valid END
+	PATCH_IF valid BEGIN
+		READ_LONG 0x28 anim
+		READ_BYTE 0x271 general
+		READ_BYTE 0x272 race
+		READ_BYTE 0x273 class
+
+		//龙和恶魔免疫弱智、石化、解离和即死效果
+		PATCH_IF race=0x79 OR race=0x92 BEGIN
+			PATCH_FOR_EACH parameter2 IN 76 134 238 13 55 209 BEGIN
+				LPF find_immunity INT_VAR immunity=parameter2 RET exists END
+				PATCH_IF exists=0 BEGIN
+					LPF ADD_CRE_EFFECT INT_VAR opcode=101 timing=9 target=1 parameter2 END
+				END
+			END
+		END
+
+		//所有不死生物免疫即死效果（超渡和有不死生物毁灭效果的武器除外）
+		PATCH_IF general=4 BEGIN
+			PATCH_FOR_EACH parameter2 IN 55 209 BEGIN
+				LPF find_immunity INT_VAR immunity=parameter2 RET exists END
+				PATCH_IF exists=0 BEGIN
+					LPF ADD_CRE_EFFECT INT_VAR opcode=101 timing=9 target=1 parameter2 END
+				END
+			END
+		END
+		
+		//魔像、眼魔、看破隐形生物免疫背刺
+		SET exists=0
+		SET trueseeing=0
+		GET_OFFSET_ARRAY effect CRE_V10_EFFECTS
+		PHP_EACH effect AS int => opcode BEGIN
+			READ_LONG opcode+8 opcode
+			PATCH_IF opcode=193 BEGIN
+				trueseeing=1 //看破隐形
+			END
+			PATCH_IF opcode=292 BEGIN
+				exists=1
+			END
+		END
+		PATCH_IF (race=0x7b OR race=0x90 OR trueseeing=1) AND exists=0 BEGIN 
+			LPF ADD_CRE_EFFECT INT_VAR opcode=292 timing=9 target=1 parameter2=1 END
+		END
+
+		//龙类免疫目盲和普通武器，职业设置为战法牧，血量修正：300以下翻3倍，300-500翻2倍
+		PATCH_IF race=0x92 AND anim>0x11ff AND anim<0x1209 BEGIN
+			//免疫目盲和普通武器
+			LPF ADD_CRE_EFFECT INT_VAR opcode=101 target=1 timing=9 parameter2=74 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode=120 target=1 timing=9 parameter2=2 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode=282 target=1 timing=9 parameter1=1 parameter2=25 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode=318 target=1 timing=9 parameter1=1 parameter2=401 END
+			
+			//职业
+			WRITE_BYTE 0x273 0x11
+			READ_BYTE 0x234 level
+			WRITE_BYTE 0x235 level
+			WRITE_BYTE 0x236 level
+			
+			//血量（除bg1npc/bg1ub/战术地狱战的龙之外）
+			READ_SHORT 0x26 hp
+			PATCH_IF 
+				~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~x#~ AND
+				~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~ii~
+			BEGIN 
+				PATCH_IF hp<300 BEGIN
+					WRITE_SHORT 0x26 hp*3
+					WRITE_SHORT 0x24 hp*3
+				END
+				PATCH_IF hp>299 && hp<500 BEGIN
+					WRITE_SHORT 0x26 hp*2
+					WRITE_SHORT 0x24 hp*2
+				END
+			END
+			
+			//龙类脚本记录
+			PATCH_FOR_EACH offset IN ~OVERRIDE~ ~CLASS~ ~RACE~ ~GENERAL~ ~DEFAULT~ BEGIN
+				READ_ASCII ~SCRIPT_%offset%~ dragon_script
+				PATCH_IF 
+					(STRING_LENGTH ~%dragon_script%~>0) AND
+					!(~%dragon_script%~ STR_EQ ~NONE~)
+					// AND	!(~%dragon_script%~ STR_EQ ~c#crefig~)
+				BEGIN
+					SET $dragon_scripts(~%dragon_script%~)=1
+				END
+			END
+		END
+		
+		// 记录法师脚本文件, 随后处理
+		PATCH_FOR_EACH mages IN 1 7 10 13 14 17 19 BEGIN
+			PATCH_IF class=mages BEGIN
+				READ_ASCII SCRIPT_DEFAULT mage_script
+				PATCH_IF 
+					(STRING_LENGTH ~%mage_script%~ >0) AND
+					!(~%mage_script%~ STR_EQ NONE)
+				BEGIN
+					SET $mage_scripts(~%mage_script%~)=1
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+//龙类自身不受龙翼拍击影响，击飞自身30呎范围内玩家控制的生物
+COPY_EXISTING spin695.spl override
+	LPF ALTER_SPELL_HEADER INT_VAR projectile=159 END
+BUT_ONLY
+
+ACTION_PHP_EACH dragon_scripts AS script => int BEGIN
+	COPY_EXISTING ~%script%.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~^\(.*\)DRAGON_WING_BUFFET)$~ ~ReallyForceSpell(Myself,DRAGON_WING_BUFFET)~
+		END
+	IF_EXISTS BUT_ONLY
+END
+
+//法师类生物自动施放防护石化
+ACTION_PHP_EACH mage_scripts AS script => int BEGIN
+	EXTEND_TOP ~%script%.bcs~ ~%SCRIPTS%/auto_WPFP.baf~
+END
+	
+//康葛斯免疫击飞
+COPY_EXISTING HLKANG.cre override HLDEMI.cre override
+	LPF ADD_CRE_EFFECT INT_VAR opcode=101 timing=9 target=1 parameter2=235 END
+		
+//北极熊应为敌对状态
+COPY_EXISTING BEARPO3.cre override
+	WRITE_BYTE 0x270 255
+	
+//BG1Spawn刷出的怪物不掉落随机物品或卷轴，杀死得到的经验值为怪物等级平方×8
+COPY - ~%TEMP_FOLDER%/bgspawn~ override
+	PATCH_IF ~%SOURCE_EXT%~ STR_EQ CRE BEGIN
+		SET $bgspawn(~%SOURCE_RES%~)=1
+	END
+	PATCH_FOR_EACH add IN KOBAMP01 KOBSCR01 KOBSOU01 KOBSWI01 BEGIN
+		SET $bgspawn(~%add%~)=1
+	END		
+	
+ACTION_PHP_EACH bgspawn AS file => int BEGIN
+	COPY_EXISTING ~%file%.cre~ override
+		READ_BYTE		0x234		level
+		WRITE_LONG	0x14		level*level*8
+		GET_OFFSET_ARRAY itm CRE_V10_ITEMS
+		PHP_EACH itm AS int => itm_off BEGIN
+			READ_ASCII itm_off itemname
+			PATCH_IF ~%itemname%~ STRING_CONTAINS_REGEXP ~RND.+~ =0 BEGIN
+				SET $todel(~%itemname%~)=1
+			END
+		END
+		PHP_EACH todel AS item => int BEGIN
+			LPF DELETE_CRE_ITEM STR_VAR item_to_delete=~%item%~ END
+		END
+	IF_EXISTS BUT_ONLY
+END
+
+//强化等级过低的无名巫妖
+ACTION_FOR_EACH script IN SPWNDEAD II0 II6 C6VAMP AR3019 BEGIN
+	COPY_EXISTING ~%script%.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~CreateCreature("lich01",\(.+\)~ ~CreateCreature("dw#lich1",\1~
+		END
+	IF_EXISTS BUT_ONLY
+END
+	
+/* 改变高级法师敌人追踪玩家的方式 */
+COPY_EXISTING_REGEXP GLOB ~dw#.*\.bcs~ override
+	FOR (n=1;n<7;++n) BEGIN
+		PATCH_IF n=1 BEGIN
+			R_B_B EVAL ~%SCRIPTS%/lich_chase_scs.baf~ ~%SCRIPTS%/lich_chase.baf~
+			ON_MISMATCH END
+		END ELSE BEGIN
+			R_B_B EVAL ~%SCRIPTS%/lich_chase_scs.baf~ ~.../inlined/blank.baf~
+			ON_MISMATCH END
+		END
+	END
+BUT_ONLY

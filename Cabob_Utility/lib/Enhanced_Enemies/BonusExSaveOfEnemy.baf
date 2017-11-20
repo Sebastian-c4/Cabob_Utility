@@ -1,0 +1,12 @@
+
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	CheckStatGT(Myself,9999,XPVALUE)
+	!CheckStat(Myself,%engine_value_type%,c_BonusExSaveOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_xsave",Myself)
+		Continue()
+END

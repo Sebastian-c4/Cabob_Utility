@@ -1,0 +1,236 @@
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY npcitem BEGIN
+	NPSHLD			=> ANOMEN
+	c2anom01		=> ANOMEN
+	NPCLCK			=> CERND
+	NPSTAF			=> CERND
+	u#clck04		=> CERND
+	u#staf02		=> CERND
+	NPSW05			=> HAERDALIS
+	NPSW06			=> HAERDALIS
+	c2hd1				=> HAERDALIS
+	c2hd2				=> HAERDALIS
+	MISC5X			=> JAHEIRA
+	U#AMUL02		=> JAHEIRA
+	NPARM				=> JAN
+	NPMISC1			=> JAN
+	NPMISC2			=> JAN
+	NPPLAT1			=> KELDORN
+	NPSW03			=> KELDORN
+	c2keld01		=> KELDORN
+	c2keld02		=> KELDORN
+	NPBOW				=> MAZZY
+	NPSW01			=> MAZZY
+	c2mazz01		=> MAZZY
+	u#bow01			=> MAZZY
+	NPRING01		=> NALIA
+	NPCHAN			=> VALYGAR
+	NPSW04			=> VALYGAR
+	c2valy01		=> VALYGAR
+	u#sw1h06		=> VALYGAR
+	u#sw1h07		=> VALYGAR
+	NPSW02			=> YOSHIMO
+	E3AMUL01		=> E3FADE
+	E3AMUL02		=> E3FADE
+	E3AMUL02		=> NONE
+	VALENH1			=> VALEN
+	VALENH2			=> VALEN
+	VALENH3			=> VALEN
+	VALENH4			=> VALEN
+	VALENH5			=> VALEN
+	TSJBRAC			=> NONE
+	FIREHEAR		=> NONE
+	K#SheSwd		=> K#SHEENA
+END
+
+DEFINE_PATCH_FUNCTION ac_type_value INT_VAR type=0 RET value BEGIN
+	value=0
+	GET_OFFSET_ARRAY global ITM_V10_GEN_EFFECTS
+	PHP_EACH global AS int => goff BEGIN
+		READ_SHORT	goff		opcode
+		READ_SLONG	goff+4	para1
+		READ_LONG		goff+8	para2
+		PATCH_IF opcode=0 && para2=type BEGIN
+			value=para1
+		END
+	END
+END
+
+DEFINE_ACTION_FUNCTION add_trans_trigger INT_VAR stat=~-1~  trans=~-1~ STR_VAR file=~~ trigger=~~ BEGIN
+	<<<<<<<< .../inlined/dia.d
+		ADD_TRANS_TRIGGER %file%
+			%stat% ~%trigger%~
+			DO %trans%
+	>>>>>>>>
+	ACTION_IF stat>=0 && trans>=0 && ~%file%~ STR_CMP ~~ && ~%trigger%~ STR_CMP ~~ BEGIN
+		COMPILE ~.../inlined/dia.d~ EVAL
+	END ELSE PRINT ~parameter error~
+END
+
+DEFINE_ACTION_FUNCTION sorc_max_spell INT_VAR mode = 1 BEGIN
+  COPY_EXISTING MXSPLSRC.2da override
+    COUNT_2DA_COLS cols
+    READ_2DA_ENTRIES_NOW rows cols
+    FOR (i_0 = 0; i_0 < rows; i_0 += 1) BEGIN
+      READ_2DA_ENTRY_FORMER rows i_0 0 level
+			PATCH_IF mode != 2 BEGIN
+				SET $level(1) = 								 level < 2  ? 2 : level < 3  ? 3 : level < 4  ? 4 : level < 5  ? 5 : level < 23 ? 6 : level < 32 ? 7 : 8
+				SET $level(2) = level < 4  ? 0 : level < 5  ? 2 : level < 6  ? 3 : level < 7  ? 4 : level < 8  ? 5 : level < 24 ? 6 : level < 33 ? 7 : 8
+				SET $level(3) = level < 6  ? 0 : level < 7  ? 2 : level < 8  ? 3 : level < 9  ? 4 : level < 10 ? 5 : level < 25 ? 6 : level < 34 ? 7 : 8
+				SET $level(4) = level < 8  ? 0 : level < 9  ? 2 : level < 10 ? 3 : level < 11 ? 4 : level < 12 ? 5 : level < 26 ? 6 : level < 35 ? 7 : 8
+				SET $level(5) = level < 10 ? 0 : level < 11 ? 2 : level < 12 ? 3 : level < 13 ? 4 : level < 14 ? 5 : level < 27 ? 6 : level < 36 ? 7 : 8
+				SET $level(6) = level < 12 ? 0 : level < 13 ? 2 : level < 14 ? 3 : level < 15 ? 4 : level < 16 ? 5 : level < 28 ? 6 : level < 37 ? 7 : 8
+				SET $level(7) = level < 14 ? 0 : level < 15 ? 2 : level < 16 ? 3 : level < 17 ? 4 : level < 18 ? 5 : level < 29 ? 6 : level < 38 ? 7 : 8
+				SET $level(8) = level < 16 ? 0 : level < 17 ? 2 : level < 18 ? 3 : level < 19 ? 4 : level < 20 ? 5 : level < 30 ? 6 : level < 39 ? 7 : 8
+				SET $level(9) = level < 18 ? 0 : level < 19 ? 2 : level < 20 ? 3 : level < 21 ? 4 : level < 22 ? 5 : level < 31 ? 6 : level < 40 ? 7 : 8
+      END
+			PATCH_IF mode = 2 BEGIN
+				SET $level(1) = 								 level < 2  ? 3 : level < 3  ? 4 : level < 4  ? 5 : level < 21 ? 6 : level < 30 ? 7 : 8
+				SET $level(2) = level < 4  ? 0 : level < 5  ? 3 : level < 6  ? 4 : level < 7  ? 5 : level < 22 ? 6 : level < 31 ? 7 : 8
+				SET $level(3) = level < 6  ? 0 : level < 7  ? 3 : level < 8  ? 4 : level < 9  ? 5 : level < 23 ? 6 : level < 32 ? 7 : 8
+				SET $level(4) = level < 8  ? 0 : level < 9  ? 3 : level < 10 ? 4 : level < 11 ? 5 : level < 24 ? 6 : level < 33 ? 7 : 8
+				SET $level(5) = level < 10 ? 0 : level < 11 ? 3 : level < 12 ? 4 : level < 13 ? 5 : level < 25 ? 6 : level < 34 ? 7 : 8
+				SET $level(6) = level < 12 ? 0 : level < 13 ? 3 : level < 14 ? 4 : level < 15 ? 5 : level < 26 ? 6 : level < 35 ? 7 : 8
+				SET $level(7) = level < 14 ? 0 : level < 15 ? 3 : level < 16 ? 4 : level < 17 ? 5 : level < 27 ? 6 : level < 36 ? 7 : 8
+				SET $level(8) = level < 16 ? 0 : level < 17 ? 3 : level < 18 ? 4 : level < 19 ? 5 : level < 28 ? 6 : level < 37 ? 7 : 8
+				SET $level(9) = level < 18 ? 0 : level < 19 ? 3 : level < 20 ? 4 : 									level < 29 ? 6 : level < 38 ? 7 : 8
+			END
+			FOR (i_1 = 1; i_1 < cols; i_1 += 1) BEGIN
+        SET_2DA_ENTRY_LATER mxsplsrc_set i_0 i_1 $level(~%i_1%~)
+      END
+    END
+    SET_2DA_ENTRIES_NOW mxsplsrc_set cols
+    PRETTY_PRINT_2DA
+    WHILE level < 50 BEGIN
+      REPLACE_EVALUATE ~^\(%level%\)\(.+\)~ BEGIN
+        SET level += 1
+      END ~\1\2%LNL%%level%\2~
+    END
+  BUT_ONLY
+END
+
+DEFINE_PATCH_FUNCTION find_immunity INT_VAR immunity=~-1~ RET exists BEGIN
+	PATCH_SILENT
+	SET exists=0
+	GET_OFFSET_ARRAY effect CRE_V10_EFFECTS
+	PHP_EACH effect AS int => offset BEGIN
+		SET offset -= 8
+		READ_LONG offset+0x10 opcode
+		READ_LONG offset+0x20 parameter2
+		PATCH_IF opcode=101 && parameter2=immunity BEGIN
+			SET exists=1
+		END
+	END
+	PATCH_IF exists=0 BEGIN
+		GET_OFFSET_ARRAY items CRE_V10_ITEMS
+		PHP_EACH items AS int => offset BEGIN
+			READ_ASCII offset item
+			INNER_ACTION BEGIN
+				COPY_EXISTING - ~%item%.itm~ override
+					GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+					PHP_EACH effect AS int => offset BEGIN
+						READ_SHORT offset opcode
+						READ_LONG offset+8 parameter2
+						PATCH_IF opcode=101 && parameter2=immunity BEGIN
+							exists=1
+						END
+					END
+				IF_EXISTS
+			END
+		END
+	END
+	PATCH_VERBOSE
+END
+
+DEFINE_ACTION_FUNCTION file_replace_string INT_VAR offset=~-1~ old=~-1~ new=~-1~ STR_VAR file=~~ BEGIN
+	ACTION_IF old>0 BEGIN	OUTER_SPRINT old_string (AT %old%)
+	END ELSE OUTER_SPRINT old_string ~~
+	ACTION_IF new>0 BEGIN	OUTER_SPRINT new_string (AT %new%)
+	END ELSE OUTER_SPRINT new_string ~~
+	
+	COPY_EXISTING_REGEXP - GLOB ~%file%~ override
+		PATCH_IF offset=0x8 || offset=0xc || offset=0x50 || offset=0x54 BEGIN
+			READ_LONG ~%offset%~ strref
+			PATCH_IF strref>0 && strref<160000 BEGIN
+				GET_STRREF ~%strref%~ string
+				INNER_PATCH_SAVE string ~%string%~ BEGIN
+					REPLACE_TEXTUALLY ~%old_string%~ ~%new_string%~
+				END
+				INNER_ACTION BEGIN
+					STRING_SET_EVALUATE ~%strref%~ ~%string%~
+				END
+			END
+		END
+		
+END
+	
+DEFINE_PATCH_FUNCTION ~REMOVE_CLASS_LINE_FROM_USABILITIES~ //cdtweaks
+  INT_VAR
+    offset = 0 // offset to write description to
+  STR_VAR
+    desc = ~~ // original description
+    unusable_regexp = ~~ // regexp that matches the Unusable By/Not Usable By line
+    unusable_replacement = ~~ // replacement for the Unusable By line
+    class_regexp = ~~ // regexp that matches the Mage line in the usability section
+    class_prefix = ~~ // in the usability section, this precedes all class listings (ex: in english, this is one space)
+BEGIN
+  INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+    REPLACE_TEXTUALLY ~%unusable_regexp%~ ~%unusable_replacement%~
+  END
+  PATCH_IF ((~%desc%~ STRING_CONTAINS_REGEXP ~^%unusable_replacement%~) == 0) BEGIN
+    // extract usability info
+    INNER_PATCH_SAVE usab_block ~%desc%~ BEGIN
+      REPLACE_TEXTUALLY ~\(.*[%LNL%%MNL%%WNL%]\)*%unusable_replacement%~ ~~
+    END
+    // update info
+    INNER_PATCH_SAVE usab_block_new ~%usab_block%~ BEGIN
+      REPLACE_TEXTUALLY ~[%LNL%%MNL%%WNL%][- %TAB%]*$~ ~~ // remove any empty lines
+      REPLACE_TEXTUALLY ~^[- %TAB%]*~ ~%class_prefix%~ // make sure entries are indented by one space
+      REPLACE_TEXTUALLY ~%class_regexp%~ ~~ // remove mage line
+    END
+    // replace old usability info with new
+    INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+      REPLACE_TEXTUALLY EXACT_MATCH ~%usab_block%~ ~%usab_block_new%~
+    END
+    
+    // check if mage was the only thing that couldn't use
+    INNER_PATCH_SAVE compare ~%desc%~ BEGIN 
+      REPLACE_TEXTUALLY ~^%unusable_replacement%.*[%LNL%%MNL%%WNL%]%class_prefix%[^- %TAB%]~ ~~
+    END
+    // if it was...
+    PATCH_IF (~%desc%~ STRING_EQUAL ~%compare%~) BEGIN
+      INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+        // remove 'not usable by' line, so it won't be sitting all by its lonesome now
+        REPLACE_TEXTUALLY ~[%LNL%%MNL%%WNL%]%unusable_replacement%.*~ ~~
+      END
+    END
+
+    // write changes
+    // SAY_EVALUATED ~%offset%~ ~%desc%~
+		// PATCH_PRINT ~%desc%~
+		INNER_ACTION BEGIN
+			STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+		END
+  END
+END
+
+//设置并记录生物的override脚本
+// ACTION_IF !FILE_EXISTS ~override/script_override.ids~ BEGIN
+	// COPY ~.../inlined/blank~ ~override/script_override.ids~
+	
+	// COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+		// SET $script(c#crefig)=1
+		// READ_ASCII 0x248 script_override
+		// PATCH_IF 
+					// (STRING_LENGTH ~%script_override%~=0)
+			// OR	(~%script_override%~ STR_EQ ~NONE~)
+		// THEN BEGIN			
+			// WRITE_ASCII 0x248 ~c#crefig~
+		// END ELSE SET $script(~%script_override%~)=1
+	// BUT_ONLY
+	
+	// ACTION_PHP_EACH script AS file => int BEGIN
+		// APPEND script_override.ids ~%file% %int%~ UNLESS ~%file%~
+	// END
+// END

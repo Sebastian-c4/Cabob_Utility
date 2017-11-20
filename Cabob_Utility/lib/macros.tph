@@ -1,0 +1,331 @@
+
+<<<<<<<< .../inlined/blank.baf
+>>>>>>>>
+COMPILE ~.../inlined/blank.baf~
+<<<<<<<< .../inlined/blank.2da
+2DA                 V1.0
+>>>>>>>>
+
+ACTION_IF !VARIABLE_IS_SET stats_offset THEN BEGIN
+	OUTER_SET stats_offset=500
+END	
+
+ACTION_IF GAME_IS ~bgee bg2ee eet~ THEN BEGIN
+	OUTER_SET engine_mark_type=328
+	OUTER_SET engine_stat_type=0
+	OUTER_SET engine_value_type=0
+	OUTER_SET engine_special_type=1
+	OUTER_SPRINT engine_ids_file SPLSTATE
+END ELSE BEGIN 
+	OUTER_SET engine_mark_type=318
+	OUTER_SET engine_stat_type=0x10000
+	OUTER_SET engine_value_type=444
+	OUTER_SET engine_special_type=0
+	OUTER_SPRINT engine_ids_file STATS
+END
+
+
+////////////////////////////////////////////////////
+DEFINE_ACTION_MACRO player_scripts BEGIN	
+	COPY ~.../inlined/blank.baf~ ~override/player_script_override.ids~
+	APPEND player_script_override.ids ~0 CHARNAME~ UNLESS ~CHARNAME~
+	
+	COPY_EXISTING - pdialog.2da override	
+		READ_2DA_ENTRIES_NOW rows 8
+		FOR(i=0;i<rows;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 0 death_var
+			SET $death(~%death_var%~)=1
+			READ_2DA_ENTRY_FORMER rows i 7 script
+			TO_UPPER script
+			INNER_ACTION BEGIN
+				APPEND player_script_override.ids ~0 %script%~ UNLESS  ~%script%~
+			END
+		END
+		
+	COPY_EXISTING_REGEXP - GLOB ~.*\.cre~ override
+		PATCH_IF SOURCE_SIZE > 0x2cc BEGIN
+			READ_ASCII 0x280 death_variable (32)
+			READ_LONG 0x1cc biography ELSE 0
+      PATCH_IF (("%biography%" < 2147483647) AND ("%biography%" > 0)) BEGIN
+				PHP_EACH death AS var => int BEGIN
+					PATCH_IF !(~%death_variable%~ STRING_CONTAINS_REGEXP ~%var%~) BEGIN
+						READ_ASCII 0x248 script
+						TO_UPPER script
+						PATCH_IF (STRING_LENGTH ~%script%~ >0) && !(~%script%~ STR_EQ ~NONE~) && !(~%script%~ STR_EQ ~c4#NONE~) && !(~%script%~ STR_EQ ~SHOUT~) && (FILE_EXISTS_IN_GAME ~%script%.bcs~) BEGIN
+							INNER_ACTION BEGIN
+								APPEND player_script_override.ids ~0 %script%~ UNLESS  ~%script%~
+							END
+						END
+					END
+				END
+			END
+		END
+		
+	COPY_EXISTING - player_script_override.ids override	
+		READ_2DA_ENTRIES_NOW rows 2
+		FOR(i=0;i<rows;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 1 script
+			SET $player_script_override(~%script%~)=1
+		END
+		
+	DELETE ~override/player_script_override.ids~
+		
+END
+
+
+
+////////////////////////////////////////////////////
+//cre效果
+DEFINE_PATCH_MACRO cre_effects BEGIN
+	READ_LONG 0x2c8 gen_effect_count
+	PATCH_IF gen_effect_count>0 THEN BEGIN
+		gen_valid=1
+		PATCH_IF make2da=1 THEN BEGIN
+			INNER_ACTION BEGIN
+				COPY ~.../inlined/temp.2da~ ~override/temp_G.2da~
+			END
+		END
+		PATCH_IF GAME_IS ~bgee bg2ee eet~ THEN BEGIN
+			GET_OFFSET_ARRAY effect 0x2c4 4 0x2c8 4 0 0 0x30
+		END ELSE BEGIN
+			GET_OFFSET_ARRAY effect CRE_V10_EFFECTS
+		END
+		PHP_EACH effect AS int => offset BEGIN
+			PATCH_IF GAME_IS ~bgee bg2ee eet~ THEN BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+0x4 parameter1
+				READ_LONG offset+0x8 parameter2
+				READ_ASCII offset+0x14 resource
+			END ELSE BEGIN
+				offset -= 8
+				READ_LONG offset+0x10 opcode
+				READ_LONG offset+0x1c parameter1
+				READ_LONG offset+0x20 parameter2
+				READ_ASCII offset+0x30 resource
+			END
+			PATCH_IF opcode=engine_mark_type && (VARIABLE_IS_SET check_exists && check_exists=1) THEN BEGIN
+				PATCH_IF parameter2>0x10000 THEN BEGIN 
+					parameter2 -= 0x10000
+				END
+				SET $stat_exists1(~%parameter2%~)=1
+			END
+			PATCH_IF STRING_LENGTH ~%resource%~=0 THEN BEGIN
+				SPRINT resource ~****~
+			END
+			PATCH_IF make2da=1 THEN BEGIN
+				INNER_ACTION BEGIN
+					APPEND ~temp_G.2da~ ~%now_file% %opcode% G %parameter1% %parameter2% %resource%~
+					COPY_EXISTING temp_G.2da override
+						PRETTY_PRINT_2DA
+				END
+			END
+		END
+	END
+END
+
+//itm装备效果
+DEFINE_PATCH_MACRO itm_gen_effects BEGIN 
+	READ_SHORT 0x70 gen_effect_count
+	PATCH_IF gen_effect_count>0 THEN BEGIN
+		gen_valid=1
+		PATCH_IF make2da=1 THEN BEGIN
+			INNER_ACTION BEGIN
+				COPY ~.../inlined/temp.2da~ ~override/temp_G.2da~
+			END
+		END
+		GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS 
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+0x4 parameter1
+			READ_LONG offset+0x8 parameter2
+			READ_ASCII offset+0x14 resource
+			PATCH_IF opcode=engine_mark_type && (VARIABLE_IS_SET check_exists && check_exists=1) THEN BEGIN
+				PATCH_IF parameter2>0x10000 THEN BEGIN 
+					parameter2 -= 0x10000
+				END
+				SET $stat_exists1(~%parameter2%~)=1
+			END
+			PATCH_IF STRING_LENGTH ~%resource%~=0 THEN BEGIN
+				SPRINT resource ~****~
+			END
+			PATCH_IF make2da=1 THEN BEGIN
+				INNER_ACTION BEGIN
+					APPEND ~temp_G.2da~ ~%now_file% %opcode% G %parameter1% %parameter2% %resource%~
+					COPY_EXISTING temp_G.2da override
+						PRETTY_PRINT_2DA
+				END
+			END
+		END
+	END
+END
+
+//spl初始施法效果
+DEFINE_PATCH_MACRO spl_gen_effects BEGIN 
+	READ_SHORT 0x70 gen_effect_count
+	PATCH_IF gen_effect_count>0 THEN BEGIN
+		gen_valid=1
+		PATCH_IF make2da=1 THEN BEGIN
+			INNER_ACTION BEGIN
+				COPY ~.../inlined/temp.2da~ ~override/temp_G.2da~
+			END
+		END
+		GET_OFFSET_ARRAY effect SPL_V10_GEN_EFFECTS 
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+0x4 parameter1
+			READ_LONG offset+0x8 parameter2
+			READ_ASCII offset+0x14 resource
+			PATCH_IF opcode=engine_mark_type && (VARIABLE_IS_SET check_exists && check_exists=1) THEN BEGIN
+				PATCH_IF parameter2>0x10000 THEN BEGIN 
+					parameter2 -= 0x10000
+				END
+				SET $stat_exists1(~%parameter2%~)=1
+			END
+			PATCH_IF STRING_LENGTH ~%resource%~=0 THEN BEGIN
+				SPRINT resource ~****~
+			END
+			PATCH_IF make2da=1 THEN BEGIN
+				INNER_ACTION BEGIN
+					APPEND ~temp_G.2da~ ~%now_file% %opcode% G %parameter1% %parameter2% %resource%~
+					COPY_EXISTING temp_G.2da override
+						PRETTY_PRINT_2DA
+				END
+			END
+		END
+	END
+END
+
+//itm头部技能效果	
+DEFINE_PATCH_MACRO itm_header_effects BEGIN
+	READ_SHORT 0x68 header_count
+	PATCH_IF header_count>0 THEN BEGIN
+		head_valid=1
+		PATCH_IF make2da=1 THEN BEGIN
+			INNER_ACTION BEGIN
+				COPY ~.../inlined/temp.2da~ ~override/temp_H.2da~
+			END
+		END
+		GET_OFFSET_ARRAY head ITM_V10_HEADERS 
+		PHP_EACH head AS int => index BEGIN
+			READ_SHORT index+0x1e effect_count
+			PATCH_IF effect_count>0 THEN BEGIN
+				GET_OFFSET_ARRAY2 effect index ITM_V10_HEAD_EFFECTS
+				PHP_EACH effect AS int => offset BEGIN
+					READ_SHORT offset opcode
+					READ_LONG offset+0x4 parameter1
+					READ_LONG offset+0x8 parameter2
+					READ_ASCII offset+0x14 resource
+					PATCH_IF opcode=engine_mark_type && (VARIABLE_IS_SET check_exists && check_exists=1) THEN BEGIN
+						PATCH_IF parameter2>0x10000 THEN BEGIN 
+							parameter2 -= 0x10000
+						END
+						SET $stat_exists1(~%parameter2%~)=1
+					END
+					PATCH_IF STRING_LENGTH ~%resource%~=0 THEN BEGIN
+						SPRINT resource ~****~
+					END
+					PATCH_IF make2da=1 THEN BEGIN
+						INNER_ACTION BEGIN
+							APPEND ~temp_G.2da~ ~%now_file% %opcode% H %parameter1% %parameter2% %resource%~
+							COPY_EXISTING temp_G.2da override
+								PRETTY_PRINT_2DA
+						END
+					END
+				END
+			END
+		END
+	END
+END
+
+//spl头部技能效果
+DEFINE_PATCH_MACRO spl_header_effects BEGIN
+	READ_SHORT 0x68 header_count
+	PATCH_IF header_count>0 THEN BEGIN
+		head_valid=1
+		PATCH_IF make2da=1 THEN BEGIN
+			INNER_ACTION BEGIN
+				COPY ~.../inlined/temp.2da~ ~override/temp_H.2da~
+			END
+		END
+		GET_OFFSET_ARRAY head SPL_V10_HEADERS 
+		PHP_EACH head AS int => index BEGIN
+			READ_SHORT index+0x1e effect_count
+			PATCH_IF effect_count>0 THEN BEGIN
+				GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+				PHP_EACH effect AS int => offset BEGIN
+					READ_SHORT offset opcode
+					READ_LONG offset+0x4 parameter1
+					READ_LONG offset+0x8 parameter2
+					READ_ASCII offset+0x14 resource
+					PATCH_IF opcode=engine_mark_type && (VARIABLE_IS_SET check_exists && check_exists=1) THEN BEGIN
+						PATCH_IF parameter2>0x10000 THEN BEGIN 
+							parameter2 -= 0x10000
+						END
+						SET $stat_exists1(~%parameter2%~)=1
+					END
+					PATCH_IF STRING_LENGTH ~%resource%~=0 THEN BEGIN
+						SPRINT resource ~****~
+					END
+					PATCH_IF make2da=1 THEN BEGIN
+						INNER_ACTION BEGIN
+							APPEND ~temp_G.2da~ ~%now_file% %opcode% H %parameter1% %parameter2% %resource%~
+							COPY_EXISTING temp_G.2da override
+								PRETTY_PRINT_2DA
+						END
+					END
+				END
+			END
+		END
+	END
+END
+
+//读取已占用#318或#328条目
+DEFINE_ACTION_MACRO check_existance BEGIN
+	ACTION_IF !FILE_EXISTS_IN_GAME ~c4_stat_temp.ids~ THEN BEGIN
+		COPY ~.../inlined/blank.baf~ ~override/c4_stat_temp.ids~
+	END
+	COPY_EXISTING - ~%engine_ids_file%.ids~ override
+		READ_2DA_ENTRIES_NOW rows 2
+		FOR (i=0;i<rows;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 0 value0
+			READ_2DA_ENTRY_FORMER rows i 1 identifier0
+			// PATCH_IF value0>255 THEN BEGIN
+				INNER_ACTION BEGIN
+					APPEND c4_stat_temp.ids ~%value0% %identifier0%~ UNLESS ~%identifier0%~
+					// OUTER_SPRINT $stat_exists(~%value0%~) ~%identifier0%~
+				END
+			// END
+		END
+	ACTION_IF !VARIABLE_IS_SET make2da THEN BEGIN
+		OUTER_SET make2da=0
+	END
+	ACTION_FOR_EACH ext IN cre itm spl BEGIN
+		OUTER_SET check_exists=1
+		COPY_EXISTING_REGEXP - GLOB ~.*\.%ext%~ override
+			gen_valid=0
+			head_valid=0
+			PATCH_IF ~%ext%~ STR_EQ cre THEN BEGIN
+				LPM cre_effects
+			END
+			PATCH_IF ~%ext%~ STR_EQ itm THEN BEGIN
+				LPM itm_gen_effects
+				LPM itm_header_effects
+			END
+			PATCH_IF ~%ext%~ STR_EQ spl THEN BEGIN
+				LPM spl_gen_effects
+				LPM spl_header_effects
+			END
+		OUTER_SET check_exists=0
+	END
+	ACTION_PHP_EACH stat_exists1 AS value1 => identifier1 BEGIN
+		ACTION_PHP_EACH stat_exits AS value0 => identifier0 BEGIN
+			ACTION_IF value1=value0 THEN BEGIN
+				OUTER_SPRINT ~identifier1~ ~%identifier0%~
+			END
+		END
+		APPEND c4_stat_temp.ids ~%value1% %identifier1%~ UNLESS ~%identifier1%~
+		APPEND ~%engine_ids_file%.ids~ ~%value1% %identifier1%~ UNLESS ~%identifier1%~
+		// OUTER_SPRINT $stat_exists(~%value1%~) ~%identifier1%~
+	END
+END
+	

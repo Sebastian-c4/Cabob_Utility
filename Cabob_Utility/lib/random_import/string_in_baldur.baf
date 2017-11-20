@@ -1,0 +1,29 @@
+
+
+IF
+	Global("EndOfBG1","Global",2)
+	OR(3)
+		GlobalGT("c4RI#T1Total","Global",0)
+		GlobalGT("c4RI#T2Total","Global",0)
+		GlobalGT("c4RI#T3Total","Global",0)
+	Global("c4RI#Completed","Global",1)
+	Global("c4RI#Tips","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@444101)
+		SetGlobal("c4RI#Tips","Global",1)
+		Continue()
+END
+
+IF
+	Global("EndOfBG1","Global",2)
+	Global("c4RI#T1Total","Global",0)
+	Global("c4RI#T2Total","Global",0)
+	Global("c4RI#T3Total","Global",0)
+	Global("c4RI#Tips","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@444102)
+		SetGlobal("c4RI#Tips","Global",1)
+		Continue()
+END

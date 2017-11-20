@@ -1,0 +1,78 @@
+IF
+	OnCreation()
+THEN
+	RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+END
+
+IF
+  Global("c4#ar0907Available","GLOBAL",1)
+  GlobalLT("Chapter","Global",3)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+    SetGlobal("c4#ar0907Available","GLOBAL",0)
+END
+
+IF
+  Global("c4#ar0907Available","GLOBAL",1)
+  Global("E3MallonTalk","GLOBAL",0)
+	Global("c4#FadeJoined","Global",1)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+    SetGlobal("c4#ar0907Available","GLOBAL",0)
+END
+
+IF
+  Global("c4#ar0907Available","GLOBAL",0)
+  GlobalGT("Chapter","Global",2)
+  Global("E3MallonTalk","GLOBAL",1)
+THEN
+  RESPONSE #100
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    SetGlobal("c4#ar0907Available","GLOBAL",1)
+END
+
+IF
+  Global("c4#ar0907Available","GLOBAL",0)
+  GlobalGT("Chapter","Global",2)
+  Global("AranJob","GLOBAL",3)
+  Global("LassalVampires","GLOBAL",3)
+	Global("c4#FadeJoined","Global",0)
+THEN
+  RESPONSE #100
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    SetGlobal("c4#ar0907Available","GLOBAL",1)
+END
+
+IF
+  Global("c4#ar0907Available","GLOBAL",0)
+  GlobalGT("Chapter","Global",2)
+	OR(3)
+		GlobalGT("BodhiJob","GLOBAL",0)
+		GlobalGT("B!Alternatives","GLOBAL",5)
+		GlobalGT("B!Tourist","GLOBAL",7)
+THEN
+  RESPONSE #100
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    SetGlobal("c4#ar0907Available","GLOBAL",1)
+END

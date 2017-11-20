@@ -1,0 +1,76 @@
+
+/* //////////////////////////////////// */
+/* 法术相关 */
+/* 错误的法术说明和效果修正 */
+/* //////////////////////////////////// */
+
+COPY_EXISTING_REGEXP GLOB ~.*\.spl~ override
+	//给没有文字说明的免疫法术#206号效果添加文字
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+4 parameter1
+			PATCH_IF opcode=206 && parameter1=0 BEGIN
+				WRITE_LONG offset+4 4742
+			END
+		END
+	END
+	
+	//修正法术效果中错误的时间类型和几率设置
+	LPF ALTER_EFFECT INT_VAR silent=1 match_probability1=0 match_probability2=0 probability1=100 END
+	LPF ALTER_EFFECT INT_VAR silent=1 match_probability1=100 match_probability2=100 probability2=0 END
+BUT_ONLY
+	
+//恢复被屏蔽的法术护盾(by SR)，屏蔽不该出现在法术列表的法术
+COPY_EXISTING hidespl.2da override
+	READ_2DA_ENTRIES_NOW hide 2
+	FOR (i=0;i<hide;i+=1) BEGIN
+		READ_2DA_ENTRY_FORMER hide i 0 spl
+		PATCH_IF ~%spl%~ STR_EQ ~SPWI519~ BEGIN
+			REMOVE_2DA_ROW i 2
+			SET i=hide
+		END
+	END
+BUT_ONLY
+
+ACTION_FOR_EACH spell IN sppr306 sppr407 spwi526 spwi802 BEGIN
+	APPEND hidespl.2da ~%spell% 1~ UNLESS ~%spell%~
+END	
+
+/* 修正错误的法术学派或说明 */
+//序列器类法术按说明应是通用学派
+ACTION_FOR_EACH spell IN 420 617 710 809 908 BEGIN
+	COPY_EXISTING_REGEXP GLOB ~spwi%spell%.*\.spl~ override
+		READ_BYTE 0x25 school
+		READ_SHORT 0x22 graphics 
+		PATCH_IF school != 0 BEGIN
+			WRITE_BYTE 0x25 0
+			WRITE_SHORT 0x1e THIS BAND 0b1111110000000011
+		END
+		PATCH_IF graphics !=0 BEGIN
+			WRITE_SHORT 0x22 17
+		END
+	BUT_ONLY
+END
+
+//混乱结界应是附魔系
+COPY_EXISTING spwi711.spl override
+	WRITE_BYTE 0x25 4
+	WRITE_BYTE 0x1f 0b00001000
+BUT_ONLY
+
+//神术消除隐形：说明应是防护系
+LAF file_replace_string INT_VAR offset=0x50 old=30003 new=30001 STR_VAR file=~sppr309.spl~ END
+
+/* 共生持续时间修正为说明中的8小时 */
+COPY_EXISTING_REGEXP GLOB ~xda7.*\.spl~ override
+	LPF ALTER_EFFECT INT_VAR match_duration=3600 duration=2400 END
+BUT_ONLY
+		
+//修正变身杀戮者武器错误的持续时间
+COPY_EXISTING imoslay3.spl override spin823.spl override
+	LPF ALTER_EFFECT INT_VAR check_globals=0 match_opcode=111 duration=44 END
+	LPF ALTER_EFFECT INT_VAR check_globals=0 match_opcode=135 duration=44 END
+BUT_ONLY

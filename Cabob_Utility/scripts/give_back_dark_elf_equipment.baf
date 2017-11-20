@@ -1,0 +1,20 @@
+
+IF
+	!AreaCheckObject("ar2200",Myself)
+	!AreaCheckObject("ar2201",Myself)
+	!AreaCheckObject("ar2202",Myself)
+	!AreaCheckObject("ar2203",Myself)
+	!AreaCheckObject("ar2204",Myself)
+	!AreaCheckObject("ar2205",Myself)
+	!AreaCheckObject("ar2206",Myself)
+	!AreaCheckObject("ar2207",Myself)
+	!AreaCheckObject("ar2208",Myself)
+	!AreaCheckObject("ar2209",Myself)
+	HasItem("c!%dark_elf_equipment%",Myself)
+	!HasItem("dw%dark_elf_equipment%",Myself)
+THEN
+	RESPONSE #100
+		CreateItem("dw%dark_elf_equipment%",0,0,0)
+		Continue()
+END
+	

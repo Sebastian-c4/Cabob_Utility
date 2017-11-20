@@ -1,0 +1,21 @@
+
+IF
+	Global("EndOfBG1","Global",2)
+	Global("%tierBefore%Done","Global",1)
+	!Global("%tierNow%Done","Global",1)
+	!Exists("%tierCre%")
+	Global("%tierCre%created","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("%tierCre%created","Locals",1)
+		SetGlobal("%tierCre%created","Locals",1)
+		// DisplayString(Player1,~%tierBefore% is Done, create %tierCre%~)
+    CreateCreatureImpassable("%tierCre%",[1.1],0)
+    CreateCreatureImpassable("%tierCre%",[1.1],0)
+    CreateCreatureImpassable("%tierCre%",[1.1],0)
+    CreateCreatureImpassable("%tierCre%",[1.1],0)
+    CreateCreatureImpassable("%tierCre%",[1.1],0)
+		Continue()
+END
+		
+		

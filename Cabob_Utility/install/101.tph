@@ -1,0 +1,410 @@
+
+/* //////////////////////////////////// */
+/* 生物相关 */
+/* 队友属性、宗派职业修改 */
+/* //////////////////////////////////// */
+
+////////队友修改和修正
+		
+//BG1明斯克离队/入队对话修复
+COMPILE ~%SCRIPTS%/bg1_minsc_fix.d~
+
+//阿诺门
+ACTION_FOR_EACH n IN 6 7 8 9 10 12 BEGIN
+	COPY ~Cabob_Utility/cre/anomen.cre~ ~override/anomen%n%.cre~
+END
+		
+//阿诺门得到超渡不死生物等级+6奖励（原版环境无效）
+// COPY_EXISTING_REGEXP ~ANOMEN[0-9]+\.cre~ override
+	// WRITE_BYTE 0x82 THIS+6
+// BUT_ONLY
+	
+//娜莉亚
+ACTION_FOR_EACH n IN 8 10 11 13 15 18 BEGIN
+	COPY ~Cabob_Utility/cre/nalia.cre~ ~override/nalia%n%.cre~
+END		
+
+//SoA爱蒙
+COPY ~Cabob_Utility/cre/imoen10.cre~ ~override~
+	
+//修复禁魔监狱中可能出现的爱蒙消失的问题
+COPY_EXISTING AR1512.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~AddXPObject("Imoen2",305000)~ ~
+											MoveGlobal("ar1512","Imoen2",[1857.1520])
+											ActionOverride("Imoen2",Face(5))
+											SmallWait(3)
+											ActionOverride("Imoen2",SetDialogue("IMOEN2"))
+											ActionOverride("Imoen2",SetNumTimesTalkedTo(0))
+											SmallWait(3)
+											ActionOverride("Imoen2",ChangeAIScript("",DEFAULT))
+											ActionOverride("Imoen2",ChangeAIScript("IMOEN2",OVERRIDE))
+											SmallWait(3)
+											AddXPObject("Imoen2",305000)~
+	END
+BUT_ONLY
+		
+//禁魔监狱里芭荻走后爱蒙不会主动触发对话，解决入队有卡对话的问题
+COPY_EXISTING IMOEN2.BCS override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~NumberOfTimesTalkedTo(0)~ ~False() NumberOfTimesTalkedTo(0)~
+	END
+BUT_ONLY
+
+//索劳芬
+ACTION_FOR_EACH n IN 5 7 10 12 15 17 BEGIN
+	COPY ~Cabob_Utility/cre/sola.cre~ ~override/sola%n%.cre~
+END
+
+//维兰免疫超渡
+COPY_EXISTING VALEN.cre override
+	LPF ADD_CRE_EFFECT INT_VAR opcode=297 target=1 timing=9 parameter2=99 END
+	
+//兹加萨1级入队，添加匹配经验的脚本
+COPY_EXISTING TSUJATH.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~JoinParty()~ ~ReallyForceSpellRES("fjxpmooc",Myself) JoinParty()~
+	END
+BUT_ONLY	
+	
+COPY_EXISTING tsujath.cre override
+	LPF DELETE_EFFECT INT_VAR match_opcode=233 match_parameter2=102 END
+	WRITE_LONG 0x18 0
+	WRITE_SHORT 0x24 4
+	WRITE_SHORT 0x26 4
+	WRITE_BYTE 0x52 20
+	WRITE_BYTE 0x53 1
+	WRITE_BYTE 0x54 14
+	WRITE_BYTE 0x55 11
+	WRITE_BYTE 0x56 13
+	WRITE_BYTE 0x57 15
+	WRITE_BYTE 0x58 12
+	WRITE_BYTE 0x234 1
+BUT_ONLY
+
+/* 避免海尔达利剧情死亡 */
+EXTEND_TOP ~HAERDALI.bcs~ ~%SCRIPTS%/haeridalis_minhp1_joined.baf~
+	
+//维康妮娅
+ACTION_FOR_EACH n IN 4 6 61 8 9 11 13 16 BEGIN
+	COPY ~Cabob_Utility/cre/viconi.cre~ ~override/viconi%n%.cre~
+END
+COPY ~Cabob_Utility/cre/viconi.cre~ ~override/viconi.cre~
+
+//修正/优化维康妮娅的招募剧情
+//BG1: SCS组件的作用并非直接移动BG1的NPC，而是两处任选一，但对话脚本未能区分导致焰拳士兵刷出位置距离很远
+<<<<<<<< .../inlined/FLAM2.d
+	ALTER_TRANS BGVICONI BEGIN 1 END BEGIN 0 END
+	BEGIN
+		~ACTION~ 
+		~CreateCreatureOffScreen("FLAM2",14)
+		ActionOverride("FlamingFist2",SetInterrupt(FALSE))
+		ActionOverride("FlamingFist2",ChangeAIScript("INITDLG",OVERRIDE))
+		ActionOverride("FlamingFist2",MoveToObject("viconia"))
+		ActionOverride("FlamingFist2",SetInterrupt(TRUE))~
+	END
+>>>>>>>>
+COMPILE ~.../inlined/FLAM2.d~	
+			
+//BG2&TOB：脚本及对话错误使用BG1的
+ACTION_FOR_EACH vic IN 6 8 9 11 13 16 BEGIN
+	COPY_EXISTING_REGEXP GLOB ~VICONI%vic%.cre~ override
+		WRITE_ASCII 0x248 VICONIA		(8) //override
+		WRITE_ASCII 0x250 INITRG10	(8) //class
+		WRITE_ASCII 0x258 PRIEST1		(8) //rage
+		WRITE_ASCII 0x260 WTASIGHT	(8) //general
+		WRITE_ASCII 0x268 SBTVIC	 	(8) //default
+		WRITE_ASCII 0x2cc VICONI		(8) //dialog
+	IF_EXISTS BUT_ONLY
+END
+
+COPY_EXISTING VICONI16.cre override
+	WRITE_ASCII 0x248 VICO25 		(8) //override
+	WRITE_ASCII 0x268 DPLAYER	 	(8) //default
+	WRITE_ASCII 0x2cc VICON25A	(8) //dialog
+		
+//塔西娅的宠物：去掉免疫时停，物理抗性降为50%
+LAF file_replace_string INT_VAR offset=0x54 old=10201 new=10202 STR_VAR file=~TAFAMIL.itm~ END
+LAF file_replace_string INT_VAR offset=0x54 old=10203 new=10204 STR_VAR file=~TAFAMIL.itm~ END
+
+COPY_EXISTING TAFAMIL.cre override
+	LPF DELETE_EFFECT INT_VAR match_opcode = 310 END
+	FOR (i=0x60;i<0x64;i+=1) BEGIN
+		WRITE_BYTE i 50
+	END
+BUT_ONLY
+
+//删除无用并可能有冲突的NPC文本修复热键
+ACTION_FOR_EACH script IN E3FADE K#SHEENA TSUJATH TSUJAT25 BEGIN
+	COPY_EXISTING ~%script%.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~HOTKEY\(.+\)$~ ~False() HOTKEY\1~
+		END
+	BUT_ONLY
+END
+
+////菲德剧情修正
+//守卫豪宅二层进入条件: 
+//游戏至少进入第三章且满足下列条件之一：
+//1. 选择吸血鬼/娅斯特/马尔菲克斯任一出海路线；
+//2. 选择影贼路线, 并在完成清剿吸血鬼任务之前菲德从未加入队伍；
+//3. 菲德加入队伍并触发绑架剧情
+//码头区废屋
+EXTEND_TOP ~AR0318.bcs~ ~%SCRIPTS%/fade_ar0318.baf~
+
+//神殿守卫豪宅2楼
+EXTEND_TOP ~AR0907.bcs~ ~%SCRIPTS%/fade_ar0907.baf~
+
+//变量修正
+COPY_EXISTING_REGEXP GLOB ~.?E3.*\.dlg~ override ~.?E3.*\.bcs~ override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~"E3FADEJOINED","locals"~ ~"E3FADEJOINED","Global"~
+		REPLACE_TEXTUALLY ~SetGlobal("E3FADEJOINED","Global",1)~
+											~SetGlobal("E3FADEJOINED","Global",1) SetGlobal("c4#FadeJoined","Global",1)~
+	END
+BUT_ONLY
+
+//守卫豪宅1楼
+EXTEND_TOP ~AR0906.bcs~ ~%SCRIPTS%/fade_ar0906.baf~
+
+COPY_EXISTING ar0906.are override
+	LPF fj_are_structure 
+		INT_VAR
+			fj_type=1
+			fj_box_left =846
+			fj_box_top =283
+			fj_box_right =1078
+			fj_box_bottom =606
+			fj_cursor_idx =22
+			fj_info_point_strref=RESOLVE_STR_REF (@40102)
+			fj_vertex_0=934 + (606 << 16)
+			fj_vertex_1=1052 + (527 << 16)
+			fj_vertex_2=1101 + (476 << 16)
+			fj_vertex_3=1078 + (329 << 16)
+			fj_vertex_4=994 + (283 << 16)
+			fj_vertex_5=916 + (443 << 16)
+			fj_vertex_6=846 + (523 << 16)
+		STR_VAR
+			fj_structure_type=region
+			fj_name=No0907a
+	END
+	LPF fj_are_structure 
+		INT_VAR
+			fj_type=1
+			fj_box_left =531
+			fj_box_top =593
+			fj_box_right =845
+			fj_box_bottom =763
+			fj_cursor_idx =22
+			fj_info_point_strref=RESOLVE_STR_REF (@40102)
+			fj_vertex_0=845 + (679 << 16)
+			fj_vertex_1=755 + (593 << 16)
+			fj_vertex_2=638 + (633 << 16)
+			fj_vertex_3=631 + (658 << 16)
+			fj_vertex_4=554 + (695 << 16)
+			fj_vertex_5=654 + (721 << 16)
+			fj_vertex_6=713 + (763 << 16)
+		STR_VAR
+			fj_structure_type=region
+			fj_name=No0907b
+	END
+BUT_ONLY
+					
+//////宗派和职业		
+//调整术士法术进展：自9级法术位达到6个的下一级起，每次升级从1级开始依次法术位+1，最高得到8个法术位
+//模式1(默认)：每次新获得法术等级的法术位从2个开始计算，每级+1直到6个
+//模式2：在20级前保留原版设置
+LAF sorc_max_spell END
+
+//修正被Refinements错误修改的武僧高阶
+ACTION_FOR_EACH remove_ability IN
+	GA_TG#EVAS GA_TG#BL09 GA_TG#BL03 GA_TG#GEVA GA_TG#FAST GA_TG#INTI GA_SPCL820
+	GA_TG#TIGS GA_TG#FINP AP_TG#DIAM AP_TG#REGE GA_TG#SECW GA_TG#CHNT GA_TG#ETHE AP_TG#DISP 
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name=~MONK~ remove_ability END
+END
+
+COPY_EXISTING lud5_48.2da override
+	COUNT_2DA_COLS cols
+	READ_2DA_ENTRIES_NOW rows cols
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 1 ability
+		TO_UPPER ability
+		SET_2DA_ENTRY_LATER upper i 1 ~%ability%~
+	END
+	SET_2DA_ENTRIES_NOW upper cols
+	
+//盗贼（除兼/转法师外）不再能够使用奥术卷轴
+COPY_EXISTING_REGEXP ~.*\.itm~ override
+	READ_BYTE 0x1f use2
+	READ_BYTE 0x20 use3
+	READ_SHORT 0x1c type
+	PATCH_IF type=0xb && (use2 BAND BIT3) = BIT3 && (use3 BAND BIT2)=0 BEGIN
+		WRITE_BYTE 0x1f THIS BOR BIT1
+		WRITE_BYTE 0x20 THIS BOR BIT1
+		WRITE_BYTE 0x20 THIS BOR BIT6
+	END
+BUT_ONLY
+
+//替换专职盗贼的高阶技能“使用卷轴”为“万能巧手”，删除战士/盗贼和牧师/盗贼兼职的高阶技能“使用卷轴”
+ACTION_FOR_EACH kit_name IN 
+	THIEF FIGHTER_THIEF FIGHTER_MAGE_THIEF MAGE_THIEF CLERIC_THIEF ASSASIN BOUNTY_HUNTER SWASHBUCKLER
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name remove_ability=~AP_TG#USSC~ END
+END
+
+ACTION_FOR_EACH kit_name IN 
+	THIEF ASSASIN BOUNTY_HUNTER SWASHBUCKLER
+BEGIN
+	LAF action_add_hla STR_VAR kit_name ability=~AP_SPCL915~ num_allowed=~1~ END
+END
+				
+//除审理者外其他宗派圣武士部分武器专精最多可修5星：无宗派-双手剑，骑士-巨剑，不死猎人-钉头锤
+ACTION_DEFINE_ASSOCIATIVE_ARRAY palprof BEGIN
+	PALADIN => TWOHANDEDSWORD
+	CAVALIER => BASTARDSWORD
+	UNDEAD_HUNTER => MACE
+END
+
+COPY_EXISTING WEAPPROF.2da override
+	PHP_EACH palprof AS kit => weapon BEGIN
+		COUNT_2DA_COLS col
+		READ_2DA_ENTRIES_NOW prof 2
+		FOR (i=0;i<prof;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER prof %i% 0 wpnow
+			PATCH_IF ~%wpnow%~ STR_EQ ~%weapon%~ BEGIN
+				FOR (j=0;j<col+~-1~;j+=1) BEGIN
+					READ_2DA_ENTRY_FORMER prof 1 %j% kitnow
+					PATCH_IF ~%kitnow%~ STR_EQ ~%kit%~ BEGIN
+						SET_2DA_ENTRY_LATER wpprof %i% %j%+1 5
+					END
+				END
+			END
+		END
+		SET_2DA_ENTRIES_NOW wpprof 2
+	END
+BUT_ONLY
+
+/* /////////////////////////////////////////////////// */
+/* 白银之手和战争领主无法使用增加攻击次数的近战武器，暗夜猎手无法使用飞镖 */
+COPY_EXISTING_REGEXP - GLOB ~.*\.itm~ override
+	SPRINT ~apr_bonus_strref~ (AT 10101)
+	SPRINT ~darts_strref~ (AT 10102)
+	
+	//加速刀
+	LPF item_flag RET moveable END
+	melee=0
+	GET_OFFSET_ARRAY header ITM_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		READ_BYTE index type
+		PATCH_IF type=1 BEGIN
+			melee=1
+		END
+	END
+	GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+	PHP_EACH effect AS int => offset BEGIN
+		READ_SHORT offset opcode
+		READ_LONG offset+4 parameter1
+		READ_LONG offset+8 parameter2
+		PATCH_IF opcode=1 && parameter1>0 && parameter2=0 && moveable && melee=1 BEGIN
+			SET $apr_bonus(~%SOURCE_RES%~)=1
+			PATCH_FOR_EACH offset IN 0x54 BEGIN
+				READ_LONG ~%offset%~ desc_strref
+				PATCH_IF desc_strref>0 BEGIN
+					GET_STRREF desc_strref desc
+					INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+						REPLACE_TEXTUALLY ~%apr_bonus_strref%~ ~~
+					END
+					SPRINT desc ~%desc%~^~%apr_bonus_strref%~
+					INNER_ACTION BEGIN
+						STRING_SET_EVALUATE desc_strref ~%desc%~
+					END
+				END
+			END
+		END
+	END
+	
+	//飞镖
+	READ_SHORT 0x1c item_type
+	PATCH_IF item_type=0x18 && moveable BEGIN
+		SET $darts(~%SOURCE_RES%~)=1
+		PATCH_FOR_EACH offset IN 0x50 0x54 BEGIN
+			READ_LONG ~%offset%~ desc_strref
+			PATCH_IF desc_strref>0 BEGIN
+				GET_STRREF desc_strref desc
+				INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+					REPLACE_TEXTUALLY ~%darts_strref%~ ~~
+				END
+				SPRINT desc ~%desc%~^~%darts_strref%~
+				INNER_ACTION BEGIN
+					STRING_SET_EVALUATE desc_strref ~%desc%~
+				END
+			END
+		END
+	END
+	
+COPY_EXISTING qpal3.spl override qwar1.spl override
+	PHP_EACH apr_bonus AS item => int BEGIN
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=180 target=1 timing=9 parameter1=9382 parameter2=0 probability1=100 probability2=0 resist_dispel=0 savingthrow=0 STR_VAR resource=~%item%~ END
+	END
+	
+COPY_EXISTING vn00.spl override
+	PHP_EACH darts AS item => int BEGIN
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=180 target=1 timing=9 parameter1=9382 parameter2=0 probability1=100 probability2=0 resist_dispel=0 savingthrow=0 STR_VAR resource=~%item%~ END
+	END
+
+//5星武器专精得到的攻击次数奖励降为1次，非勇士类也能获得专精奖励的次数
+COPY_EXISTING wspatck.2da override
+	FOR (i=1;i<52;i+=1) BEGIN
+		SET_2DA_ENTRY_LATER attack 0 i 0
+		SET_2DA_ENTRY_LATER attack 1 i 0
+		SET_2DA_ENTRY_LATER attack 2 i ~-1~
+		SET_2DA_ENTRY_LATER attack 3 i ~-1~
+		SET_2DA_ENTRY_LATER attack 4 i ~-1~
+		SET_2DA_ENTRY_LATER attack 5 i 1
+	END
+	SET_2DA_ENTRIES_NOW attack 51
+	PRETTY_PRINT_2DA
+BUT_ONLY
+STRING_SET 32120 @10103
+
+//武器精通提供的攻击次数加成对非勇士系职业同样有效；勇士类正常在7、13级获得0.5次攻击 //test
+COPY ~tobex_ini/TobExTweak.ini~ ~tobex_ini/TobExTweak.ini~
+	REPLACE_TEXTUALLY ~Engine:Weapon Specialisation Number of Attacks Mod=[0-9]~ ~Engine:Weapon Specialisation Number of Attacks Mod=1~
+BUT_ONLY
+			
+COPY_EXISTING spcl131.spl ~override/addapr1.spl~ spcl131.spl ~override/addapr2.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=1 parameter1=6 END
+	LPF CLONE_EFFECT INT_VAR opcode=206 parameter1=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+	
+COPY_EXISTING - kitlist.2da override
+	READ_2DA_ENTRIES_NOW rows 9
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 5 abilities
+		READ_2DA_ENTRY_FORMER rows i 8 class
+		PATCH_IF ~%class%~ STR_EQ 2 || ~%class%~ STR_EQ 6 || ~%class%~ STR_EQ 12 BEGIN
+			SET $clab_file(~%abilities%~)=1
+		END
+	END
+	PATCH_FOR_EACH true_class IN clabfi01 clabpa01 clabrn01 BEGIN
+		SET $clab_file(~%true_class%~)=1
+	END
+	
+COPY_EXISTING clabfi01.2da ~override/CLABEMPT.2da~
+	
+ACTION_PHP_EACH clab_file AS file => int BEGIN
+	COPY_EXISTING ~%file%.2da~ override
+		COUNT_2DA_COLS cols
+		READ_2DA_ENTRIES_NOW rows cols
+		SET new_row=rows+1
+		SPRINT new_ability ~ABILITY%new_row%~
+		INSERT_2DA_ROW rows cols ~%new_ability%    ****        ****        ****        ****        ****        ****        AP_ADDAPR1        ****        ****        ****        ****        ****        AP_ADDAPR2        ****        ****        ****        ****        ****        ****        ****   ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****        ****~
+		PRETTY_PRINT_2DA
+	BUT_ONLY
+END
+
+//1级人物只能在单项武器专精上最多投入2点
+COPY ~tobex_ini/TobExTweak.ini~ ~tobex_ini/TobExTweak.ini~
+	REPLACE_TEXTUALLY ~Engine:Level One Proficiency Restrictions=[0-9]~ ~Engine:Level One Proficiency Restrictions=2~
+BUT_ONLY
+

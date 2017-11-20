@@ -1,0 +1,18 @@
+ADD_STATE_TRIGGER wish25 0
+	~!CheckStatLT(LastTalkedToBy,5,WIS)~
+
+APPEND wish25
+
+IF ~NumTimesTalkedTo(0) CheckStatLT(LastTalkedToBy,5,WIS)~ THEN BEGIN lowwis
+	SAY @30322
+	++ #-1 EXIT
+END
+
+END
+
+ALTER_TRANS WISH25
+BEGIN 12 END
+BEGIN 14 END
+BEGIN 
+	~REPLY~ ~@30321~
+END

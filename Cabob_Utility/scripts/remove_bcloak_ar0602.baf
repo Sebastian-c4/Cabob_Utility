@@ -1,0 +1,16 @@
+IF
+  Global("d1ADD_BAG","AR0602",0)
+THEN
+  RESPONSE #100
+    SetGlobal("d1ADD_BAG","AR0602",1)
+    ActionOverride("Chest7",CreateItem("d1bag",0,0,0))
+    ActionOverride("Chest8",CreateItem("d1bag02",1,0,0))
+END
+
+IF
+  Global("d1addclk","AR0602",0)
+THEN
+  RESPONSE #100
+    SetGlobal("d1addclk","AR0602",1)
+    ActionOverride("Chest2",CreateItem("clck05",0,0,0))
+END

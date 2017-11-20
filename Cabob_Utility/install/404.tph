@@ -1,0 +1,94 @@
+
+/* //////////////////////////////////// */
+/* 杂项设置 */
+/* 任务与剧情 */
+/* //////////////////////////////////// */
+
+//墓园区地下灭蛛剑任务奖励取消蛛网袋，只能从派娜处拿到1个蜘蛛雕像（任务奖励或杀死后掉落）
+COPY_EXISTING SPPAIN.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~GiveItemCreate("misc3e",LastTalkedToBy,0,0,0)~ ~GiveItem("misc3e",LastTalkedToBy)~
+		REPLACE_TEXTUALLY ~GiveItemCreate("wand14",LastTalkedToBy,10,0,0)~ ~~
+	END
+		
+//复活恋人后芭荻黑心不会消失
+COPY_EXISTING CLEANSE.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~DestroyItem("MISCBP")~ ~~
+	END
+BUT_ONLY
+
+//SoA最终战没收强化魔力护符，剧情动画结束后增加一次自动存档。位置: Auto-Save
+COMPILE ~%SCRIPTS%/helljon_take_amulet.d~
+EXTEND_TOP ar2900.bcs ~%SCRIPTS%/helljon_take_amulet.baf~
+EXTEND_TOP ii0.bcs ~%SCRIPTS%/SoaFinalSave.baf~
+
+//修改增加属性的剧情对话：限制力量、敏捷、体质的上限降为种族/职业许可值+1
+INCLUDE ~%LIBS%/tb#tweaks/additional_stat.tph~
+
+//深渊花园模组：
+//灰色纹身效果修正：攻击次数增加1/2次，命中-1，最大生命-3，死亡豁免-2
+COPY_EXISTING dggray.spl override
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			PATCH_IF opcode=54 BEGIN
+				WRITE_LONG offset+0x4 ~-1~
+			END
+			PATCH_IF opcode=18 BEGIN
+				WRITE_LONG offset+0x4 ~-3~
+			END
+			PATCH_IF opcode=33 BEGIN
+				WRITE_LONG offset+0x4 ~-2~
+			END
+		END
+	END
+IF_EXISTS BUT_ONLY
+
+//纹身可为所有队友制作, 而非锁定主角
+COPY_EXISTING 0xSTDG.bcs override
+	R_B_B ~%SCRIPTS%/0xSTDG_old.baf~ ~.../inlined/blank.baf~
+BUT_ONLY
+
+ACTION_FOR_EACH type IN gray gree blac ambe silv yell viol red blue gold BEGIN
+	COPY_EXISTING ~dg%type%.spl~ override
+		WRITE_ASCII 0x10 ~~ #8
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=1 speed=0 END
+		LPF DELETE_EFFECT INT_VAR match_opcode=174 END
+	BUT_ONLY
+END
+
+COPY ~%SCRIPTS%/0xstdg_0.d~ ~%SCRIPTS%/0xstdg.d~
+	SET string=40515
+	PATCH_FOR_EACH type IN gray gree blac ambe silv yell viol red blue gold BEGIN
+		APPEND_FILE_EVALUATE ~%SCRIPTS%/0xstdg_1.d~
+		SET string+=1
+	END
+	APPEND_FILE_EVALUATE ~%SCRIPTS%/0xstdg_9.d~
+
+COMPILE ~%SCRIPTS%/0xstdg.d~ 	
+
+
+/* 希瑞克选民一战将临时没收队伍绝大多数免疫背刺的装备，优化攻击目标选择 */	
+COPY ~.../inlined/blank.2da~ ~override/c_protbs.2da~
+	count=1
+	PATCH_FOR_EACH item IN dgiambe2 wqxheq s#clck03 s#leat01 shld07p BEGIN
+		SPRINT ~string~ ~%count%~^~  ~^~%item%~
+		INSERT_2DA_ROW ~%count%~ 0 ~%string%~
+		count+=1
+	END
+	INSERT_2DA_ROW 1 0 ~     ITEMS~
+	INSERT_2DA_ROW 1 0 ~*~
+	
+EXTEND_TOP rr#001.bcs ~%SCRIPTS%/take_protect_bs_items.baf~
+	
+ACTION_FOR_EACH script IN VEND ZAER BODK SELI GROK KERT BEGIN
+	COPY_EXISTING ~rr#%script%.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~CheckStatLT\(.+\),100,\(RESISTPIERCING\|RESISTSLASHING\)~
+				~CheckStatLT\1,75,\2~
+		END
+	BUT_ONLY
+END

@@ -1,0 +1,11 @@
+
+IF
+	Global("c4RI#T%tier%N%now%","Global",0)
+	RandomNum(%loc_max%,%seed%)
+	!Global("c4RI#T3N1","Global",4)
+	!Global("c4RI#T3N2","Global",4)
+	True()
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T%tier%N%now%","Global",%seed%)
+END

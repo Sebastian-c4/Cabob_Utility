@@ -1,0 +1,22 @@
+
+
+IF
+	// Global("c4#tobcheck","Global",1)
+	GlobalLT("Chapter","Global",8)
+THEN
+	RESPONSE #100
+		SetGlobal("Chapter","Global",8)
+		// SetGlobal("c4#tobcheck","Global",2)
+		Continue()
+END
+
+IF
+	Global("c4#tobcheck","Global",0)
+	GlobalGT("Chapter","Global",7)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#tobcheck","Global",1)
+		DisplayString(Player1,@99401)
+		Continue()
+END
+

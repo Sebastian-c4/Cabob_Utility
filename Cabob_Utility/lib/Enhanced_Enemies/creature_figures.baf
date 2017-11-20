@@ -1,0 +1,477 @@
+
+IF
+	!Allegiance(Myself,ENEMY)
+	OR(4)
+		CheckStat(Myself,444,c_BonusStatusOfEnemy)
+		CheckStat(Myself,444,c_BonusHPOfEnemy)
+		CheckStat(Myself,444,c_BonusSaveOfEnemy)
+		CheckStat(Myself,444,c_BonusExSaveOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_clear",Myself)
+		Continue()
+END
+
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusStatusOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_status",Myself)
+		Continue()
+END
+
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	CheckStatGT(Myself,9999,XPVALUE)
+	!CheckStat(Myself,444,c_BonusExSaveOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_xsave",Myself)
+		Continue()
+END
+
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,12000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp24",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,11500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp23",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,11000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp22",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,10500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp21",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,10000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp20",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,9500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp19",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,9000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp18",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,8500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp17",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,8000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp16",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,7500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp15",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,7000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp14",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,6500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp13",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,6000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp12",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,5500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp11",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,5000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp10",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,4500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp9",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,4000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp8",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,3500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp7",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,3000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp6",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,2500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp5",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,2000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp4",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,1500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp3",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,1000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp2",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusHPOfEnemy)
+  !XPLT(Player1,500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_ehp1",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,12000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save16",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,11250000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save15",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,10500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save14",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,9750000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save13",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,9000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save12",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,8250000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save11",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,7500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save10",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,6750000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save9",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,6000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save8",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,5250000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save7",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,4500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save6",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,3750000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save5",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,3000000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save4",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,2250000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save3",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,1500000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save2",Myself)
+		Continue()
+END
+IF
+  Global("EndOfBG1","Global",2)
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOf())
+	!CheckStat(Myself,444,c_BonusSaveOfEnemy)
+  !XPLT(Player1,750000)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_save1",Myself)
+		Continue()
+END

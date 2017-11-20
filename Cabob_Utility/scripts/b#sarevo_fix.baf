@@ -1,0 +1,8 @@
+
+IF
+	GlobalTimerExpired("B#SAREVOMINHP1","Locals")
+	HasItem("MINHP1",Myself)
+THEN
+	RESPONSE #100
+		DestroyItem("MINHP1")
+END

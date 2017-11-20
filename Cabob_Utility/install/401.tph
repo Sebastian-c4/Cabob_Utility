@@ -1,0 +1,65 @@
+
+/* //////////////////////////////////// */
+/* 杂项设置 */
+/* 区域设置 */
+/* //////////////////////////////////// */
+
+/* BG1城市区域如BG2一样自动显示完整地图 */
+ACTION_FOR_EACH area IN 0015 6526 6700 3700 3800 6800 7200 7300 7400 7600 7700 7800 8000 8100 8200 u000 BEGIN
+	EXTEND_TOP ~ar%area%.bcs~ ~%SCRIPTS%/explorearea.baf~
+END
+
+//在高篱堡地图创建任务所需的骷髅，其他生物不掉落骷髅头
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+	LPF DELETE_CRE_ITEM STR_VAR item_to_delete=MISC50 END
+BUT_ONLY
+	
+COPY_EXISTING BGSKEL03.cre override
+	WRITE_ASCII 0x0280 BGSKEL03
+	
+EXTEND_BOTTOM ~ar7100.bcs~ ~%SCRIPTS%/HelpThalantyr_Skull.baf~
+		
+//只能从巨龙桥西面出口通往乌葛斯胡渣
+COPY_EXISTING ar7900.are override
+	LPF fj_are_structure 
+		INT_VAR
+			fj_type=1
+			fj_box_left =3856
+			fj_box_top =0
+			fj_box_right =4400
+			fj_box_bottom =60
+			fj_cursor_idx =22
+			fj_flags =512
+			fj_info_point_strref=RESOLVE_STR_REF (@40101)
+			fj_vertex_0=4400 + (0 << 16)
+			fj_vertex_1=4400 + (60 << 16)
+			fj_vertex_2=3865 + (60 << 16)
+			fj_vertex_3=3865 + (0 << 16)
+		STR_VAR
+			fj_structure_type=region
+			fj_name=c4#nou00
+	END
+BUT_ONLY
+	
+//去掉地牢里多余的博德安斗篷
+COPY_EXISTING AR0602.bcs override
+	R_B_B ~%SCRIPTS%/remove_bcloak_ar0602.baf~ ~override/blank.bcs~
+	
+/* 按游荡者平衡内容强化两条新出海路线中影贼总部的战斗 */
+COPY_EXISTING ar0300.bcs override
+	R_B_B EVAL ~%SCRIPTS%/b!ar0300_fix.baf~ ~%SCRIPTS%/ar0300_new.baf~
+BUT_ONLY
+
+EXTEND_BOTTOM ~rr#010.bcs~ ~%SCRIPTS%/b!ar0329.baf~
+
+/* 杰拉特家族怪物不会离开区域，防止意外全城红圈 */
+COPY_EXISTING ar2209.are override
+	LPF ALTER_AREA_REGION INT_VAR flag_impassable_npc=1 STR_VAR region_name=Tran2200 END
+BUT_ONLY
+
+//只有在进入ToB后才能进入观察者堡垒第二层
+EXTEND_TOP ITPORTAL.bcs ~%SCRIPTS%/wk2_in_tob.baf~
+
+/* 洛斯和恩格将出现在次元空间 */
+EXTEND_TOP ar4500.bcs ~%SCRIPTS%/rolles_and_engar.baf~
+	

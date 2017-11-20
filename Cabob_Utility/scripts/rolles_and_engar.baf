@@ -1,0 +1,14 @@
+
+IF
+	!Exists("s#rolles")
+THEN
+	RESPONSE #100
+		CreateCreature("s#rolles",[2122.1315],5)
+END
+
+IF
+	!Exists("shop04")
+THEN
+  RESPONSE #100
+    CreateCreature("shop04",[2135.1422],5)
+END

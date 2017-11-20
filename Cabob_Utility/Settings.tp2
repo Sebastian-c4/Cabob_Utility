@@ -1,0 +1,167 @@
+BACKUP ~Cabob_Utility/backup/settings~
+AUTHOR ~c4demon@gmail.com~
+
+AUTO_EVAL_STRINGS
+ASK_EVERY_COMPONENT
+// AUTO_TRA ~Cabob_Utility/lib/%s~
+
+ALWAYS
+	CLEAR_MEMORY
+	
+	OUTER_TEXT_SPRINT ~MOD_FOLDER~ ~Cabob_Utility~
+	OUTER_TEXT_SPRINT ~SCRIPTS~ ~%MOD_FOLDER%/scripts~
+	OUTER_TEXT_SPRINT ~LIBS~ ~%MOD_FOLDER%/lib~
+	OUTER_TEXT_SPRINT ~INST_FOLDER~ ~%MOD_FOLDER%/install~
+	OUTER_TEXT_SPRINT ~TEMP_FOLDER~ ~%MOD_FOLDER%/temp_file~
+	
+	INCLUDE ~%LIBS%/macros.tph~
+	INCLUDE ~%LIBS%/functions.tpa~
+	INCLUDE ~%LIBS%/cabob_functions.tpa~
+	INCLUDE ~%LIBS%/hla_actions.tpa~
+	INCLUDE ~%LIBS%/settings.tph~
+	
+END
+
+LANGUAGE	~简体中文~
+					~schinese~ 
+					~Cabob_Utility/tra/schinese/prompts-%WEIDU_OS%.tra~ 
+					~Cabob_Utility/tra/schinese/setup.tra~
+
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~默认汉化字体~
+DESIGNATED 101
+SUBCOMPONENT ~字体设置~
+NO_LOG_RECORD
+
+COPY ~Cabob_Utility/Fonts/Vanilla~ override
+COPY_EXISTING baldur.ini baldur.ini
+	REPLACE_TEXTUALLY ~^F STONESML=.*$~ ~F STONESML=NORMAL~
+BUT_ONLY
+
+BEGIN ~宋体大字体（制作：未知）~
+DESIGNATED 102
+SUBCOMPONENT ~字体设置~
+NO_LOG_RECORD
+
+COPY ~Cabob_Utility/Fonts/BigSIMSUN~ override
+COPY_EXISTING baldur.ini baldur.ini
+	REPLACE_TEXTUALLY ~^F STONESML=.*$~ ~F STONESML=REALMS~
+BUT_ONLY
+
+BEGIN ~方正准圆（制作：天地南羽）~
+DESIGNATED 103
+SUBCOMPONENT ~字体设置~
+NO_LOG_RECORD
+
+COPY ~Cabob_Utility/Fonts/FZZY~ override
+COPY_EXISTING baldur.ini baldur.ini
+	REPLACE_TEXTUALLY ~^F STONESML=.*$~ ~F STONESML=REALMS~
+BUT_ONLY
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~屏蔽小图标~
+DESIGNATED 201
+SUBCOMPONENT ~是否显示装备特效在头像上的小图标~
+NO_LOG_RECORD
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=142 match_probability2=0 probability2=100 END
+BUT_ONLY
+
+BEGIN ~显示小图标~
+DESIGNATED 202
+SUBCOMPONENT ~是否显示装备特效在头像上的小图标~
+NO_LOG_RECORD
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=142 match_probability2=100 probability2=0 END
+BUT_ONLY
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~安装美化版的法术动画~
+DESIGNATED 301
+// NO_LOG_RECORD
+
+PRINT ~动画制作：小强魔法学院~
+
+INCLUDE ~%LIBS%/PrettySpell/PrettySpell.tph~
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~主角死亡后不会马上结束游戏，但无法再控制其他人物~
+DESIGNATED 401
+SUBCOMPONENT ~设置主角死亡之后的游戏状态~
+NO_LOG_RECORD
+
+COPY ~tobex_ini/tobextweak.ini~ ~tobex_ini/tobextweak.ini~
+	REPLACE_TEXTUALLY ~Engine:Disable End On Player1 Dead=[01]~ ~Engine:Disable End On Player1 Dead=1~
+BUT_ONLY
+	
+COPY_EXISTING_REGEXP GLOB ~baldur.*\.bcs~ override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~G("IDonotWannaKnowHowIWasKilled",[01])~ ~G("IDonotWannaKnowHowIWasKilled",0)~
+	END
+BUT_ONLY
+
+BEGIN ~主角死亡后不会马上结束游戏，可控制其他人物~
+DESIGNATED 402
+SUBCOMPONENT ~设置主角死亡之后的游戏状态~
+NO_LOG_RECORD
+
+COPY ~tobex_ini/tobextweak.ini~ ~tobex_ini/tobextweak.ini~
+	REPLACE_TEXTUALLY ~Engine:Disable End On Player1 Dead=[01]~ ~Engine:Disable End On Player1 Dead=1~
+BUT_ONLY
+
+COPY_EXISTING_REGEXP GLOB ~baldur.*\.bcs~ override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~G("IDonotWannaKnowHowIWasKilled",[01])~ ~G("IDonotWannaKnowHowIWasKilled",1)~
+	END
+BUT_ONLY
+
+BEGIN ~主角死亡后马上结束游戏（游戏默认）~
+DESIGNATED 403
+SUBCOMPONENT ~设置主角死亡之后的游戏状态~
+NO_LOG_RECORD
+
+COPY ~tobex_ini/tobextweak.ini~ ~tobex_ini/tobextweak.ini~
+	REPLACE_TEXTUALLY ~Engine:Disable End On Player1 Dead=[01]~ ~Engine:Disable End On Player1 Dead=0~
+BUT_ONLY
+
+COPY_EXISTING_REGEXP GLOB ~baldur.*\.bcs~ override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~G("IDonotWannaKnowHowIWasKilled",[01])~ ~G("IDonotWannaKnowHowIWasKilled",1)~
+	END
+BUT_ONLY
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~敌对生物属性强化设置~
+DESIGNATED 1000
+NO_LOG_RECORD
+
+AT_NOW ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies.txt~
+
+INCLUDE ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies_Values.tph~
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~c4AI 快捷键设置~
+DESIGNATED 2000
+NO_LOG_RECORD
+	  
+LAM c4AI_hotkey	
+
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~资源文件biff操作(有助于加快游戏速度)~
+DESIGNATED 0
+DEPRECATED ~~
+
+ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
+	AT_UNINSTALL ~rm -rf %MOD_FOLDER%/biffs~
+END ELSE BEGIN
+	AT_UNINSTALL ~rd /q /s %MOD_FOLDER%/biffs~ EXACT
+	AT_UNINSTALL ~del data\c4#bif*.bif~ EXACT
+END
+
+LAM biff_files
+	
+COPY_EXISTING RING01.itm ~data/biffed.mrk~

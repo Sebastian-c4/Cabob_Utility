@@ -1,0 +1,395 @@
+
+/* //////////////////////////////////// */
+/* 全局和文本 */
+/* 全局修正 */
+/* //////////////////////////////////// */
+
+//修正非法物品和法术文件，以及名字和说明
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override ~.*\.spl~ override
+	LPF FJ_SPL_ITM_REINDEX END
+	PATCH_FOR_EACH offset IN 0x08 0x0c 0x50 0x54 BEGIN
+		READ_LONG ~%offset%~ strref
+		PATCH_IF strref > 151048 BEGIN
+			WRITE_LONG ~%offset%~ ~-1~
+		END
+	END
+	//删除文本说明中的冗余字段和多余空行
+	PATCH_FOR_EACH offset IN 0x50 0x54 BEGIN
+		READ_LONG ~%offset%~ desc_strref
+		PATCH_IF desc_strref>0 BEGIN
+			GET_STRREF desc_strref desc
+			INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+				FOR (i=99301;i<99304;i+=2) BEGIN
+					SET j=i+1
+					SPRINT ~old_string~ (AT i)
+					SPRINT ~new_string~ (AT j)
+					REPLACE_TEXTUALLY ~%old_string%~ ~%new_string%~
+				END
+			END
+			INNER_ACTION BEGIN
+				STRING_SET_EVALUATE desc_strref ~%desc%~
+			END
+		END
+	END
+BUT_ONLY
+
+//优化物品随机进程
+OUTER_TEXT_SPRINT ~refine~ ~%LIBS%/Randomiser_Refine~
+
+//直接开始TOB时设定变量
+EXTEND_TOP ~ar4000.bcs~ ~%refine%/ar4000_fix.baf~
+
+//新脚本
+COPY ~%refine%/observer_00.baf~ ~%refine%/observer.baf~
+//1代
+	FOR(i=24;i<32;i+=1) BEGIN
+		before= i -1
+		SPRINT tierBefore ~fl%before%t~
+		SPRINT tierNow ~fl%i%t~
+		SPRINT tierCre ~fltier%i%~
+		PATCH_IF i=24 THEN BEGIN
+			SPRINT tierBefore ~skip~
+		END
+		APPEND_FILE_EVALUATE ~%refine%/observer_01.baf~
+	END
+	
+//2代
+	FOR(i=1;i<8;i+=1) BEGIN
+		before= i -1
+		SPRINT tierBefore ~fl%before%t~
+		SPRINT tierNow ~fl%i%t~
+		SPRINT tierCre ~fltier%i%~
+		PATCH_IF i=1 THEN BEGIN
+			SPRINT tierBefore ~skip~
+		END
+		APPEND_FILE_EVALUATE ~%refine%/observer_02.baf~
+	END
+	FOR(i=10;i<15;i+=1) BEGIN
+		before= i -1
+		SPRINT tierBefore ~fl%before%t~
+		SPRINT tierNow ~fl%i%t~
+		SPRINT tierCre ~fltier%i%~
+		PATCH_IF i=1 THEN BEGIN
+			SPRINT tierBefore ~fl7t~
+		END
+		PATCH_IF i=14 THEN BEGIN
+			SPRINT tierNow ~flkat~
+			SPRINT tierCre ~flTIERKA~
+		END
+		APPEND_FILE_EVALUATE ~%refine%/observer_02.baf~
+	END
+	REPLACE_TEXTUALLY ~Global("skipDone","Global",1)~ ~~
+	
+LAF create_one_observer STR_VAR name=rmrefine END
+EXTEND_BOTTOM ~rmrefine.bcs~ ~%refine%/observer.baf~
+
+//BG1矿坑魔法塞子的钥匙在杀死达瓦恩之后直接进入主角背包
+COPY_EXISTING AR8603.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~RevealAreaOnMap("AR7900")~ ~GiveItemCreate("BGMISC83",Player1,0,0,0) RevealAreaOnMap("AR7900")~
+	END
+BUT_ONLY
+
+//去掉纳西凯矿洞内的中立生物(进行地窖任务时)
+EXTEND_TOP ~SEEENEMY.bcs~ ~%SCRIPTS%/neutrual_in_nash_mine.baf~
+EXTEND_TOP ~RUNENEMY.bcs~ ~%SCRIPTS%/neutrual_in_nash_mine.baf~
+			
+//屏蔽SOA初始法术选择对话中不应出现的3级防护火焰和防护寒冷
+LAF add_trans_trigger INT_VAR stat=7 trans=17 STR_VAR file=A6GENSPL trigger=~False()~ END
+LAF add_trans_trigger INT_VAR stat=7 trans=18 STR_VAR file=A6GENSPL trigger=~False()~ END
+LAF add_trans_trigger INT_VAR stat=9 trans=17 STR_VAR file=A6GENSPL trigger=~False()~ END
+LAF add_trans_trigger INT_VAR stat=9 trans=18 STR_VAR file=A6GENSPL trigger=~False()~ END
+
+/* SoA部分去掉不合适的昼夜切换动画 */
+COPY_EXISTING_REGEXP - GLOB ~.*\.are~ override
+	READ_ASCII 0x94 script
+	INNER_ACTION BEGIN
+		COPY_EXISTING ~%script%.bcs~ override
+			DECOMPILE_AND_PATCH BEGIN
+				REPLACE_TEXTUALLY ~Time(DUSK_END)~ ~Time(DUSK_END) GLobalLT("EndOfBG1","Global",2)~
+				REPLACE_TEXTUALLY ~Time(DAWN_END)~ ~Time(DAWN_END) GLobalLT("EndOfBG1","Global",2)~
+			END
+		BUT_ONLY
+	END
+			
+//修复圣武士据点乌玛丘陵男爵任务的错误
+COPY_EXISTING PLMETR01.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~ActionOverride("plfarm03",Enemy())~ ~ActionOverride("plfarm03",EscapeArea())~
+	END
+BUT_ONLY
+
+//艾德温对话修正
+COPY_EXISTING edwinj.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~("Viconia)~ ~("Viconia")~
+	END
+BUT_ONLY
+
+//修复费尔格拉格，杰拉特家族等可能丢失的掉落
+LAF create_one_observer STR_VAR name=rdmfix01 END
+EXTEND_BOTTOM rdmfix01.bcs ~%SCRIPTS%/randomise_fix_firkrag.baf~
+ACTION_FOR_EACH fl IN FL6T10 FL6T17 FLKAT8 BEGIN
+	COPY_EXISTING ~%fl%.bcs~ override
+	EXTEND_BOTTOM rdmfix01.bcs ~override/%fl%.bcs~
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~firkra02~ ~b#fir03~
+			REPLACE_TEXTUALLY ~DestroySelf()~ ~~
+		END
+END
+
+ACTION_FOR_EACH jaellat IN fl4t15 fl6t19 fl6t23 fl7t4 BEGIN
+	COPY_EXISTING ~%jaellat%.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~dadrow2~ ~dw#drja1~
+		END
+	BUT_ONLY
+END
+
+//海归后崔斯特小队战斗跳出修复	
+COPY_EXISTING C6DRIZZ.cre override
+	WRITE_BYTE 0x54 1
+	WRITE_BYTE 0x55 3
+	WRITE_BYTE 0x56 3
+	WRITE_BYTE 0x57 4
+	WRITE_BYTE 0x58 5
+	WRITE_LONG 0x28 0x6101
+BUT_ONLY
+
+//修复库鲁因战斗可能卡住的问题
+COPY_EXISTING kruin.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~StartCutSceneMode()~ ~StartCutSceneMode() CutSceneID(Myself)~
+	END
+			
+//直接从soa最终战进入tob不再卡剧情
+EXTEND_TOP baldur.bcs ~%SCRIPTS%/tobcheck.baf~
+EXTEND_TOP baldur25.bcs ~%SCRIPTS%/tobcheck25.baf~
+			
+//森林幽魂不再反复给经验
+COMPILE ~%SCRIPTS%/head.d~
+
+/* 观察者壁垒：修正错误的任务进度设置、黄龙卡剧情、血毒遭遇战跳出 */
+COPY_EXISTING ar3000.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~SpellCastInnateRES("SPIN592",\[ANYONE\])~ ~SpellCastInnateRES("SPIN592",[PC])~
+	END
+BUT_ONLY
+
+COPY_EXISTING RITPONT.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~StartCutSceneMode()~ ~StartCutSceneMode() CutSceneID(Myself)~
+		REPLACE_TEXTUALLY ~DestroySelf()~ ~~
+		REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~EndCutSceneMode() DestroySelf()~
+	END
+BUT_ONLY
+
+COPY_EXISTING SPIN583.spl override
+	LPF ALTER_EFFECT INT_VAR match_opcode=25 parameter1=2 END
+BUT_ONLY
+
+//巅峰之战五裔非正常锁血的解决(暂时方案)	
+ACTION_FOR_EACH scripts IN FINABAZ FINBALTH FINBODH FINGROM FINILLA FINIREN FINSAREV FINSEND FINYAGA BEGIN
+	EXTEND_TOP ~%scripts%.bcs~ ~%SCRIPTS%/final_5e_hp_fix.baf~
+END
+
+////禁魔监狱不再没收宗派职业专属装备，正常没收应有的物品
+//代码修改自scs
+OUTER_SET ~i~=0	
+OUTER_SET ~j~=0
+COPY_EXISTING_REGEXP - ~.*\.itm~ override
+	PATCH_IF (SOURCE_SIZE>0x1) THEN BEGIN 
+		READ_BYTE 0x18 ~droppablebyte~
+		PATCH_IF ((~%droppablebyte%~ BAND ~0b00000100~)=~0b00000100~) THEN BEGIN
+			READ_SHORT 0x1c ~containercheck~
+			PATCH_IF ~%containercheck%~=36 THEN BEGIN
+				SPRINT $containerlist(~%j%~) ~%SOURCE_RES%~
+				SET ~j~=~%j%~+1	
+			END ELSE BEGIN
+				SPRINT $itemlist(~%i%~) ~%SOURCE_RES%~
+				SET ~i~=~%i%~+1	
+			END
+		END
+	END
+
+OUTER_SET ~containercount~=~%j%~
+OUTER_SET ~itemcount~=~%i%~
+
+<<<<<<<< .../stratagems-inline/blank.2da
+>>>>>>>>
+
+OUTER_SET ~bagcounter~=0
+COPY ~.../stratagems-inline/blank.2da~ ~override/dw#bags.2da~
+	WHILE ~%bagcounter%~<~%containercount%~ BEGIN
+		SPRINT ~string~ $containerlist(~%bagcounter%~)
+		SET ~number~=~%bagcounter%~+10
+		SPRINT ~string~ ~%number%~^~  ~^~%string%~
+		INSERT_2DA_ROW ~%bagcounter%~ 0 ~%string%~
+		SET ~bagcounter~=~%bagcounter%~+1
+	END
+	INSERT_2DA_ROW 0 0 ~9 CDPOTIO2~
+	INSERT_2DA_ROW 0 0 ~8 CDAMMO2~
+	INSERT_2DA_ROW 0 0 ~7 CDAMMO~
+	INSERT_2DA_ROW 0 0 ~6 CDAMMOBT~
+	INSERT_2DA_ROW 0 0 ~5 CDPLBAG~
+	INSERT_2DA_ROW 0 0 ~4 CDPLCASE~
+	INSERT_2DA_ROW 0 0 ~3 CDPLQUIV~
+	INSERT_2DA_ROW 0 0 ~2 CDPOTBAG~
+	INSERT_2DA_ROW 0 0 ~1 CDPOTION~
+	INSERT_2DA_ROW 0 0 ~     ITEMS~
+	INSERT_2DA_ROW 0 0 ~XXX~
+	INSERT_2DA_ROW 0 0 ~2DA V1.0~
+
+OUTER_SET ~file_index~=0
+OUTER_SET ~globalcounter~=0
+
+OUTER_FOR (i=0;i<~%itemcount%~;i=i+200) BEGIN
+	OUTER_SET ~counter~=0
+	OUTER_SET ~file_index~=~%file_index%~+1
+	OUTER_SPRINT ~filename~ ~dw#spl~^~%file_index%~
+	COPY ~.../stratagems-inline/blank.2da~ ~override/%filename%.2da~
+		WHILE ~%counter%~<200 AND ~%globalcounter%~<~%itemcount%~ BEGIN
+			SPRINT ~string~ $itemlist(~%globalcounter%~)
+			SET ~number~=~%counter%~+1
+			SPRINT ~string~ ~%number%~^~  ~^~%string%~
+			INSERT_2DA_ROW ~%counter%~ 0 ~%string%~
+			SET ~counter~=~%counter%~+1
+			SET ~globalcounter~=~%globalcounter%~+1
+		END	
+		INSERT_2DA_ROW 0 0 ~     ITEMS~
+		INSERT_2DA_ROW 0 0 ~XXX~
+		INSERT_2DA_ROW 0 0 ~2DA V1.0~
+END		
+
+OUTER_SPRINT ~oldstring~ ~ActionOverride("ppireni2",DestroySelf())~
+OUTER_SPRINT ~newstring~ ~%oldstring%~
+OUTER_SPRINT ~newstring~ ~%newstring%~^~ActionOverride("Yoshimo",MakeUnselectable(1))ActionOverride("Yoshimo",LeaveParty())ActionOverride("Yoshimo",ChangeAIScript("",DEFAULT))ActionOverride("Yoshimo",SetDialog("yoshimox"))ActionOverride("Yoshimo",LeaveAreaLUA("AR1516","",[748.1064],6))~
+OUTER_SPRINT ~newstring~ ~%newstring%~^~SetInterrupt(FALSE) ActionOverride("desk1",TakeItemListParty("dw#bags")) Wait(2)ActionOverride("desk1",TakeItemListParty("dw#tpitm"))~
+
+OUTER_FOR (i=1;i<=~%file_index%~;i=i+1) BEGIN
+	OUTER_SPRINT ~supplement~ ~ActionOverride("desk1",TakeItemListParty("dw#spl~ ^ ~%i%~^~"))~
+	OUTER_SPRINT ~newstring~ ~%newstring%~^~%supplement%~
+END
+OUTER_SPRINT ~newstring~ ~%newstring%~^~Wait(4) SetInterrupt(TRUE)~
+
+COPY_EXISTING ~cut41g.bcs~ ~override~
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~ActionOverride("desk1",TakeItemListParty~ ~//ActionOverride("desk1",TakeItemListParty~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",MakeUnselectable(1))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",LeaveParty())~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",ChangeAIScript("",DEFAULT))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",SetDialog("yoshimox"))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",LeaveAreaLUA("AR1516","",\[748.1064\],6))~ ~~
+		REPLACE_TEXTUALLY ~%oldstring%~ ~%newstring%~
+	END
+	
+ACTION_IF FILE_EXISTS_IN_GAME ~u!cut41g.bcs~ THEN BEGIN
+	COPY_EXISTING ~u!cut41g.bcs~ ~override~
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~ActionOverride("desk1",TakeItemListParty~ ~//ActionOverride("desk1",TakeItemListParty~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",MakeUnselectable(1))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",LeaveParty())~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",ChangeAIScript("",DEFAULT))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",SetDialog("yoshimox"))~ ~~
+		REPLACE_TEXTUALLY ~ActionOverride("Yoshimo",LeaveAreaLUA("AR1516","",\[748.1064\],6))~ ~~
+		REPLACE_TEXTUALLY ~%oldstring%~ ~%newstring%~
+	END
+END
+
+//删除已有列表中宗派特有物品, 禁魔监狱不没收		
+COPY_EXISTING - kitlist.2da override
+	READ_2DA_ENTRIES_NOW rows 6
+	FOR (i=2;i<rows;i+=1) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 5 clab
+		SET $clabfiles(~%clab%~)=1
+	END
+	
+ACTION_PHP_EACH clabfiles AS file => int BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.2da~ BEGIN
+	COPY_EXISTING - ~%file%.2da~ override
+		COUNT_2DA_COLS col
+		READ_2DA_ENTRIES_NOW rows col
+		FOR (i=0;i<rows;i+=1) BEGIN
+			FOR (j=0;j<col;j+=1) BEGIN
+				READ_2DA_ENTRY_FORMER rows i j spl
+				length=STRING_LENGTH ~%spl%~
+				PATCH_IF length>3 BEGIN
+					SNPRINT 2 type ~%spl%~
+					//PATCH_IF ~%type%~ STR_EQ ~GA~ BEGIN
+						INNER_PATCH ~%spl%~ BEGIN
+							spllength=length+~-3~
+							READ_ASCII 0x3 splname (%spllength%)
+							//PATCH_PRINT ~%splname%~
+							SET $spell(~%splname%~)=1
+						END
+					//END
+				END
+			END
+		END
+	END
+END
+
+COPY_EXISTING - luabbr.2da override
+	READ_2DA_ENTRIES_NOW rows 2
+	FOR (i=1;i<rows;i+=1) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 1 hla
+		SET $hlafiles(~lu%hla%~)=1
+	END
+	
+ACTION_PHP_EACH hlafiles AS file => int BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.2da~ BEGIN
+	COPY_EXISTING - ~%file%.2da~ override
+		READ_2DA_ENTRIES_NOW rows 2
+		FOR (i=0;i<rows;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 1 spl
+			length=STRING_LENGTH ~%spl%~
+			PATCH_IF length>3 BEGIN
+				SNPRINT 2 type ~%spl%~
+				//PATCH_IF ~%type%~ STR_EQ ~GA~ BEGIN
+					INNER_PATCH ~%spl%~ BEGIN
+						spllength=length+~-3~
+						READ_ASCII 0x3 splname (%spllength%)
+						//PATCH_PRINT ~%splname%~
+						SET $spell(~%splname%~)=1
+					END
+				//END
+			END
+		END
+	END
+END
+
+ACTION_PHP_EACH spell AS name => int BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%name%.spl~ BEGIN
+		COPY_EXISTING ~%name%.spl~ override
+			GET_OFFSET_ARRAY header SPL_V10_HEADERS
+			PHP_EACH header AS int => offset1 BEGIN
+				GET_OFFSET_ARRAY2 effect offset1 SPL_V10_HEAD_EFFECTS 
+				PHP_EACH effect AS int => offset2 BEGIN
+					READ_SHORT offset2 op
+					PATCH_IF op=122 || op=143 BEGIN
+						READ_ASCII offset2+0x14 resource
+						SET $kititem(~%resource%~)=1
+					END
+				END
+			END
+		BUT_ONLY
+	END
+END
+
+OUTER_FOR (i=1;i<100;i+=1) BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~dw#spl%i%.2da~ BEGIN
+		COPY_EXISTING ~dw#spl%i%.2da~ override
+			COUNT_2DA_ROWS 2 rows
+			FOR (j=0;j<rows;j+=1) BEGIN
+				READ_2DA_ENTRY j 1 2 itemexist
+				PHP_EACH kititem AS item => int BEGIN
+					PATCH_IF ~%itemexist%~ STR_EQ ~%item%~ BEGIN
+						REMOVE_2DA_ROW j 2
+						j -= 1
+						rows -= 1
+					END
+				END
+			END
+		BUT_ONLY
+	END
+END

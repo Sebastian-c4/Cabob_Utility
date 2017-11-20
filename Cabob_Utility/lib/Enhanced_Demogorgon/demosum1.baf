@@ -1,0 +1,60 @@
+
+//去掉免疫武器等级的戒指
+IF
+	False() //取消
+	OR(3)
+		HasItemEquiped("immune1",Myself)
+		HasItemEquiped("immune2",Myself)
+		HasItemEquiped("immune3",Myself)
+THEN
+	RESPONSE #100
+		DestroyItem("immune1")
+		DestroyItem("immune2")
+		DestroyItem("immune3")
+END
+
+//狒狒加血
+IF
+  Allegiance(Myself,ENEMY)
+	AreaCheck("ar3020")
+	Global("c4#SupportDemogorgon","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#SupportDemogorgon","Locals",1)
+		ReallyForceSpellRES("c4#sum1b","demogor2")
+		ReallyForceSpellRES("c4#sum1b",Myself)
+END
+
+//计时
+IF
+  Allegiance(Myself,ENEMY)
+	AreaCheck("ar3020")
+	Global("c4#SummonDemonsTimerSet","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#SummonDemonsTimerSet","Locals",1)
+    SetGlobalTimer("c4#SummonDemonsSingle","Locals",6)
+	RESPONSE #100
+		SetGlobal("c4#SummonDemonsTimerSet","Locals",1)
+    SetGlobalTimer("c4#SummonDemonsSingle","Locals",12)
+	RESPONSE #100
+		SetGlobal("c4#SummonDemonsTimerSet","Locals",1)
+    SetGlobalTimer("c4#SummonDemonsSingle","Locals",18)
+END
+
+//召唤
+IF
+  Allegiance(Myself,ENEMY)
+	AreaCheck("ar3020")
+	GlobalTimerExpired("c4#SummonDemonsSingle","Locals")
+  !GlobalTimerNotExpired("castspell","Locals")
+	!Global("c4#TotalSummon","Locals",2)
+THEN
+	RESPONSE #100
+    SetGlobalTimer("castspell","Locals",ONE_ROUND)
+    SetGlobalTimer("c4#SummonDemonsSingle","Locals",18)
+		IncrementGlobal("c4#TotalSummon","Locals",1)
+		SpellNoDecRES("c4#sum1a",Myself)
+END
+		
+	

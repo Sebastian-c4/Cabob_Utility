@@ -1,0 +1,9 @@
+
+IF
+  Global("IITookAmulet2","AR2900",1)
+  Dead("ii2")
+THEN
+  RESPONSE #100
+		SetGlobal("IITookAmulet2","AR2900",0)
+    GiveItemCreate("s#amul02",Player1,1,1,1)
+END

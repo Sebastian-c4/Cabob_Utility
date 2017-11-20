@@ -1,0 +1,13 @@
+
+IF
+	!Allegiance(Myself,ENEMY)
+	OR(4)
+		CheckStat(Myself,%engine_value_type%,c_BonusStatusOfEnemy)
+		CheckStat(Myself,%engine_value_type%,c_BonusHPOfEnemy)
+		CheckStat(Myself,%engine_value_type%,c_BonusSaveOfEnemy)
+		CheckStat(Myself,%engine_value_type%,c_BonusExSaveOfEnemy)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c_clear",Myself)
+		Continue()
+END

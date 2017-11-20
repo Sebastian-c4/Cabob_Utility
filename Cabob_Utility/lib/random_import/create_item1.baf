@@ -1,0 +1,12 @@
+
+IF
+	Global("c4RI#IHaveT%tier%N%now%","Global",1)
+	Global("c4RI#T%tier%N%now%","Global",%seed%)
+	AreaCheck("%area%")
+	Exists("%creature%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%item%","%creature%",0,0,0)
+		SetGlobal("c4RI#T%tier%N%now%","Global",-1)
+END
+	

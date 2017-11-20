@@ -1,0 +1,26 @@
+@19108 = ~如果你看到这个说明你曾经尝试过作弊或是在 TB#Tweaks 里遭遇到了BUG。~
+
+@19107 = ~<GABBER>_回味和你在一起时的冒险。~
+@19109 = ~经过这段艰苦的日子，<HESHE>_锻炼了<HISHER>_…~
+@19102 = ~但<HESHE>_也运用了<HISHER>_…~
+@19111 = ~…%Stat%。~ // Strength, Dexterity, Constitution, ...
+         ~…%Statf%。~
+@19112 = ~略过。~
+
+@19100 = ~<HESHE>_努力提升了<HISHER>_%Stat%。~
+         ~<HESHE>_努力提升了<HISHER>_%Statf%。~
+
+@19106 = ~<HESHE>_是否已经%comparative%？~ // stronger, more dextrous, healtier, ...
+         ~<HESHE>_是否已经%comparativef%？~
+         
+@19105 = ~是的！<GABBER>_已经%comparative%了。~
+         ~是的！<GABBER>_已经%comparativef%了。~
+
+@19101 = ~不了，作为一个<RACE>_，<HESHE>_已经足够%adjective%。~ // strong, dextrous, healthy, ...
+         ~不了，作为一个<RACE>_，<HESHE>_已经足够%adjectivef%。~
+@19103 = ~<GABBER>_的%Stat%被魔力影响，但<HESHE>_仍然能提升其未被魔力影响的部分。~
+         ~<GABBER>_的%Statf%被魔力影响，但<HESHE>_仍然能提升其未被魔力影响的部分。~
+@19104 = ~<GABBER>_将在八小时内再试一次，直到<HISHER>_%Stat%不再受到魔力影响。~
+         ~<GABBER>_将在八小时内再试一次，直到<HISHER>_%Statf%不再受到魔力影响。~
+
+@19110 = ~<GABBER>_现在将精力放回到当前的任务上。~

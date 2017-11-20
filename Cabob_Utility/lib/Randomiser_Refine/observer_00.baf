@@ -1,0 +1,23 @@
+
+IF
+	Global("EndOfBG1","Global",0)
+	Global("fl31tDone","Global",1)
+	Global("c4#EndOfRandomiserBG1","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@99402) //bg1随机完成
+		SetGlobal("c4#EndOfRandomiserBG1","Global",1)
+		Continue()
+END
+
+IF
+	Global("EndOfBG1","Global",2)
+	Global("flkatDone","Global",1)
+	Global("c4#EndOfRandomiserBG2","Global",0)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player1,@99403) //bg2随机完成
+		SetGlobal("c4#EndOfRandomiserBG2","Global",1)
+		Continue()
+END
+	

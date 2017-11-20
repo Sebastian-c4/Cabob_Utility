@@ -1,0 +1,9 @@
+
+IF
+	GlobalLT("ENDOFBG1","GLOBAL",2)
+	XPGT(player%n%,300000)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("bg1xpcap", Player%n%)
+		Continue()
+END

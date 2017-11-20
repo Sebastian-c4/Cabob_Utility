@@ -1,0 +1,12 @@
+
+IF
+	Global("ReturnNashQuest","GLOBAL",7)
+	Class(Myself,INNOCENT)
+	OR(3)
+		AreaCheck("ar4401")
+		AreaCheck("ar4402")
+		AreaCheck("ar4403")
+THEN
+	RESPONSE #100
+		DestroySelf()
+END

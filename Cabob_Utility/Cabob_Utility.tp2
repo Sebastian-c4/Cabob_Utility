@@ -1,0 +1,219 @@
+BACKUP ~Cabob_Utility/backup/tweaks~
+AUTHOR ~c4demon@gmail.com~
+
+VERSION ~c4fix~
+
+ASK_EVERY_COMPONENT
+AUTO_EVAL_STRINGS
+// AUTO_TRA ~Cabob_Utility/lib/%s~
+
+ALWAYS
+
+	CLEAR_MEMORY
+	
+	OUTER_TEXT_SPRINT ~MOD_FOLDER~ ~Cabob_Utility~
+	OUTER_TEXT_SPRINT ~SCRIPTS~ ~%MOD_FOLDER%/scripts~
+	OUTER_TEXT_SPRINT ~LIBS~ ~%MOD_FOLDER%/lib~
+	OUTER_TEXT_SPRINT ~INST_FOLDER~ ~%MOD_FOLDER%/install~
+	OUTER_TEXT_SPRINT ~TEMP_FOLDER~ ~%MOD_FOLDER%/temp_file~
+	
+	INCLUDE ~%LIBS%/macros.tph~
+	INCLUDE ~%LIBS%/functions.tpa~
+	INCLUDE ~%LIBS%/cabob_functions.tpa~
+	INCLUDE ~%LIBS%/hla_actions.tpa~
+	INCLUDE ~%LIBS%/settings.tph~
+	
+END
+
+LANGUAGE	~简体中文~
+					~schinese~ 
+					~Cabob_Utility/tra/schinese/prompts-%WEIDU_OS%.tra~ 
+					~Cabob_Utility/tra/schinese/setup.tra~
+					
+/* ******************* */
+	
+BEGIN @991 //文本修正
+DESIGNATED 991
+GROUP @0 //全局和文本修正
+
+INCLUDE ~%INST_FOLDER%/991.tph~
+	
+/* ******************* */
+
+BEGIN @992 //全局修正
+DESIGNATED 992
+GROUP @0 //全局和文本修正
+
+INCLUDE ~%INST_FOLDER%/992.tph~
+	
+/* ******************* */
+
+BEGIN @993 //全局设定
+DESIGNATED 993
+GROUP @0 //全局和文本修正
+
+INCLUDE ~%INST_FOLDER%/993.tph~
+					
+/* ******************* */
+/* ******************* */
+/* ******************* */
+	
+BEGIN @101 //队友属性、宗派职业修改
+DESIGNATED 101
+GROUP @1 //生物相关
+
+INCLUDE ~%INST_FOLDER%/101.tph~
+
+/* ******************* */
+
+	
+BEGIN @102 //敌对生物属性调整
+DESIGNATED 102
+GROUP @1 //生物相关
+
+INCLUDE ~%INST_FOLDER%/102.tph~
+
+/* ******************* */
+	
+BEGIN @103 //掉落修正
+DESIGNATED 103
+GROUP @1 //生物相关
+
+INCLUDE ~%INST_FOLDER%/103.tph~
+
+/* ******************* */
+	
+BEGIN @104 //其他修改和修正
+DESIGNATED 104
+GROUP @1 //生物相关
+
+INCLUDE ~%INST_FOLDER%/104.tph~
+
+/* ******************* */
+/* ******************* */
+/* ******************* */
+	
+BEGIN @201 //错误的物品说明和效果修正
+DESIGNATED 201
+GROUP @2 //物品相关
+
+INCLUDE ~%INST_FOLDER%/201.tph~
+
+/* ******************* */	
+
+BEGIN @202 //物品可用性调整
+DESIGNATED 202
+GROUP @2 //物品相关
+
+INCLUDE ~%INST_FOLDER%/202.tph~
+
+/* ******************* */	
+
+BEGIN @203 //物品属性全局修改
+DESIGNATED 203
+GROUP @2 //物品相关
+
+INCLUDE ~%INST_FOLDER%/203.tph~
+					
+/* ******************* */
+	
+BEGIN @204 //特殊物品属性修订
+DESIGNATED 204
+GROUP @2 //物品相关
+
+INCLUDE ~%INST_FOLDER%/204.tph~					
+
+/* ******************* */
+/* ******************* */
+/* ******************* */					
+	
+BEGIN @301 //错误的法术说明和效果修正
+DESIGNATED 301
+GROUP @3 //法术相关
+
+INCLUDE ~%INST_FOLDER%/301.tph~				
+
+/* ******************* */		
+	
+BEGIN @302 //法术攻防类法术修改
+DESIGNATED 302
+GROUP @3 //法术相关
+
+INCLUDE ~%INST_FOLDER%/302.tph~				
+
+/* ******************* */
+	
+BEGIN @303 //其他法术修改
+DESIGNATED 303
+GROUP @3 //法术相关
+
+INCLUDE ~%INST_FOLDER%/303.tph~			
+
+/* ******************* */
+/* ******************* */
+/* ******************* */					
+	
+BEGIN @401 //区域设置
+DESIGNATED 401
+GROUP @4 //杂项设置
+
+INCLUDE ~%INST_FOLDER%/401.tph~				
+
+/* ******************* */					
+	
+BEGIN @402 //商店相关
+DESIGNATED 402
+GROUP @4 //杂项设置
+
+INCLUDE ~%INST_FOLDER%/402.tph~				
+
+/* ******************* */					
+	
+BEGIN @403 //合成升级
+DESIGNATED 403
+GROUP @4 //杂项设置
+
+INCLUDE ~%INST_FOLDER%/403.tph~				
+
+/* ******************* */					
+	
+BEGIN @404 //任务与剧情
+DESIGNATED 404
+GROUP @4 //杂项设置
+
+INCLUDE ~%INST_FOLDER%/404.tph~				
+
+/* ******************* */						
+/* ******************* */						
+/* ******************* */							
+	
+BEGIN @444000 //任务与剧情
+DESIGNATED 444000
+
+//bg1物品随机导入bg2
+INCLUDE ~%LIBS%/random_import/random_import.tph~
+
+//强化狄摩高根战斗
+INCLUDE ~%LIBS%/Enhanced_Demogorgon/Enhanced_Demogorgon.tph~
+
+//敌对生物获得额外属性奖励
+INCLUDE ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies_Creation.tph~
+
+
+/* ******************* */						
+/* ******************* */						
+/* ******************* */									
+	
+BEGIN ~Make Biff~
+DESIGNATED 999999
+
+ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
+	AT_UNINSTALL ~rm -rf %MOD_FOLDER%/biffs~
+END ELSE BEGIN
+	AT_UNINSTALL ~rd /q /s %MOD_FOLDER%/biffs~ EXACT
+	AT_UNINSTALL ~del data\c4#bif*.bif~ EXACT
+END
+
+LAM biff_files
+
+	

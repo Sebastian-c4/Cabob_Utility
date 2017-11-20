@@ -1,0 +1,11 @@
+IF
+  Global("BG1DrizztItem","GLOBAL",0)
+  OR(3)
+    PartyHasItem("CHAN06")
+    PartyHasItem("SW1H15")
+    PartyHasItem("SW1H16")
+THEN
+  RESPONSE #100
+    SetGlobal("BG1DrizztItem","GLOBAL",1)
+    Continue()
+END

@@ -1,0 +1,2817 @@
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,1)
+	!Global("c4RI#T1N1","Global",1)
+	!Global("c4RI#T1N2","Global",1)
+	!Global("c4RI#T1N3","Global",1)
+	!Global("c4RI#T1N4","Global",1)
+	!Global("c4RI#T1N5","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",1)
+END
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,2)
+	!Global("c4RI#T1N1","Global",2)
+	!Global("c4RI#T1N2","Global",2)
+	!Global("c4RI#T1N3","Global",2)
+	!Global("c4RI#T1N4","Global",2)
+	!Global("c4RI#T1N5","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",2)
+END
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,3)
+	!Global("c4RI#T1N1","Global",3)
+	!Global("c4RI#T1N2","Global",3)
+	!Global("c4RI#T1N3","Global",3)
+	!Global("c4RI#T1N4","Global",3)
+	!Global("c4RI#T1N5","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",3)
+END
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,4)
+	!Global("c4RI#T1N1","Global",4)
+	!Global("c4RI#T1N2","Global",4)
+	!Global("c4RI#T1N3","Global",4)
+	!Global("c4RI#T1N4","Global",4)
+	!Global("c4RI#T1N5","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",4)
+END
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,5)
+	!Global("c4RI#T1N1","Global",5)
+	!Global("c4RI#T1N2","Global",5)
+	!Global("c4RI#T1N3","Global",5)
+	!Global("c4RI#T1N4","Global",5)
+	!Global("c4RI#T1N5","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",5)
+END
+
+IF
+	Global("c4RI#T1N1","Global",0)
+	RandomNum(6,6)
+	!Global("c4RI#T1N1","Global",6)
+	!Global("c4RI#T1N2","Global",6)
+	!Global("c4RI#T1N3","Global",6)
+	!Global("c4RI#T1N4","Global",6)
+	!Global("c4RI#T1N5","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N1","Global",6)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,1)
+	!Global("c4RI#T1N1","Global",1)
+	!Global("c4RI#T1N2","Global",1)
+	!Global("c4RI#T1N3","Global",1)
+	!Global("c4RI#T1N4","Global",1)
+	!Global("c4RI#T1N5","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",1)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,2)
+	!Global("c4RI#T1N1","Global",2)
+	!Global("c4RI#T1N2","Global",2)
+	!Global("c4RI#T1N3","Global",2)
+	!Global("c4RI#T1N4","Global",2)
+	!Global("c4RI#T1N5","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",2)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,3)
+	!Global("c4RI#T1N1","Global",3)
+	!Global("c4RI#T1N2","Global",3)
+	!Global("c4RI#T1N3","Global",3)
+	!Global("c4RI#T1N4","Global",3)
+	!Global("c4RI#T1N5","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",3)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,4)
+	!Global("c4RI#T1N1","Global",4)
+	!Global("c4RI#T1N2","Global",4)
+	!Global("c4RI#T1N3","Global",4)
+	!Global("c4RI#T1N4","Global",4)
+	!Global("c4RI#T1N5","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",4)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,5)
+	!Global("c4RI#T1N1","Global",5)
+	!Global("c4RI#T1N2","Global",5)
+	!Global("c4RI#T1N3","Global",5)
+	!Global("c4RI#T1N4","Global",5)
+	!Global("c4RI#T1N5","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",5)
+END
+
+IF
+	Global("c4RI#T1N2","Global",0)
+	RandomNum(6,6)
+	!Global("c4RI#T1N1","Global",6)
+	!Global("c4RI#T1N2","Global",6)
+	!Global("c4RI#T1N3","Global",6)
+	!Global("c4RI#T1N4","Global",6)
+	!Global("c4RI#T1N5","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N2","Global",6)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,1)
+	!Global("c4RI#T1N1","Global",1)
+	!Global("c4RI#T1N2","Global",1)
+	!Global("c4RI#T1N3","Global",1)
+	!Global("c4RI#T1N4","Global",1)
+	!Global("c4RI#T1N5","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",1)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,2)
+	!Global("c4RI#T1N1","Global",2)
+	!Global("c4RI#T1N2","Global",2)
+	!Global("c4RI#T1N3","Global",2)
+	!Global("c4RI#T1N4","Global",2)
+	!Global("c4RI#T1N5","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",2)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,3)
+	!Global("c4RI#T1N1","Global",3)
+	!Global("c4RI#T1N2","Global",3)
+	!Global("c4RI#T1N3","Global",3)
+	!Global("c4RI#T1N4","Global",3)
+	!Global("c4RI#T1N5","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",3)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,4)
+	!Global("c4RI#T1N1","Global",4)
+	!Global("c4RI#T1N2","Global",4)
+	!Global("c4RI#T1N3","Global",4)
+	!Global("c4RI#T1N4","Global",4)
+	!Global("c4RI#T1N5","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",4)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,5)
+	!Global("c4RI#T1N1","Global",5)
+	!Global("c4RI#T1N2","Global",5)
+	!Global("c4RI#T1N3","Global",5)
+	!Global("c4RI#T1N4","Global",5)
+	!Global("c4RI#T1N5","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",5)
+END
+
+IF
+	Global("c4RI#T1N3","Global",0)
+	RandomNum(6,6)
+	!Global("c4RI#T1N1","Global",6)
+	!Global("c4RI#T1N2","Global",6)
+	!Global("c4RI#T1N3","Global",6)
+	!Global("c4RI#T1N4","Global",6)
+	!Global("c4RI#T1N5","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N3","Global",6)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,1)
+	!Global("c4RI#T1N1","Global",1)
+	!Global("c4RI#T1N2","Global",1)
+	!Global("c4RI#T1N3","Global",1)
+	!Global("c4RI#T1N4","Global",1)
+	!Global("c4RI#T1N5","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",1)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,2)
+	!Global("c4RI#T1N1","Global",2)
+	!Global("c4RI#T1N2","Global",2)
+	!Global("c4RI#T1N3","Global",2)
+	!Global("c4RI#T1N4","Global",2)
+	!Global("c4RI#T1N5","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",2)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,3)
+	!Global("c4RI#T1N1","Global",3)
+	!Global("c4RI#T1N2","Global",3)
+	!Global("c4RI#T1N3","Global",3)
+	!Global("c4RI#T1N4","Global",3)
+	!Global("c4RI#T1N5","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",3)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,4)
+	!Global("c4RI#T1N1","Global",4)
+	!Global("c4RI#T1N2","Global",4)
+	!Global("c4RI#T1N3","Global",4)
+	!Global("c4RI#T1N4","Global",4)
+	!Global("c4RI#T1N5","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",4)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,5)
+	!Global("c4RI#T1N1","Global",5)
+	!Global("c4RI#T1N2","Global",5)
+	!Global("c4RI#T1N3","Global",5)
+	!Global("c4RI#T1N4","Global",5)
+	!Global("c4RI#T1N5","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",5)
+END
+
+IF
+	Global("c4RI#T1N4","Global",0)
+	RandomNum(6,6)
+	!Global("c4RI#T1N1","Global",6)
+	!Global("c4RI#T1N2","Global",6)
+	!Global("c4RI#T1N3","Global",6)
+	!Global("c4RI#T1N4","Global",6)
+	!Global("c4RI#T1N5","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N4","Global",6)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,1)
+	!Global("c4RI#T1N1","Global",1)
+	!Global("c4RI#T1N2","Global",1)
+	!Global("c4RI#T1N3","Global",1)
+	!Global("c4RI#T1N4","Global",1)
+	!Global("c4RI#T1N5","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",1)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,2)
+	!Global("c4RI#T1N1","Global",2)
+	!Global("c4RI#T1N2","Global",2)
+	!Global("c4RI#T1N3","Global",2)
+	!Global("c4RI#T1N4","Global",2)
+	!Global("c4RI#T1N5","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",2)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,3)
+	!Global("c4RI#T1N1","Global",3)
+	!Global("c4RI#T1N2","Global",3)
+	!Global("c4RI#T1N3","Global",3)
+	!Global("c4RI#T1N4","Global",3)
+	!Global("c4RI#T1N5","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",3)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,4)
+	!Global("c4RI#T1N1","Global",4)
+	!Global("c4RI#T1N2","Global",4)
+	!Global("c4RI#T1N3","Global",4)
+	!Global("c4RI#T1N4","Global",4)
+	!Global("c4RI#T1N5","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",4)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,5)
+	!Global("c4RI#T1N1","Global",5)
+	!Global("c4RI#T1N2","Global",5)
+	!Global("c4RI#T1N3","Global",5)
+	!Global("c4RI#T1N4","Global",5)
+	!Global("c4RI#T1N5","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",5)
+END
+
+IF
+	Global("c4RI#T1N5","Global",0)
+	RandomNum(6,6)
+	!Global("c4RI#T1N1","Global",6)
+	!Global("c4RI#T1N2","Global",6)
+	!Global("c4RI#T1N3","Global",6)
+	!Global("c4RI#T1N4","Global",6)
+	!Global("c4RI#T1N5","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T1N5","Global",6)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",1)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",2)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",3)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",4)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",5)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",6)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",7)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",8)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",9)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",10)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",11)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",12)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",13)
+END
+
+IF
+	Global("c4RI#T2N1","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N1","Global",14)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",1)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",2)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",3)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",4)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",5)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",6)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",7)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",8)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",9)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",10)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",11)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",12)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",13)
+END
+
+IF
+	Global("c4RI#T2N2","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N2","Global",14)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",1)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",2)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",3)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",4)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",5)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",6)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",7)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",8)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",9)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",10)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",11)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",12)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",13)
+END
+
+IF
+	Global("c4RI#T2N3","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N3","Global",14)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",1)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",2)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",3)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",4)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",5)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",6)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",7)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",8)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",9)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",10)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",11)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",12)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",13)
+END
+
+IF
+	Global("c4RI#T2N4","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N4","Global",14)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",1)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",2)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",3)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",4)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",5)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",6)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",7)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",8)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",9)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",10)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",11)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",12)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",13)
+END
+
+IF
+	Global("c4RI#T2N5","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N5","Global",14)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",1)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",2)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",3)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",4)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",5)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",6)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",7)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",8)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",9)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",10)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",11)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",12)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",13)
+END
+
+IF
+	Global("c4RI#T2N6","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N6","Global",14)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",1)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",2)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",3)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",4)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",5)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",6)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",7)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",8)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",9)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",10)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",11)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",12)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",13)
+END
+
+IF
+	Global("c4RI#T2N7","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N7","Global",14)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",1)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",2)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",3)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",4)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",5)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",6)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",7)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",8)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",9)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",10)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",11)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",12)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",13)
+END
+
+IF
+	Global("c4RI#T2N8","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N8","Global",14)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,1)
+	!Global("c4RI#T2N1","Global",1)
+	!Global("c4RI#T2N2","Global",1)
+	!Global("c4RI#T2N3","Global",1)
+	!Global("c4RI#T2N4","Global",1)
+	!Global("c4RI#T2N5","Global",1)
+	!Global("c4RI#T2N6","Global",1)
+	!Global("c4RI#T2N7","Global",1)
+	!Global("c4RI#T2N8","Global",1)
+	!Global("c4RI#T2N9","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",1)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,2)
+	!Global("c4RI#T2N1","Global",2)
+	!Global("c4RI#T2N2","Global",2)
+	!Global("c4RI#T2N3","Global",2)
+	!Global("c4RI#T2N4","Global",2)
+	!Global("c4RI#T2N5","Global",2)
+	!Global("c4RI#T2N6","Global",2)
+	!Global("c4RI#T2N7","Global",2)
+	!Global("c4RI#T2N8","Global",2)
+	!Global("c4RI#T2N9","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",2)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,3)
+	!Global("c4RI#T2N1","Global",3)
+	!Global("c4RI#T2N2","Global",3)
+	!Global("c4RI#T2N3","Global",3)
+	!Global("c4RI#T2N4","Global",3)
+	!Global("c4RI#T2N5","Global",3)
+	!Global("c4RI#T2N6","Global",3)
+	!Global("c4RI#T2N7","Global",3)
+	!Global("c4RI#T2N8","Global",3)
+	!Global("c4RI#T2N9","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",3)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,4)
+	!Global("c4RI#T2N1","Global",4)
+	!Global("c4RI#T2N2","Global",4)
+	!Global("c4RI#T2N3","Global",4)
+	!Global("c4RI#T2N4","Global",4)
+	!Global("c4RI#T2N5","Global",4)
+	!Global("c4RI#T2N6","Global",4)
+	!Global("c4RI#T2N7","Global",4)
+	!Global("c4RI#T2N8","Global",4)
+	!Global("c4RI#T2N9","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",4)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,5)
+	!Global("c4RI#T2N1","Global",5)
+	!Global("c4RI#T2N2","Global",5)
+	!Global("c4RI#T2N3","Global",5)
+	!Global("c4RI#T2N4","Global",5)
+	!Global("c4RI#T2N5","Global",5)
+	!Global("c4RI#T2N6","Global",5)
+	!Global("c4RI#T2N7","Global",5)
+	!Global("c4RI#T2N8","Global",5)
+	!Global("c4RI#T2N9","Global",5)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",5)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,6)
+	!Global("c4RI#T2N1","Global",6)
+	!Global("c4RI#T2N2","Global",6)
+	!Global("c4RI#T2N3","Global",6)
+	!Global("c4RI#T2N4","Global",6)
+	!Global("c4RI#T2N5","Global",6)
+	!Global("c4RI#T2N6","Global",6)
+	!Global("c4RI#T2N7","Global",6)
+	!Global("c4RI#T2N8","Global",6)
+	!Global("c4RI#T2N9","Global",6)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",6)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,7)
+	!Global("c4RI#T2N1","Global",7)
+	!Global("c4RI#T2N2","Global",7)
+	!Global("c4RI#T2N3","Global",7)
+	!Global("c4RI#T2N4","Global",7)
+	!Global("c4RI#T2N5","Global",7)
+	!Global("c4RI#T2N6","Global",7)
+	!Global("c4RI#T2N7","Global",7)
+	!Global("c4RI#T2N8","Global",7)
+	!Global("c4RI#T2N9","Global",7)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",7)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,8)
+	!Global("c4RI#T2N1","Global",8)
+	!Global("c4RI#T2N2","Global",8)
+	!Global("c4RI#T2N3","Global",8)
+	!Global("c4RI#T2N4","Global",8)
+	!Global("c4RI#T2N5","Global",8)
+	!Global("c4RI#T2N6","Global",8)
+	!Global("c4RI#T2N7","Global",8)
+	!Global("c4RI#T2N8","Global",8)
+	!Global("c4RI#T2N9","Global",8)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",8)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,9)
+	!Global("c4RI#T2N1","Global",9)
+	!Global("c4RI#T2N2","Global",9)
+	!Global("c4RI#T2N3","Global",9)
+	!Global("c4RI#T2N4","Global",9)
+	!Global("c4RI#T2N5","Global",9)
+	!Global("c4RI#T2N6","Global",9)
+	!Global("c4RI#T2N7","Global",9)
+	!Global("c4RI#T2N8","Global",9)
+	!Global("c4RI#T2N9","Global",9)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",9)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,10)
+	!Global("c4RI#T2N1","Global",10)
+	!Global("c4RI#T2N2","Global",10)
+	!Global("c4RI#T2N3","Global",10)
+	!Global("c4RI#T2N4","Global",10)
+	!Global("c4RI#T2N5","Global",10)
+	!Global("c4RI#T2N6","Global",10)
+	!Global("c4RI#T2N7","Global",10)
+	!Global("c4RI#T2N8","Global",10)
+	!Global("c4RI#T2N9","Global",10)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",10)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,11)
+	!Global("c4RI#T2N1","Global",11)
+	!Global("c4RI#T2N2","Global",11)
+	!Global("c4RI#T2N3","Global",11)
+	!Global("c4RI#T2N4","Global",11)
+	!Global("c4RI#T2N5","Global",11)
+	!Global("c4RI#T2N6","Global",11)
+	!Global("c4RI#T2N7","Global",11)
+	!Global("c4RI#T2N8","Global",11)
+	!Global("c4RI#T2N9","Global",11)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",11)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,12)
+	!Global("c4RI#T2N1","Global",12)
+	!Global("c4RI#T2N2","Global",12)
+	!Global("c4RI#T2N3","Global",12)
+	!Global("c4RI#T2N4","Global",12)
+	!Global("c4RI#T2N5","Global",12)
+	!Global("c4RI#T2N6","Global",12)
+	!Global("c4RI#T2N7","Global",12)
+	!Global("c4RI#T2N8","Global",12)
+	!Global("c4RI#T2N9","Global",12)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",12)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,13)
+	!Global("c4RI#T2N1","Global",13)
+	!Global("c4RI#T2N2","Global",13)
+	!Global("c4RI#T2N3","Global",13)
+	!Global("c4RI#T2N4","Global",13)
+	!Global("c4RI#T2N5","Global",13)
+	!Global("c4RI#T2N6","Global",13)
+	!Global("c4RI#T2N7","Global",13)
+	!Global("c4RI#T2N8","Global",13)
+	!Global("c4RI#T2N9","Global",13)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",13)
+END
+
+IF
+	Global("c4RI#T2N9","Global",0)
+	RandomNum(14,14)
+	!Global("c4RI#T2N1","Global",14)
+	!Global("c4RI#T2N2","Global",14)
+	!Global("c4RI#T2N3","Global",14)
+	!Global("c4RI#T2N4","Global",14)
+	!Global("c4RI#T2N5","Global",14)
+	!Global("c4RI#T2N6","Global",14)
+	!Global("c4RI#T2N7","Global",14)
+	!Global("c4RI#T2N8","Global",14)
+	!Global("c4RI#T2N9","Global",14)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T2N9","Global",14)
+END
+
+IF
+	Global("c4RI#T3N1","Global",0)
+	RandomNum(4,1)
+	!Global("c4RI#T3N1","Global",1)
+	!Global("c4RI#T3N2","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N1","Global",1)
+END
+
+IF
+	Global("c4RI#T3N1","Global",0)
+	RandomNum(4,2)
+	!Global("c4RI#T3N1","Global",2)
+	!Global("c4RI#T3N2","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N1","Global",2)
+END
+
+IF
+	Global("c4RI#T3N1","Global",0)
+	RandomNum(4,3)
+	!Global("c4RI#T3N1","Global",3)
+	!Global("c4RI#T3N2","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N1","Global",3)
+END
+
+IF
+	Global("c4RI#T3N1","Global",0)
+	RandomNum(4,4)
+	!Global("c4RI#T3N1","Global",4)
+	!Global("c4RI#T3N2","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N1","Global",4)
+END
+
+IF
+	Global("c4RI#T3N2","Global",0)
+	RandomNum(4,1)
+	!Global("c4RI#T3N1","Global",1)
+	!Global("c4RI#T3N2","Global",1)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N2","Global",1)
+END
+
+IF
+	Global("c4RI#T3N2","Global",0)
+	RandomNum(4,2)
+	!Global("c4RI#T3N1","Global",2)
+	!Global("c4RI#T3N2","Global",2)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N2","Global",2)
+END
+
+IF
+	Global("c4RI#T3N2","Global",0)
+	RandomNum(4,3)
+	!Global("c4RI#T3N1","Global",3)
+	!Global("c4RI#T3N2","Global",3)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N2","Global",3)
+END
+
+IF
+	Global("c4RI#T3N2","Global",0)
+	RandomNum(4,4)
+	!Global("c4RI#T3N1","Global",4)
+	!Global("c4RI#T3N2","Global",4)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#T3N2","Global",4)
+END
+
+IF
+	Global("c4RI#Completed","Global",0)
+	!Global("c4RI#T1N1","Global",0)
+	!Global("c4RI#T1N2","Global",0)
+	!Global("c4RI#T1N3","Global",0)
+	!Global("c4RI#T1N4","Global",0)
+	!Global("c4RI#T1N5","Global",0)
+	!Global("c4RI#T2N1","Global",0)
+	!Global("c4RI#T2N2","Global",0)
+	!Global("c4RI#T2N3","Global",0)
+	!Global("c4RI#T2N4","Global",0)
+	!Global("c4RI#T2N5","Global",0)
+	!Global("c4RI#T2N6","Global",0)
+	!Global("c4RI#T2N7","Global",0)
+	!Global("c4RI#T2N8","Global",0)
+	!Global("c4RI#T2N9","Global",0)
+	!Global("c4RI#T3N1","Global",0)
+	!Global("c4RI#T3N2","Global",0)
+	!Global("c4RI#T1N1","Global",0)
+	!Global("c4RI#T1N2","Global",0)
+	!Global("c4RI#T1N3","Global",0)
+	!Global("c4RI#T1N4","Global",0)
+	!Global("c4RI#T1N5","Global",0)
+	!Global("c4RI#T2N1","Global",0)
+	!Global("c4RI#T2N2","Global",0)
+	!Global("c4RI#T2N3","Global",0)
+	!Global("c4RI#T2N4","Global",0)
+	!Global("c4RI#T2N5","Global",0)
+	!Global("c4RI#T2N6","Global",0)
+	!Global("c4RI#T2N7","Global",0)
+	!Global("c4RI#T2N8","Global",0)
+	!Global("c4RI#T2N9","Global",0)
+	!Global("c4RI#T3N1","Global",0)
+	!Global("c4RI#T3N2","Global",0)
+	
+THEN
+	RESPONSE #100
+		SetGlobal("c4RI#Completed","Global",1)
+		DestroySelf()
+END

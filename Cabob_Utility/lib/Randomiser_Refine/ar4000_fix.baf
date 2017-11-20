@@ -1,0 +1,7 @@
+
+IF
+	!Global("EndOfBG1","Global",2)
+THEN
+	RESPONSE #100
+		SetGlobal("EndOfBG1","Global",2)
+END

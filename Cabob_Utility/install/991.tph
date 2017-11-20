@@ -1,0 +1,28 @@
+
+/* //////////////////////////////////// */
+/* 全局和文本 */
+/* 文本修正 */
+/* //////////////////////////////////// */
+	
+//修正各等级武器专精说明文字
+STRING_SET 32117 @99001
+STRING_SET 32118 @99002
+STRING_SET 32119 @99003
+STRING_SET 32120 @99004
+
+//翻译修正
+STRING_SET 67694 @99005
+STRING_SET 67707 @99006
+STRING_SET 30530 @99007
+STRING_SET 64593 @99008
+STRING_SET 64650 @99009
+
+//文本修正统一
+ALTER_TLK BEGIN
+	FOR (i=99101;i<99196;i+=2) BEGIN
+		SET j=i+1
+		SPRINT ~old_string~ (AT i)
+		SPRINT ~new_string~ (AT j)
+		REPLACE_TEXTUALLY ~%old_string%~ ~%new_string%~
+	END
+END

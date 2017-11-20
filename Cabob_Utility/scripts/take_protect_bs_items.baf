@@ -1,0 +1,10 @@
+
+IF
+	Allegiance("RR#VEND",ENEMY)
+	Global("TakeProtectBackStabItems","rr#001",0)
+THEN
+	RESPONSE #100
+		SetGlobal("TakeProtectBackStabItems","rr#001",1)
+		ActionOverride("rr#vend",TakeItemListParty("c_protbs"))
+		Continue()
+END

@@ -1,0 +1,145 @@
+
+
+OUTER_TEXT_SPRINT RAN ~%LIBS%/random_import~
+
+COPY - ~%RAN%/items.2da~ ~%RAN%/items.2da~
+	SET ~item_t1max~ =0
+	SET ~item_t2max~ =0
+	SET ~item_t3max~ =0
+	READ_2DA_ENTRIES_NOW rows 5
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 1 item
+		READ_2DA_ENTRY_FORMER rows i 2 tier
+		SPRINT $items(~%item%~) ~%tier%~
+		FOR (j=1;j<4;++j) BEGIN
+			PATCH_IF ~%tier%~ STR_EQ ~%j%~ BEGIN
+				SET ~item_t%j%max~ +=1
+			END
+		END
+	END
+	
+COPY - ~%RAN%/locations.2da~ ~%RAN%/locations.2da~
+	SET ~loc_t1max~ =0
+	SET ~loc_t2max~ =0
+	SET ~loc_t3max~ =0
+	READ_2DA_ENTRIES_NOW rows 5
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 1 map
+		READ_2DA_ENTRY_FORMER rows i 2 creature
+		READ_2DA_ENTRY_FORMER rows i 3 tier
+		SPRINT $locations(~%map%~) ~%creature%~
+		FOR (j=1;j<4;++j) BEGIN
+			PATCH_IF ~%tier%~ STR_EQ ~%j%~ BEGIN
+				SET ~loc_t%j%max~ +=1
+			END
+		END
+	END
+
+//过渡时记录
+COPY ~%RAN%/aram00_0.baf~ ~%RAN%/aram00_work.baf~
+	FOR (i=1;i<4;++i) BEGIN //每个tier计数归零
+		SET now=1
+		PHP_EACH items AS item => tier BEGIN
+			PATCH_IF ~%tier%~ STR_EQ ~%i%~ BEGIN
+				APPEND_FILE_EVALUATE ~%RAN%/aram00_1.baf~
+				SET now+=1
+			END
+		END
+	END
+	
+COPY_EXISTING aram00.bcs override
+	R_B_B ~%RAN%/aram00_0.baf~ ~%RAN%/aram00_work.baf~
+BUT_ONLY
+
+//随机过程
+COPY ~.../inlined/blank.baf~ ~%RAN%/random_item.baf~
+	FOR (tier=1;tier<4;++tier) BEGIN
+		SET item_max=~%item_t%tier%max%~
+		SET loc_max=~%loc_t%tier%max%~
+		FOR (now=1;now<=item_max;++now) BEGIN
+			FOR (seed=1;seed<=loc_max;++seed) BEGIN
+				INNER_ACTION BEGIN
+					COPY ~%RAN%/random_item1.baf~ ~%RAN%/random_item2.baf~
+						FOR (i=1;i<=item_max;++i) BEGIN
+							REPLACE_TEXTUALLY ~True()~ ~!Global("c4RI#T%tier%N%i%","Global",%seed%)%LNL%%TAB%True()~
+						END
+				END
+				APPEND_FILE_EVALUATE ~%RAN%/random_item2.baf~
+			END
+			INNER_ACTION BEGIN
+				COPY ~%RAN%/random_item0.baf~ ~%RAN%/random_item0.baf~
+					REPLACE_TEXTUALLY ~True()~ ~!Global("c4RI#T%tier%N%now%","Global",0)%LNL%%TAB%True()~
+			END
+		END
+	END
+	APPEND_FILE_EVALUATE ~%RAN%/random_item0.baf~
+	REPLACE_TEXTUALLY ~True()~ ~~
+
+LAF create_one_observer STR_VAR name=c4rnd01 specific=~Global("c4RI#Completed","Global",0)~ END
+EXTEND_BOTTOM ~c4rnd01.bcs~ ~%RAN%/random_item.baf~
+
+//物品创建
+COPY ~.../inlined/blank.baf~ ~%RAN%/create_item.baf~
+
+OUTER_FOR (tier=1;tier<4;++tier) BEGIN
+	OUTER_SET item_max=~%item_t%tier%max%~
+	OUTER_SET loc_max=~%loc_t%tier%max%~
+	OUTER_FOR (now=1;now<=item_max;++now) BEGIN
+		OUTER_FOR (seed=1;seed<=loc_max;++seed) BEGIN
+			COPY - ~%RAN%/items.2da~ ~%RAN%/items.2da~
+				READ_2DA_ENTRIES_NOW rows 5
+				FOR (i=0;i<rows;++i) BEGIN
+					READ_2DA_ENTRY_FORMER rows i 0 num
+					READ_2DA_ENTRY_FORMER rows i 1 item0
+					READ_2DA_ENTRY_FORMER rows i 2 tier0
+					PATCH_IF
+						~%num%~ STR_EQ ~%now%~ AND
+						~%tier0%~ STR_EQ ~%tier%~
+					BEGIN
+						SPRINT item ~%item0%~
+						SET i=rows
+					END
+				END
+			COPY - ~%RAN%/locations.2da~ ~%RAN%/locations.2da~
+				READ_2DA_ENTRIES_NOW rows 5
+				FOR (i=0;i<rows;++i) BEGIN
+					READ_2DA_ENTRY_FORMER rows i 0 num
+					READ_2DA_ENTRY_FORMER rows i 1 area0
+					READ_2DA_ENTRY_FORMER rows i 2 creature0
+					READ_2DA_ENTRY_FORMER rows i 3 tier0
+					PATCH_IF
+						~%num%~ STR_EQ ~%seed%~ AND
+						~%tier0%~ STR_EQ ~%tier%~
+					BEGIN
+						SPRINT area ~%area0%~
+						SPRINT creature ~%creature0%~
+						SET i=rows
+					END
+				END
+			COPY ~%RAN%/create_item.baf~ ~%RAN%/create_item.baf~
+				APPEND_FILE_EVALUATE ~%RAN%/create_item1.baf~
+		END
+	END
+END
+
+LAF create_one_observer STR_VAR name=c4rnd02 END
+EXTEND_BOTTOM ~c4rnd02.bcs~ ~%RAN%/create_item.baf~
+	
+//全局脚本中的提示
+EXTEND_BOTTOM baldur.bcs ~%RAN%/string_in_baldur.baf~
+	
+//将被随机的物品设置为不可出售
+ACTION_PHP_EACH items AS item => int BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		WRITE_BYTE 0x18 (THIS BAND 0b11110111)
+	IF_EXISTS BUT_ONLY
+END
+		
+//精灵锁子甲+2从高篱堡移到喀尔可身上
+COPY_EXISTING highhedg.sto override
+	REMOVE_STORE_ITEM ~ECHAN01~
+BUT_ONLY
+
+COPY_EXISTING kahrk.cre override
+	ADD_CRE_ITEM ECHAN01 #0 #0 #0 IDENTIFIED ARMOR
+BUT_ONLY

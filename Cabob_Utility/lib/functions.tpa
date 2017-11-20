@@ -1,0 +1,1003 @@
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+// partially borrowed from: 
+// https://github.com/Gibberlings3/ItemRevisions/blob/master/item_rev/lib/macros.tpa
+
+DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
+
+PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.spl~) BEGIN
+  hs = 0x28
+  WRITE_LONG 0xc ~-1~ //Identified name
+  WRITE_LONG 0x54 ~-1~ //Identified description
+  PATCH_FOR_EACH tz IN 0x44 0x48 0x58 0x5c BEGIN
+    WRITE_LONG tz 0
+  END
+END ELSE PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.itm~) BEGIN
+  hs = 0x38
+END
+READ_LONG 0x64 hf //Extended header offset
+READ_SHORT 0x68 hc //Extended header count
+READ_LONG 0x6a fb //Feature block table offset
+READ_SHORT 0x70 fc //Feature block count
+PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN // Ardanis: fixed "hc > 1" to "hc > 0"
+  READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+  PATCH_IF (~%eh%~ STRING_EQUAL ~fail~) BEGIN
+    WHILE ((~%eh%~ STRING_EQUAL ~fail~) AND (hc > 0)) BEGIN
+      READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+      hc -= 1
+    END
+  END
+  DELETE_BYTES hf (hs * hc)
+  hf = 0x72
+  WRITE_LONG 0x64 hf
+  WRITE_SHORT 0x68 hc
+  fb = (0x72 + (hs * hc))
+  WRITE_LONG 0x6a fb
+  PATCH_IF !(~%eh%~ STRING_EQUAL ~fail~) BEGIN
+    INSERT_BYTES hf (hs * hc)
+    WRITE_ASCIIE hf ~%eh%~
+  END
+END ELSE PATCH_IF ((hf != 0x72) AND (hc = 0)) BEGIN
+  hf = 0x72
+  WRITE_LONG 0x64 hf
+END
+FOR (i1 = 0; i1 < (hs * hc); i1 += hs) BEGIN
+  WRITE_SHORT (hf + i1 + 0x20) fc
+  READ_SHORT (hf + i1 + 0x1e) cx
+  fc += cx
+END
+PATCH_IF (SOURCE_SIZE > (0x72 + (hs * hc) + (0x30 * fc))) BEGIN
+  DELETE_BYTES (0x72 + (hs * hc) + (0x30 * fc)) (SOURCE_SIZE - (0x72 + (hs * hc) + (0x30 * fc)))
+END
+
+// added by Ardanis
+WRITE_SHORT 0x6e 0
+
+END // end of function
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION ~CREATE_SPELL~
+  INT_VAR
+    type=4
+    level=1
+    school=0
+    sectype=0
+    flags=0
+  STR_VAR
+    spell=~ag#dummy~
+BEGIN
+<<<<<<<<...inlined/ag#dummy.spl
+>>>>>>>>
+COPY ~...inlined/ag#dummy.spl~ ~override/%spell%.spl~
+  INSERT_BYTES 0 0x72
+  WRITE_ASCII 0 ~SPL V1  ~
+
+  WRITE_LONG 0x18 flags
+  WRITE_SHORT 0x1c type
+  WRITE_SHORT 0x25 school
+  WRITE_BYTE 0x27 sectype
+  WRITE_LONG 0x34 level
+
+  WRITE_LONG 0xc `0
+  WRITE_LONG 0x54 `0
+  WRITE_LONG 0x64 0x72
+  WRITE_LONG 0x6a 0x72
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ~ADD_SPELL_HEADER~
+  INT_VAR
+    type=1
+    location=4
+    target=1
+    target_count=0
+    range=0
+    required_level=1
+    speed=0
+    projectile=1
+
+    copy_header=0
+    insert_point=~-1~
+  STR_VAR
+    icon=~~
+  RET
+    insert_point
+BEGIN
+  LPF ~FJ_SPL_ITM_REINDEX~ END
+  hs=0x28
+	
+  READ_LONG 0x64 ho
+  READ_SHORT 0x68 hc
+  READ_LONG 0x6a eo
+  insert_point = (insert_point>hc || insert_point<0) ? hc : insert_point
+  copy_header = (copy_header<0) ? 0 : copy_header
+
+  PATCH_IF copy_header>hc BEGIN
+    PATCH_WARN ~Unable to copy %copy_header%th header, %SOURCE_FILE% contains only %hc% headers!~
+  END ELSE BEGIN
+    INSERT_BYTES ho+insert_point*hs hs
+    hc+=1
+    eo+=hs
+    PATCH_IF copy_header BEGIN
+      READ_SHORT ho+(copy_header - 1)*hs+0x1e ec
+      READ_SHORT ho+(copy_header - 1)*hs+0x20 ei
+      READ_ASCII eo+ei*0x30 effs (ec*0x30)
+      READ_ASCII ho+(copy_header - 1)*hs copy (hs)
+      WRITE_ASCIIE ho+insert_point*hs ~%copy%~ (hs)
+    END
+    WRITE_SHORT 0x68 hc
+    WRITE_LONG 0x6a eo
+
+    READ_SHORT 0x70 ei // technically, it is a counter
+    FOR (i=ho;i<ho+hc*hs;i+=hs) BEGIN
+      READ_SHORT i+0x1e ec
+      WRITE_SHORT i+0x20 ei
+      ei+=ec
+    END
+
+    PATCH_IF copy_header BEGIN
+      READ_SHORT ho+insert_point*hs+0x1e ec
+      READ_SHORT ho+insert_point*hs+0x20 ei
+      INSERT_BYTES eo+ei*0x30 ec*0x30
+      WRITE_ASCIIE eo+ei*0x30 ~%effs%~ (ec*0x30)
+    END ELSE BEGIN
+      off=ho+insert_point*hs
+      WRITE_BYTE off type
+      WRITE_BYTE off+0x2 location
+      WRITE_ASCIIE off+0x4 ~%icon%~ (8)
+      WRITE_BYTE off+0xc target
+      WRITE_BYTE off+0xd target_count
+      WRITE_SHORT off+0xe range
+      WRITE_SHORT off+0x10 required_level
+      WRITE_LONG off+0x12 speed
+      WRITE_SHORT off+0x26 projectile
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_ACTION_FUNCTION CREATE_EFFECT
+	INT_VAR
+		opcode=0
+		target=2
+		timing=0
+		duration=0
+		parameter1=0
+		parameter2=0
+		parameter3=0
+    parameter4=0
+		probability1=100
+		probability2=0
+		power=0
+		special=0
+		dicenumber=0
+		dicesize=0
+		resist_dispel=0
+		savebonus=0
+		savingthrow=0
+	STR_VAR
+		resource=~~
+		vvc=~~
+		resource2=~~
+		variable=~~
+		name=~~
+BEGIN
+	CREATE EFF ~%name%~
+		WRITE_LONG 0x10 opcode
+		WRITE_LONG 0x14 target
+		WRITE_LONG 0x18 power
+		WRITE_LONG 0x1c parameter1
+		WRITE_LONG 0x20 parameter2
+		WRITE_SHORT 0x24 timing
+		WRITE_LONG 0x28 duration
+		WRITE_SHORT 0x2c probability1
+		WRITE_SHORT 0x2e probability2
+		WRITE_LONG 0x38 dicenumber
+		WRITE_LONG 0x3C dicesize
+		WRITE_LONG 0x40 savingthrow
+		WRITE_LONG 0x44 savebonus
+		WRITE_LONG 0x48 special
+		WRITE_LONG 0x5c resist_dispel
+		WRITE_LONG 0x60 parameter3
+		WRITE_LONG 0x64 parameter4
+		WRITE_ASCIIE 0x30 ~%resource%~
+		WRITE_ASCIIE 0x68 ~%vvc%~
+		WRITE_ASCIIE 0x70 ~%resource2%~
+		WRITE_ASCIIE 0xa8 ~%variable%~
+END		
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_ACTION_MACRO read_ids BEGIN
+	ACTION_IF !FILE_EXISTS_IN_GAME ~c4_stat_temp.ids~ THEN BEGIN
+		LAM check_existance
+	END		
+	COPY_EXISTING - ~c4_stat_temp.ids~ override
+		READ_2DA_ENTRIES_NOW rows 2
+		FOR (i=0;i<rows;i+=1) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 0 value_
+			READ_2DA_ENTRY_FORMER rows i 1 identifier_
+			SPRINT $stat_exists(~%value_%~) ~%identifier_%~
+		END
+END
+
+DEFINE_ACTION_FUNCTION find_stat_output INT_VAR stats_input=500 STR_VAR identifier_input=~~ RET stat_value_output BEGIN
+	ACTION_IF !VARIABLE_IS_SET $stat_exists(1) THEN BEGIN
+		LAM read_ids
+	END
+	OUTER_SET exist=0
+	ACTION_IF !VARIABLE_IS_SET modder_prefix THEN BEGIN
+		OUTER_SPRINT modder_prefix ~c4~
+	END
+	ACTION_PHP_EACH stat_exists AS value => string BEGIN
+		ACTION_IF ~%identifier_input%~ STR_EQ ~%string%~ THEN BEGIN
+			OUTER_SET stat_value_output = value
+			// PRINT ~%identifier_input% exists, value = %value%~
+			OUTER_SET exist=1
+		END
+	END
+	ACTION_IF exist=0 THEN BEGIN
+		OUTER_SET stat_value_output=stats_input
+		OUTER_SET x=stat_value_output
+		OUTER_WHILE x<32768 BEGIN
+			OUTER_SET skip=0
+			ACTION_PHP_EACH stat_exists AS value => string BEGIN
+				ACTION_IF x=value THEN BEGIN
+					OUTER_SET skip=1
+				END
+			END
+			ACTION_IF skip=0 THEN BEGIN
+				OUTER_SET stats_input=stat_value_output
+				OUTER_SET x=32768
+			END ELSE BEGIN 
+				OUTER_SET stat_value_output +=1
+				OUTER_SET x+=1
+			END
+		END
+	END
+END
+
+DEFINE_ACTION_FUNCTION find_stat INT_VAR stats_now=stats_offset STR_VAR identifier=~~ RET stat_value BEGIN
+
+	LAF find_stat_output INT_VAR stats_input=%stats_now% STR_VAR identifier_input=EVAL ~%identifier%~ RET stat_value=%stat_value_output% END
+	
+	OUTER_SET $stat_exists(~%stat_value%~)=1
+	ACTION_IF (STRING_LENGTH ~%identifier%~) >0 THEN BEGIN
+		APPEND ~c4_stat_temp.ids~ ~%stat_value% %identifier%~ UNLESS ~%identifier%~ 
+		APPEND ~%engine_ids_file%.ids~ ~%stat_value% %identifier%~ UNLESS ~%identifier%~ 
+	END
+	
+END
+
+DEFINE_PATCH_FUNCTION find_stat INT_VAR stats_now=stats_offset STR_VAR identifier=~~ RET stat_value BEGIN
+
+	INNER_ACTION BEGIN
+		LAF find_stat_output INT_VAR stats_input=%stats_now% STR_VAR identifier_input=EVAL ~%identifier%~ RET stat_value=%stat_value_output% END
+	
+		OUTER_SET $stat_exists(~%stat_value%~)=1
+		ACTION_IF (STRING_LENGTH ~%identifier%~) >0 THEN BEGIN
+			APPEND ~c4_stat_temp.ids~ ~%stat_value% %identifier%~ UNLESS ~%identifier%~ 
+			APPEND ~%engine_ids_file%.ids~ ~%stat_value% %identifier%~ UNLESS ~%identifier%~ 
+		END
+	END
+	
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_PATCH_FUNCTION ADD_UNIQUE_MARK
+	INT_VAR 
+		check_globals=1
+		check_headers=1
+		match_opcode = ~-1~
+		match_target = ~-1~
+		match_power = ~-1~
+		match_parameter1 = ~-1~
+		match_parameter2 = ~-1~
+		match_timing = ~-1~
+		match_resist_dispel = ~-1~
+		match_duration = ~-1~
+		match_probability1 = ~-1~
+		match_probability2 = ~-1~
+		match_dicenumber = ~-1~
+		match_dicesize = ~-1~
+		match_savingthrow = ~-1~
+		match_savebonus = ~-11~
+		match_special = ~-1~
+	STR_VAR 
+		identifier=~~
+		match_resource=~SAME~
+BEGIN
+	LPF find_stat STR_VAR identifier=EVAL ~%identifier%~ RET stat=stat_value END
+	stat+=%engine_stat_type%
+	LPF CLONE_EFFECT 
+		INT_VAR 
+			multi_match=1
+			check_globals
+			check_headers
+			match_opcode
+			match_target
+			match_power
+			match_parameter1
+			match_parameter2
+			match_timing
+			match_resist_dispel
+			match_duration
+			match_probability1
+			match_probability2
+			match_dicenumber
+			match_dicesize
+			match_savingthrow
+			match_savebonus
+			match_special
+			opcode=%engine_mark_type%
+			parameter1=%engine_value_type%
+			parameter2=%stat%
+			special=%engine_special_type%
+		STR_VAR
+			resource=~~
+			silent=1
+			insert=below
+			match_resource
+	END
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_ACTION_FUNCTION C4_HANDLE_CHARSETS STR_VAR lang_path=~tra~ BEGIN	
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY character_set BEGIN
+		schinese => CP936
+		tschinese => CP950
+		czech => CP1250
+		polish => CP1250
+		polski => CP1250
+		english => CP1252
+		american => CP1252
+		french => CP1252
+		francais => CP1252
+		german => CP1252
+		deutsch => CP1252
+		italian => CP1252
+		italiano => CP1252
+		spanish => CP1252
+		castilian => CP1252
+		espanol => CP1252
+		castellano => CP1252
+		japanese => CP932
+		korean => CP949
+	END
+	
+	ACTION_IF GAME_IS ~bgee bg2ee eet~ THEN BEGIN
+		ACTION_IF ~%WEIDU_OS%~ STR_EQ ~WIN32~ THEN BEGIN
+			MKDIR ~%MOD_FOLDER%/%lang_path%/ee/%LANGUAGE%~
+			COPY ~%MOD_FOLDER%/%lang_path%/%LANGUAGE%~ ~%MOD_FOLDER%/%lang_path%/ee/%LANGUAGE%~
+			LAF HANDLE_CHARSETS 
+				INT_VAR
+					infer_charset = 1
+				STR_VAR 
+					tra_path = EVAL ~%MOD_FOLDER%/%lang_path%/ee~
+					iconv_path = EVAL ~%MOD_FOLDER%/iconv~
+					charset_table=character_set
+					convert_array=utf8convert
+					noconvert_array=utf8noconvert
+					reload_array=utf8reload
+			END
+		END ELSE BEGIN
+			LAF HANDLE_CHARSETS 
+				INT_VAR
+					infer_charset = 1
+				STR_VAR
+					tra_path = EVAL ~%MOD_FOLDER%/%lang_path%/ee~
+					charset_table=character_set
+					convert_array=utf8convert
+					noconvert_array=utf8noconvert
+					reload_array=utf8reload
+			END
+		END
+	END	
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_PATCH_FUNCTION CLONE_SPELL_HEADER
+	INT_VAR
+		source_required_level = 1
+		required_level = 2
+BEGIN
+	// read and check
+	READ_BYTE		5 										version
+  READ_LONG  	0x64									header_offset
+  READ_SHORT 	0x68									header_count
+  READ_LONG  	0x6a									feature_offset
+	READ_SHORT 	0x6e									cfeature_offset
+	READ_SHORT 	0x70									cfeature_count
+  READ_SHORT 	header_offset + 0x20 	header1_feature_offset
+	
+	PATCH_IF
+				(SOURCE_SIZE > 0x71)
+		&& 	(source_required_level > 0)
+		&& 	(required_level > 1)
+		&&	(version = 49)
+		&&	(header_count > 0)
+		&&	(header_offset + header_count*0x28 + cfeature_offset = feature_offset)
+		&&	(cfeature_count = header1_feature_offset)
+	BEGIN
+		valid = 1
+	END ELSE BEGIN
+		valid = 0
+		PATCH_FAIL ~WRONG input or NOT a valid file !!~
+	END
+	
+	PATCH_IF valid BEGIN // if passed check
+		insert = 0 // check if source header exists and define the insert point at the same time
+		
+		FOR (hd=0;hd<header_count;++hd) BEGIN
+		
+			// read entire source header
+			READ_SHORT header_offset + hd*0x28 + 0x10 rlevel
+			PATCH_IF rlevel=source_required_level BEGIN
+				insert = hd + 1
+				READ_ASCII header_offset + hd*0x28					source_header (0x28)
+				READ_SHORT header_offset + hd*0x28 + 0x20 	source_header_feature_offset
+				READ_SHORT header_offset + hd*0x28 + 0x1e 	source_header_feature_count
+				
+				// read entire feature block of this header
+				source_header_feature_size = (source_header_feature_count * 0x30)
+				READ_ASCII (feature_offset + source_header_feature_offset * 0x30) source_header_feature (source_header_feature_size)
+			END
+			
+			// if a header with required level equals to the input required_level, skip this patch and display a warning			
+			PATCH_IF insert > 0 BEGIN
+				next = insert
+				WHILE next < header_count + 1 BEGIN
+					READ_SHORT header_offset + next*0x28 + 0x10 rlevel_next
+					PATCH_IF rlevel_next < required_level BEGIN
+						insert = next
+						next += 1
+					END
+					PATCH_IF rlevel_next = required_level BEGIN
+						PATCH_WARN ~A header with required leve %required_level% already exists, patch skipped !!~
+						insert = 0
+						next = header_count + 1
+					END
+					PATCH_IF rlevel_next > required_level BEGIN
+						next = header_count + 1
+					END
+				END
+			END
+			
+		END
+		
+		// insert bytes
+		PATCH_IF insert >0 BEGIN
+			
+			// update global value
+			header_count += 1
+			feature_offset += 0x28
+			WRITE_SHORT	0x68	header_count
+			WRITE_LONG	0x6a	feature_offset
+		
+			INSERT_BYTES (header_offset + insert*0x28) 0x28
+			WRITE_ASCIIE (header_offset + insert*0x28) ~%source_header%~
+			WRITE_SHORT (header_offset + insert*0x28 + 0x10) required_level
+			INSERT_BYTES (feature_offset + source_header_feature_offset * 0x30 + source_header_feature_count * 0x30) source_header_feature_size
+			WRITE_ASCIIE (feature_offset + source_header_feature_offset * 0x30 + source_header_feature_size) ~%source_header_feature%~
+			
+			// update feature_offset in each header
+			offset = cfeature_count
+			FOR (hd=0;hd<header_count;++hd) BEGIN
+				WRITE_SHORT header_offset + hd*0x28 + 0x20		offset
+				READ_SHORT 	header_offset + hd*0x28 + 0x1e	 	count
+				offset += count
+			END
+			
+		END // end of insert bytes
+		
+	END // end of valid check
+	
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+
+DEFINE_PATCH_FUNCTION CREATE_HEADERS_AS_LEVEL 
+	INT_VAR 
+		max_level = 50
+		level_increment = 2
+		level_multiplier = 1 
+BEGIN
+	
+  READ_SHORT	0x68	header_count
+	
+  PATCH_IF 
+				(max_level > 1)
+		&&	(level_increment > 0)
+		&&	(level_multiplier > 0)
+		&&	(header_count = 1) 
+	BEGIN
+		FOR (required_level=level_increment; required_level<=max_level; required_level+=level_multiplier) BEGIN
+			LPF CLONE_SPELL_HEADER INT_VAR required_level END
+		END
+	END
+
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+
+DEFINE_PATCH_FUNCTION ALTER_HEADER_EFFECTS_AS_LEVEL 
+	INT_VAR 
+		match_header 				= 999999  
+		match_opcode 				= 999999 
+		match_target 				= 999999 
+		match_power 				= 999999 
+		match_parameter1 		= 999999 
+		match_parameter2 		= 999999 
+		match_timing 				= 999999 
+		match_resist_dispel = 999999 
+		match_duration 			= 999999 
+		match_probability1 	= 999999 
+		match_probability2 	= 999999 
+		match_dicenumber 		= 999999 
+		match_dicesize 			= 999999 
+		match_savingthrow 	= 999999 
+		match_savebonus 		= 999999  	
+		match_special 			= 999999  	
+		
+		parameter1 					= 999999
+		multi_parameter1 		= 0
+		duration 						= 999999
+		multi_duration 			= 0
+		dicenumber 					= 999999
+		multi_dicenumber 		= 0
+		savebonus 					= 999999
+		multi_savebonus 		= 0
+		probability1 				= 999999
+		multi_probability1 	= 0
+		probability2 				= 999999
+		multi_probability2 	= 0		
+	STR_VAR 
+		match_resource 	= ~~
+		resource 				= ~~
+		suffix_list 		= ~~
+BEGIN
+		
+	// check if is a spl file
+	PATCH_IF ~%SOURCE_EXT%~ STR_EQ ~SPL~ = 0 BEGIN
+		PATCH_FAIL ~Only .spl supported~
+	END
+		
+	// set first
+	m = 0
+	resource_length = STRING_LENGTH ~%resource%~
+	suffix_length = STRING_LENGTH ~%suffix_list%~
+	PATCH_IF resource_length = 0 && suffix_length > 0 BEGIN
+		PATCH_WARN ~Suffix can be set only if "resource" includes more than 1 character !! No new resource would be set !!~
+	END
+		
+	// read effects
+	GET_OFFSET_ARRAY header  SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT 	offset 			opcode_
+			READ_BYTE 	offset+2 		target_
+			READ_BYTE 	offset+3 		power_
+			READ_LONG 	offset+4 		parameter1_
+			READ_LONG 	offset+8 		parameter2_
+			READ_BYTE 	offset+0xc 	timing_
+			READ_BYTE 	offset+0xd 	resist_dispel_
+			READ_LONG 	offset+0xe 	duration_
+			READ_BYTE 	offset+0x12 probability1_
+			READ_BYTE 	offset+0x13 probability2_
+			READ_LONG 	offset+0x1c dicenumber_
+			READ_LONG 	offset+0x20 dicesize_
+			READ_LONG 	offset+0x24 savingthrow_
+			READ_LONG 	offset+0x28 savebonus_
+			READ_LONG 	offset+0x28 special_
+			READ_ASCII 	offset+0x14 resource_
+			
+			// check match
+			PATCH_IF  
+						(opcode_				= match_opcode							|| match_opcode 				= 999999)
+				&&  (target_				= match_target							|| match_target 				= 999999)
+				&&  (power_					= match_power								|| match_power 					= 999999)
+				&&  (parameter1_		= match_parameter1					|| match_parameter1 		= 999999)
+				&&  (parameter2_		= match_parameter2					|| match_parameter2 		= 999999)
+				&&  (timing_				= match_timing							|| match_timing 				= 999999)
+				&&  (resist_dispel_	= match_resist_dispel				|| match_resist_dispel 	= 999999)
+				&&  (duration_ 			= match_duration						|| match_duration 			= 999999)
+				&&  (probability1_ 	= match_probability1 				|| match_probability1 	= 999999)
+				&&  (probability2_ 	= match_probability2 				|| match_probability2 	= 999999)
+				&&  (dicenumber_ 		= match_dicenumber 					|| match_dicenumber 		= 999999)
+				&&  (dicesize_ 			= match_dicesize 						|| match_dicesize 			= 999999)
+				&&  (savingthrow_		= match_savingthrow 				|| match_savingthrow 		= 999999)
+				&&  (savebonus_			= match_savebonus 					|| match_savebonus 			= 999999)
+				&&  (special_	 			= match_special		 					|| match_special 				= 999999)
+				&& 	((~%resource_%~ STR_EQ ~%match_resource%~) 	|| (~%match_resource%~ STR_EQ ~~))
+			BEGIN
+			
+				// set new value
+        PATCH_IF multi_parameter1 != 0 THEN BEGIN
+					PATCH_IF parameter1 != 999999 BEGIN
+						WRITE_LONG offset+4 parameter1	+ m*multi_parameter1
+					END ELSE BEGIN
+						WRITE_LONG offset+4 parameter1_	+ m*multi_parameter1
+					END
+				END
+				
+        PATCH_IF multi_duration != 0 THEN BEGIN
+					PATCH_IF duration != 999999 BEGIN
+						WRITE_LONG offset+0xe duration	+ m*multi_duration
+					END ELSE BEGIN
+						WRITE_LONG offset+0xe duration_	+ m*multi_duration
+					END
+				END
+				
+        PATCH_IF multi_dicenumber != 0 THEN BEGIN
+					PATCH_IF dicenumber != 999999 BEGIN
+						WRITE_LONG offset+0x1c dicenumber	+ m*multi_dicenumber
+					END ELSE BEGIN
+						WRITE_LONG offset+0x1c dicenumber_	+ m*multi_dicenumber
+					END
+				END
+				
+        PATCH_IF multi_savebonus != 0 THEN BEGIN
+					PATCH_IF savebonus != 999999 BEGIN
+						WRITE_LONG offset+0x28 savebonus	+ m*multi_savebonus
+					END ELSE BEGIN
+						WRITE_LONG offset+0x28 savebonus_	+ m*multi_savebonus
+					END
+				END
+				
+        PATCH_IF multi_probability1 != 0 THEN BEGIN
+					PATCH_IF probability1 != 999999 BEGIN
+						WRITE_BYTE offset+0x12 probability1		+ m*multi_probability1
+					END ELSE BEGIN
+						WRITE_BYTE offset+0x12 probability1_	+ m*multi_probability1
+					END
+				END
+				
+        PATCH_IF multi_probability2 != 0 THEN BEGIN
+					PATCH_IF probability2 != 999999 BEGIN
+						WRITE_BYTE offset+0x13 probability2		+ m*multi_probability2
+					END ELSE BEGIN
+						WRITE_BYTE offset+0x13 probability2_	+ m*multi_probability2
+					END
+				END
+				
+				PATCH_IF suffix_length > 0 BEGIN
+				
+					PATCH_IF m < suffix_length BEGIN
+						LPF SUBSTRING INT_VAR start=m length=1 STR_VAR string=~%suffix_list%~ RET suffix=substring END
+					END ELSE LPF SUBSTRING INT_VAR start= suffix_length - 1 length=1 STR_VAR string=~%suffix_list%~ RET suffix=substring END
+					
+					PATCH_IF resource_length > 0 BEGIN
+						SPRINT new_resource ~%resource%~^~%suffix%~
+					END ELSE SPRINT new_resource ~%resource_%~
+					
+					PATCH_IF (STRING_LENGTH ~%new_resource%~) >8 BEGIN
+						PATCH_FAIL ~New resource CANNOT include more than 8 characters !!~
+					END
+					
+				END ELSE BEGIN
+				
+					PATCH_IF resource_length > 0 BEGIN
+						SPRINT new_resource ~%resource%~
+					END ELSE SPRINT new_resource ~%resource_%~
+					
+				END
+				
+				WRITE_ASCIIE offset+0x14 ~%new_resource%~
+				
+			END // end of check 
+		END // end of GET_OFFSET_ARRAY2
+		
+		m += 1 // increment multiplier
+	END //end of GET_OFFSET_ARRAY
+	
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+
+DEFINE_PATCH_FUNCTION ADD_ITEM_HEADER 
+	INT_VAR				
+		//无标注的默认0
+		new_header_type 			=	3 //新建的头部类型, 默认3-魔法
+		identify 							=	0 // 是否需要辨识后才能使用
+		location 							= 3 // 技能位置, 3-装备
+		target 								= 1 // 目标,默认1-生物
+		range 								= 40 // 射程,默认40
+		launcher 							= 0 // 投射类型
+		speed 								= 0 // 速度
+		//以下几个仅类型1-武器有效
+		thac0_bonus 					= 0 // THAC0奖励
+		dicesize 							= 0 // 伤害骰面
+		dicenumber 						= 0 // 伤害骰数
+		damage_bonus 					= 0 // 伤害奖励
+		damage_type 					= 0 // 伤害类型
+		animation_overhand		= 0 // 动画几率-劈砍
+		animation_backhand		= 0 // 动画几率-挥砍
+		animation_thrust			= 0 // 动画几率-穿刺
+		//////
+		primary_type 					= 0 // 基础学派
+		secondary_type 				= 0 // 次要学派
+		charges 							= 0 // 充能数
+		drained 							= 0 // 充能类型
+		projectile 						= 0 // 投射动画
+		arrow 								= 0 // 弹药类型-箭
+		bolt 									= 0 // 弹药类型-矢
+		bullet 								= 0 // 弹药类型-弹丸
+		flag_strength 				= 0// 使用力量奖励
+		flag_break 						= 0 // 易碎
+		flag_hostile 					= 0 // 敌对
+		flag_recharge 				= 0 // 是否可充能
+		flag_bypass 					= 0 // 无视盾, 仅IWD2
+		flag_keenedge 				= 0 // 锋锐, 仅IWD2
+		flag_backstab 				= 0 // 可背刺, 仅EE, 或安装了ToBEx并开启
+		flag_noinvisible			= 0 // 无法瞄准隐形生物, 仅EE, 或安装了ToBEx并开启
+	STR_VAR 
+		icon 									= ~~ // 使用图标
+		name 									= ~~ // 提示文字, 可用@+数字读取tra文件, 或直接输入文字.
+	RET
+		new_header 								 //新建的头部位置, 供ADD_ITEM_EFFECT调用
+BEGIN
+		PATCH_IF STRING_LENGTH ~%DEST_EXT%~ >0 BEGIN
+			SPRINT item_name ~%DEST_RES%~
+		END ELSE SPRINT item_name ~%SOURCE_RES%~
+		
+		READ_LONG 0x64 offset_h
+		READ_SHORT 0x68 count_h	
+		READ_SHORT 0x70 total
+		FOR(i=0;i<count_h;i+=1) BEGIN
+			READ_SHORT offset_h+i*0x38+0x1e num1
+			total+=num1
+		END
+		
+		INSERT_BYTES offset_h+count_h*0x38 (0x38)
+		WRITE_BYTE offset_h+count_h*0x38 99
+		WRITE_SHORT offset_h+count_h*0x38+0x20 total
+		
+		WRITE_SHORT 0x68 THIS +1
+		WRITE_LONG 0x6a THIS + 0x38
+		new_header=count_h+1
+		
+		LPF ALTER_ITEM_HEADER 
+			INT_VAR 
+				match_icon=0
+				header_type=99
+				new_header_type
+				identify
+				location
+				target
+				range
+				launcher
+				speed
+				thac0_bonus
+				dicesize
+				primary_type
+				dicenumber
+				secondary_type
+				damage_bonus
+				charges
+				drained
+				projectile
+				animation_overhand
+				animation_backhand
+				animation_thrust
+				arrow
+				bolt
+				bullet
+				flag_strength
+				flag_break
+				flag_hostile
+				flag_recharge
+				flag_bypass
+				flag_keenedge
+				flag_backstab
+				flag_noinvisible
+			STR_VAR
+				icon
+		END
+		
+		PATCH_IF (STRING_LENGTH ~%name%~)>0 THEN BEGIN
+			SNPRINT 1 tra ~%name%~ 
+			PATCH_IF ~%tra%~ STR_EQ ~@~ THEN BEGIN
+				len=STRING_LENGTH ~%name%~
+				PATCH_IF len>1 THEN BEGIN
+					LPF SUBSTRING INT_VAR start=1 length=~%len%~ -1 STR_VAR string=EVAL ~%name%~ RET name1=substring END
+				END
+				SPRINT strref (AT %name1%)
+				index = RESOLVE_STR_REF (~%strref%~)
+			END ELSE BEGIN
+				SPRINT strref ~%name%~
+				index = RESOLVE_STR_REF (~%strref%~)
+			END
+		END
+		
+		PATCH_IF new_header<4 THEN BEGIN		
+			INNER_ACTION BEGIN
+				APPEND TOOLTIP.2da ~%item_name% -1 -1 -1~ UNLESS ~%item_name%~
+				COPY_EXISTING TOOLTIP.2da override
+					READ_2DA_ENTRIES_NOW rows 4
+					FOR (i=0;i<rows;i+=1) BEGIN
+						READ_2DA_ENTRY_FORMER rows i 0 item
+						PATCH_IF ~%item%~ STR_EQ ~%item_name%~ THEN BEGIN
+							SET_2DA_ENTRY_LATER set i new_header index
+						END
+					END
+					SET_2DA_ENTRIES_NOW set 4
+				BUT_ONLY
+			END
+		END
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_ACTION_FUNCTION create_observer STR_VAR name=~~ specific=~~ BEGIN
+<<<<<<<< .../inlined/create_observer_baldur1.baf
+IF
+	InPartyAllowDead(Player%n%)
+	%specific%
+	!Exists("%name%%n%")
+THEN
+	RESPONSE #100
+		CreateCreatureImpassable("%name%%n%",[1.1],0)
+		Continue()
+END
+>>>>>>>>
+<<<<<<<< .../inlined/create_observer_crescript.baf
+>>>>>>>>
+
+	OUTER_SET namelength = STRING_LENGTH ~%name%~
+	ACTION_IF namelength>0 && namelength<8 BEGIN
+		OUTER_FOR (n=1;n<7;n+=1) BEGIN
+			COPY_EXISTING bird.cre ~override\%name%%n%.cre~
+				LPF ADD_CRE_EFFECT INT_VAR opcode = 293 timing = 9 target = 1 parameter2 = 1 END
+				LPF ADD_CRE_EFFECT INT_VAR opcode = 66 timing = 9 target = 1 parameter1 = 255 END
+				LPF ADD_CRE_EFFECT INT_VAR opcode = 287 timing = 9 target = 1 END
+				LPF ADD_CRE_EFFECT INT_VAR opcode = 310 timing = 9 target = 1 parameter2 = 1 END
+				WRITE_LONG 0x8 ~-1~
+				WRITE_LONG 0xc ~-1~
+				WRITE_LONG 0x28 0xc500
+				WRITE_BYTE 0x53 1
+				WRITE_BYTE 0x270 0x80
+				WRITE_ASCIIE 0xa4 ~~ #400
+				WRITE_ASCIIE 0x248 ~%name%%n%~ #40
+				WRITE_ASCIIE 0x280 ~%name%%n%~ #32
+			EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~.../inlined/create_observer_baldur1.baf~ EVAL EVAL
+			COPY_EXISTING blank.bcs ~override/%name%%n%.bcs~
+			EXTEND_BOTTOM ~%name%%n%.bcs~ ~.../inlined/create_observer_crescript.baf~ EVAL
+		END
+	END ELSE BEGIN
+		PRINT ~Wrong creature name specified !!~
+		AT_NOW ~pause~
+	END
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_ACTION_FUNCTION create_one_observer STR_VAR name=~~ specific=~~ BEGIN
+<<<<<<<< .../inlined/create_one_observer_baldur1.baf
+IF
+	InPartyAllowDead(Player1)
+	%specific%
+	!Exists("%name%")
+THEN
+	RESPONSE #100
+		CreateCreatureImpassable("%name%",[1.1],0)
+		Continue()
+END
+>>>>>>>>
+<<<<<<<< .../inlined/create_one_observer_crescript.baf
+>>>>>>>>
+
+	OUTER_SET namelength = STRING_LENGTH ~%name%~
+	ACTION_IF namelength>0 && namelength<9 BEGIN
+		COPY_EXISTING bird.cre ~override\%name%.cre~
+			LPF ADD_CRE_EFFECT INT_VAR opcode = 293 timing = 9 target = 1 parameter2 = 1 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode = 66 timing = 9 target = 1 parameter1 = 255 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode = 287 timing = 9 target = 1 END
+			LPF ADD_CRE_EFFECT INT_VAR opcode = 310 timing = 9 target = 1 parameter2 = 1 END
+			WRITE_LONG 0x8 ~-1~
+			WRITE_LONG 0xc ~-1~
+			WRITE_LONG 0x28 0xc500
+			WRITE_BYTE 0x53 1
+			WRITE_BYTE 0x270 0x80
+			WRITE_ASCIIE 0xa4 ~~ #400
+			WRITE_ASCIIE 0x248 ~%name%~ #40
+			WRITE_ASCIIE 0x280 ~%name%~ #32
+		EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~.../inlined/create_one_observer_baldur1.baf~ EVAL	EVAL	
+		COPY_EXISTING blank.bcs ~override/%name%.bcs~
+		EXTEND_BOTTOM ~%name%.bcs~ ~.../inlined/create_one_observer_crescript.baf~ EVAL
+	END ELSE BEGIN
+		PRINT ~Wrong creature name specified !!~
+		AT_NOW ~pause~
+	END
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////		
+
+DEFINE_ACTION_FUNCTION deactivate_observer STR_VAR name=~~ BEGIN
+<<<<<<<< .../inlined/clear_ob.baf
+IF
+	True()
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+>>>>>>>>
+	
+	COPY_EXISTING_REGEXP ~baldur.*\.bcs~ override
+		DECOMPILE_AND_PATCH BEGIN
+			REPLACE_TEXTUALLY ~!Exists("%name%")~ ~False() !Exists("%name%")~
+		END
+	BUT_ONLY
+	
+	COMPILE ~.../inlined/clear_ob.baf~
+	
+	ACTION_IF FILE_EXISTS_IN_GAME ~%name%.bcs~ BEGIN
+		COPY_EXISTING clear_ob.bcs ~override/%name%.bcs~
+	END
+	
+	DELETE ~override/clear_ob.bcs~
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+		
+DEFINE_PATCH_FUNCTION item_flag RET valid moveable magical two_hand BEGIN
+	valid=0
+	moveable=0
+	magical=0
+	two_hand=0
+	PATCH_IF SOURCE_SIZE>0x71 BEGIN
+		valid=1
+		PATCH_IF valid=1 THEN BEGIN
+			READ_BYTE 0x18 flag_in
+			PATCH_IF (flag_in BAND 0b00000100) = 0b00000100 BEGIN
+				moveable=1
+			END
+			PATCH_IF (flag_in BAND 0b01000000) = 0b01000000 BEGIN
+				magical=1
+			END
+			PATCH_IF (flag_in BAND 0b00000010) = 0b00000010 BEGIN
+				two_hand=1
+			END
+		END
+	END
+END

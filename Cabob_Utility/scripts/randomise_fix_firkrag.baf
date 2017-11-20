@@ -1,0 +1,13 @@
+
+IF
+	Exists("b#fir03")
+	Global("RandomiseFixFirkrag","Global",0)
+THEN
+	RESPONSE #100
+    GiveItemCreate("E3TOOTH","b#fir03",1,0,0)
+    GiveItemCreate("DeITM018","b#fir03",0,0,0)
+    GiveItemCreate("DeITM035","b#fir03",0,0,0)
+    GiveItemCreate("DeITM073","b#fir03",0,0,0)
+    GiveItemCreate("DeITM083","b#fir03",0,0,0)
+		SetGlobal("RandomiseFixFirkrag","Global",1)
+END

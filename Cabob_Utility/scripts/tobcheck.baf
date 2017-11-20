@@ -1,0 +1,11 @@
+
+IF
+	AreaCheckObject("ar4000",Player1)
+	// Global("c4#tobcheck","Global",0)
+THEN
+	RESPONSE #100
+		// SetGlobal("c4#tobcheck","Global",1)
+		// SetGlobal("Chapter","Global",8)
+		MoveToExpansion()
+		Continue()
+END

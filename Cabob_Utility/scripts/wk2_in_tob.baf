@@ -1,0 +1,24 @@
+
+IF
+	WalkedToTrigger([ANYONE])
+	!GlobalTimerNotExpired("Entrance3003Timer","AR3001")
+	Global("PortalOpen","AR3001",1)
+	GLT("Chapter",4)
+THEN
+	RESPONSE #100			
+		ClearActions(LastTrigger)
+		SetGlobalTimer("Entrance3003Timer","AR3001",TWO_MINUTES)
+		DisplayString(LastTrigger,@40103)
+END
+
+IF
+	WalkedToTrigger([ANYONE])
+	!GlobalTimerNotExpired("Entrance3003Timer","AR3001")
+	Global("PortalOpen","AR3001",1)
+	GLT("Chapter",8)
+THEN
+	RESPONSE #100			
+		ClearActions(LastTrigger)
+		SetGlobalTimer("Entrance3003Timer","AR3001",TWO_MINUTES)
+		DisplayString(LastTrigger,@40104)
+END

@@ -1,0 +1,112 @@
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY status1 BEGIN
+	CON => 10
+	DEX => 15
+	STR => 44
+END
+ACTION_DEFINE_ASSOCIATIVE_ARRAY status2 BEGIN
+	CON => 10
+	DEX => 15
+	STR => 44
+	INT => 0
+	WIS => 0
+	CHR => 0
+END
+ACTION_DEFINE_ASSOCIATIVE_ARRAY status3 BEGIN
+	INT => 0
+	WIS => 0
+	CHR => 0
+END
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	GET_OFFSET_ARRAY header ITM_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index ITM_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+4 parameter1
+			READ_LONG offset+8 parameter2
+			READ_BYTE offset+0xc timing
+			PHP_EACH status1 AS stat => opcode0 BEGIN
+				PATCH_IF opcode=opcode0 && timing=0
+							&& ((parameter1<0 && parameter2=0) 
+							|| (parameter1<19 && parameter2=1))
+				BEGIN
+					WRITE_LONG offset+0x2c opcode0+44
+					SET $~mod%stat%~(~%SOURCE_FILE%~)=1
+				END
+			END
+		END
+	END
+	GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+	PHP_EACH effect AS int => offset BEGIN
+		READ_SHORT offset opcode
+		READ_LONG offset+4 parameter1
+		READ_LONG offset+8 parameter2
+		PHP_EACH status1 AS stat => opcode0 BEGIN
+			PATCH_IF opcode=opcode0 && timing=2
+						&& ((parameter1<0 && parameter2=0) 
+						|| (parameter1<19 && parameter2=1))
+			BEGIN
+				WRITE_LONG offset+0x2c opcode0+44
+				SET $~mod%stat%~(~%SOURCE_FILE%~)=1
+			END
+		END
+	END
+BUT_ONLY
+
+COPY_EXISTING_REGEXP GLOB ~.*\.spl~ override
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+4 parameter1
+			READ_LONG offset+8 parameter2
+			PHP_EACH status1 AS stat => opcode0 BEGIN
+				PATCH_IF opcode=opcode0 && timing=0
+							&& ((parameter1<0 && parameter2=0) 
+							|| (parameter1<19 && parameter2=1))
+				BEGIN
+					WRITE_LONG offset+0x2c opcode0+44
+					SET $~mod%stat%~(~%SOURCE_FILE%~)=1
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+ACTION_PHP_EACH status2 AS stat0 => opcode0 BEGIN
+	LAF find_stat STR_VAR identifier=~%stat0%modified~ RET stat=stat_value END
+	OUTER_SET stat+=0x10000
+	ACTION_PHP_EACH ~mod%stat0%~ AS file => int BEGIN
+		COPY_EXISTING ~%file%~ override
+			LPF CLONE_EFFECT INT_VAR silent=1 match_special=opcode0+44 opcode=318 parameter1=1 parameter2=stat END
+			LPF ALTER_EFFECT INT_VAR silent=1 match_special=opcode0+44 special=0 END
+		BUT_ONLY
+	END
+END
+
+OUTER_SPRINT WORK_FOLDER ~%LIBS%/tb#tweaks~
+
+COPY ~%WORK_FOLDER%/lib0~ ~%WORK_FOLDER%/lib~
+	REPLACE_TEXTUALLY ~race_max \+= modifier~ ~race_max=race_max+modifier+1~
+	REPLACE_TEXTUALLY ~EXTEND_BOTTOM_REGEXP~ ~//EXTEND_BOTTOM_REGEXP~
+	REPLACE_TEXTUALLY ~tb#tweaks/~ ~%WORK_FOLDER%/~
+BUT_ONLY
+
+OUTER_SPRINT ~grace~ ~False()~
+INCLUDE ~%WORK_FOLDER%/lib/stat_training_init.tpa~
+INCLUDE ~%WORK_FOLDER%/lib/stat_training_basic.tpa~
+INCLUDE ~%WORK_FOLDER%/lib/stat_training.tpa~
+	
+COPY_EXISTING TB#TWSTA.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		PHP_EACH status3 AS STA => int BEGIN
+			REPLACE_TEXTUALLY ~!CheckStatLT(Myself,[0-9]+,%STA%)~ ~!CheckStatLT(Myself,25,%STA%)~
+		END
+		PHP_EACH status1 AS STA => int BEGIN
+			REPLACE_TEXTUALLY ~!CheckStatLT\(.*%STA%\)~ ~Checkstat(Myself,0,%STA%modified) !CheckStatLT\1~
+		END
+	END
+BUT_ONLY

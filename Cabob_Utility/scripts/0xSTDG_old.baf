@@ -1,0 +1,80 @@
+IF
+Global("DGSign","GLOBAL",1)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGGray",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",2)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGGree",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",3)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGBlac",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",4)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGAmbe",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",5)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGSilv",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",6)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGYell",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",7)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGViol",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",8)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGRed",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",9)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGBlue",Player1)
+END
+
+IF
+Global("DGSign","GLOBAL",10)
+THEN
+RESPONSE #100
+SetGlobal("DGSign","GLOBAL",11)
+ForceSpellRES("DGGold",Player1)
+END
+

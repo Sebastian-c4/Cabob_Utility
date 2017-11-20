@@ -1,0 +1,1805 @@
+
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",1)
+	AreaCheck("AR0405")
+	Exists("HAEGAN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","HAEGAN",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",2)
+	AreaCheck("AR0406")
+	Exists("BEAST")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","BEAST",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",3)
+	AreaCheck("AR0500")
+	Exists("KAYPALA")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","KAYPALA",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",4)
+	AreaCheck("AR0529")
+	Exists("NEB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","NEB",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",5)
+	AreaCheck("AR0411")
+	Exists("OBSHAL01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","OBSHAL01",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N1","Global",1)
+	Global("c4RI#T1N1","Global",6)
+	AreaCheck("AR0300")
+	Exists("DCLERIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("PLATWY","DCLERIC",0,0,0)
+		SetGlobal("c4RI#T1N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",1)
+	AreaCheck("AR0405")
+	Exists("HAEGAN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","HAEGAN",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",2)
+	AreaCheck("AR0406")
+	Exists("BEAST")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","BEAST",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",3)
+	AreaCheck("AR0500")
+	Exists("KAYPALA")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","KAYPALA",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",4)
+	AreaCheck("AR0529")
+	Exists("NEB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","NEB",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",5)
+	AreaCheck("AR0411")
+	Exists("OBSHAL01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","OBSHAL01",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N2","Global",1)
+	Global("c4RI#T1N2","Global",6)
+	AreaCheck("AR0300")
+	Exists("DCLERIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN02","DCLERIC",0,0,0)
+		SetGlobal("c4RI#T1N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",1)
+	AreaCheck("AR0405")
+	Exists("HAEGAN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","HAEGAN",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",2)
+	AreaCheck("AR0406")
+	Exists("BEAST")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","BEAST",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",3)
+	AreaCheck("AR0500")
+	Exists("KAYPALA")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","KAYPALA",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",4)
+	AreaCheck("AR0529")
+	Exists("NEB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","NEB",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",5)
+	AreaCheck("AR0411")
+	Exists("OBSHAL01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","OBSHAL01",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N3","Global",1)
+	Global("c4RI#T1N3","Global",6)
+	AreaCheck("AR0300")
+	Exists("DCLERIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05SW1","DCLERIC",0,0,0)
+		SetGlobal("c4RI#T1N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",1)
+	AreaCheck("AR0405")
+	Exists("HAEGAN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","HAEGAN",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",2)
+	AreaCheck("AR0406")
+	Exists("BEAST")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","BEAST",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",3)
+	AreaCheck("AR0500")
+	Exists("KAYPALA")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","KAYPALA",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",4)
+	AreaCheck("AR0529")
+	Exists("NEB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","NEB",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",5)
+	AreaCheck("AR0411")
+	Exists("OBSHAL01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","OBSHAL01",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N4","Global",1)
+	Global("c4RI#T1N4","Global",6)
+	AreaCheck("AR0300")
+	Exists("DCLERIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("STAFOAK","DCLERIC",0,0,0)
+		SetGlobal("c4RI#T1N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",1)
+	AreaCheck("AR0405")
+	Exists("HAEGAN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","HAEGAN",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",2)
+	AreaCheck("AR0406")
+	Exists("BEAST")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","BEAST",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",3)
+	AreaCheck("AR0500")
+	Exists("KAYPALA")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","KAYPALA",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",4)
+	AreaCheck("AR0529")
+	Exists("NEB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","NEB",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",5)
+	AreaCheck("AR0411")
+	Exists("OBSHAL01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","OBSHAL01",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT1N5","Global",1)
+	Global("c4RI#T1N5","Global",6)
+	AreaCheck("AR0300")
+	Exists("DCLERIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("LEATBAL","DCLERIC",0,0,0)
+		SetGlobal("c4RI#T1N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N1","Global",1)
+	Global("c4RI#T2N1","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BOW08","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N2","Global",1)
+	Global("c4RI#T2N2","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BW05PL1","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N3","Global",1)
+	Global("c4RI#T2N3","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC06","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N3","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N4","Global",1)
+	Global("c4RI#T2N4","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC07","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N4","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N5","Global",1)
+	Global("c4RI#T2N5","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("HAMMLAT","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N5","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N6","Global",1)
+	Global("c4RI#T2N6","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("ECHAN01","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N6","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N7","Global",1)
+	Global("c4RI#T2N7","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBELT01","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N7","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N8","Global",1)
+	Global("c4RI#T2N8","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THBRAC01","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N8","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",1)
+	AreaCheck("AR0205")
+	Exists("UNSEEINGEYE")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","UNSEEINGEYE",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",2)
+	AreaCheck("AR0206")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",3)
+	AreaCheck("AR0301")
+	Exists("MaeVar")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","MaeVar",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",4)
+	AreaCheck("AR0317")
+	Exists("RAYIC")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","RAYIC",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",5)
+	AreaCheck("AR0412")
+	Exists("TOLGER2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","TOLGER2",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",6)
+	AreaCheck("AR0516")
+	Exists("PWARDEN")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","PWARDEN",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",7)
+	AreaCheck("AR0712")
+	Exists("SEVPAT01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","SEVPAT01",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",8)
+	AreaCheck("AR0705")
+	Exists("MEKRATH")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","MEKRATH",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",9)
+	AreaCheck("AR0806")
+	Exists("BHCRYPT")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","BHCRYPT",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",10)
+	AreaCheck("AR0410")
+	Exists("LAVOK02")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","LAVOK02",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",11)
+	AreaCheck("AR0318")
+	Exists("GBLICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","GBLICH01",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",12)
+	AreaCheck("AR0326")
+	Exists("KRGNOME")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","KRGNOME",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",13)
+	AreaCheck("AR1401")
+	Exists("LICH01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","LICH01",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT2N9","Global",1)
+	Global("c4RI#T2N9","Global",14)
+	AreaCheck("AR1202")
+	Exists("FIRMAG01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("BRAC10","FIRMAG01",0,0,0)
+		SetGlobal("c4RI#T2N9","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N1","Global",1)
+	Global("c4RI#T3N1","Global",1)
+	AreaCheck("AR3016")
+	Exists("GORCHR")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THCLCK03","GORCHR",0,0,0)
+		SetGlobal("c4RI#T3N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N1","Global",1)
+	Global("c4RI#T3N1","Global",2)
+	AreaCheck("AR3015")
+	Exists("GORCAMB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THCLCK03","GORCAMB",0,0,0)
+		SetGlobal("c4RI#T3N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N1","Global",1)
+	Global("c4RI#T3N1","Global",3)
+	AreaCheck("AR5204")
+	Exists("HGBER01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THCLCK03","HGBER01",0,0,0)
+		SetGlobal("c4RI#T3N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N1","Global",1)
+	Global("c4RI#T3N1","Global",4)
+	AreaCheck("AR5002")
+	Exists("GROMG08")
+THEN
+	RESPONSE #100
+		GiveItemCreate("THCLCK03","GROMG08",0,0,0)
+		SetGlobal("c4RI#T3N1","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N2","Global",1)
+	Global("c4RI#T3N2","Global",1)
+	AreaCheck("AR3016")
+	Exists("GORCHR")
+THEN
+	RESPONSE #100
+		GiveItemCreate("CROWN","GORCHR",0,0,0)
+		SetGlobal("c4RI#T3N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N2","Global",1)
+	Global("c4RI#T3N2","Global",2)
+	AreaCheck("AR3015")
+	Exists("GORCAMB")
+THEN
+	RESPONSE #100
+		GiveItemCreate("CROWN","GORCAMB",0,0,0)
+		SetGlobal("c4RI#T3N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N2","Global",1)
+	Global("c4RI#T3N2","Global",3)
+	AreaCheck("AR5204")
+	Exists("HGBER01")
+THEN
+	RESPONSE #100
+		GiveItemCreate("CROWN","HGBER01",0,0,0)
+		SetGlobal("c4RI#T3N2","Global",-1)
+END
+	
+IF
+	Global("c4RI#IHaveT3N2","Global",1)
+	Global("c4RI#T3N2","Global",4)
+	AreaCheck("AR5002")
+	Exists("GROMG08")
+THEN
+	RESPONSE #100
+		GiveItemCreate("CROWN","GROMG08",0,0,0)
+		SetGlobal("c4RI#T3N2","Global",-1)
+END
+	

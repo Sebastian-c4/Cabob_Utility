@@ -1,0 +1,502 @@
+
+/* //////////////////////////////////// */
+/* 物品相关 */
+/* 物品属性全局修改 */
+/* //////////////////////////////////// */
+
+/////////////////武器调整/////////////////	  	
+	
+/* 将可以选择近战或远程模式的单手武器分成独立的两个可随时切换的武器，以方便近战模式下使用副手武器（作为合成材料时需要的均为近战形态） */
+COPY_EXISTING_REGEXP - GLOB ~.*\.itm~ override
+	LPF item_flag RET valid moveable two_hand END
+	PATCH_IF valid && moveable && two_hand=0 BEGIN
+		SET todo=0
+		GET_OFFSET_ARRAY header ITM_V10_HEADERS
+		PHP_EACH header AS int => offset BEGIN
+			READ_BYTE offset type
+			PATCH_IF type=1 || type=2 BEGIN //头部类型为近战或远程
+				SET todo+=1
+			END
+		END
+		PATCH_IF todo=2 BEGIN //同时有近战和远程能力
+			SET found_newname=0 //初始化新文件名的查找：使用下划线、减号、井号、数字0为备选替换文件名的第2个字符
+			PATCH_FOR_EACH newname_replace IN ~_~ ~-~ ~#~ ~0~ BEGIN
+				PATCH_IF found_newname=0 BEGIN
+					INNER_PATCH_SAVE newname ~%SOURCE_RES%~ BEGIN
+						WRITE_ASCII 0x1 ~%newname_replace%~ (1)
+					END
+					PATCH_IF NOT FILE_EXISTS_IN_GAME ~%newname%.itm~ BEGIN
+						SPRINT $weapons(~%SOURCE_RES%~) ~%newname%~
+						SET found_newname=1
+						INNER_ACTION BEGIN
+							COPY_EXISTING ~%SOURCE_RES%.itm~ ~override/%newname%.itm~
+								WRITE_SHORT 0x42 0 //新物品无需辨识
+						END
+					END
+				END
+			END
+			PATCH_IF found_newname=0 BEGIN
+				PATCH_FAIL ~文件名存在，需要定义新的替换字符~
+			END
+		END
+	END
+
+//修改现有文件
+ACTION_PHP_EACH weapons AS old => new BEGIN
+	
+	//旧物品
+	COPY_EXISTING ~%old%.itm~ override
+		//修改头部
+		LPF DELETE_ITEM_HEADER INT_VAR header_type=2 END
+		LPF ADD_ITEM_HEADER INT_VAR new_header_type=3 target=5 STR_VAR icon=SPPR711B name=~@20302~ RET new_header END
+		//添加效果
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%new%~ END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%old%~ END
+		//修改名字
+		READ_LONG 0xc name_strref
+		GET_STRREF name_strref name
+		SPRINT suffix (AT 20301)
+		SPRINT name ~%name%~^~%suffix%~
+		SAY 0xc ~%name%~
+	BUT_ONLY
+	
+	//新物品
+	COPY_EXISTING ~%new%.itm~ override
+		//修改头部
+		LPF DELETE_ITEM_HEADER INT_VAR header_type=1 END
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=2 drained=0 END
+		LPF ADD_ITEM_HEADER INT_VAR new_header_type=3 target=5 STR_VAR icon=SPPR711B name=~@20304~ RET new_header END
+		//添加效果
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%old%~ END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%new%~ END
+		//修改名字
+		READ_LONG 0xc name_strref
+		GET_STRREF name_strref name
+		SPRINT suffix (AT 20303)
+		SPRINT name ~%name%~^~%suffix%~
+		SAY 0xc ~%name%~
+	BUT_ONLY
+END
+		
+/* 武器类型调整：流星锤武器精通移改为钉头锤/流星锤 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF item_flag RET valid moveable END
+	PATCH_IF valid && moveable BEGIN
+		READ_SHORT 0x1c type
+		PATCH_IF type=0x16 BEGIN	//流星锤
+			READ_LONG 0x50 unid
+			READ_LONG 0x54 id
+			WRITE_BYTE 0x31 0x65	//专精改成钉头锤系
+			SET $morningstar(~%unid%~)=1
+			SET $morningstar(~%id%~)=1
+		END
+		PATCH_IF type=0x11 BEGIN	//钉头锤
+			READ_LONG 0x50 unid
+			READ_LONG 0x54 id
+			SET $mace(~%unid%~)=1
+			SET $mace(~%id%~)=1
+		END
+		PATCH_IF type=0x17 BEGIN	//链枷
+			READ_LONG 0x50 unid
+			READ_LONG 0x54 id
+			SET $flail(~%unid%~)=1
+			SET $flail(~%id%~)=1
+		END
+	END
+BUT_ONLY
+
+//文本修改
+OUTER_SET $mace(31125)=1	//原钉头锤
+OUTER_SET $mace(34160)=1	//原钉头锤说明
+OUTER_SET $flail(34159)=1	//原链枷/流星锤说明
+
+ACTION_PHP_EACH morningstar AS strref => n BEGIN
+	ACTION_IF strref > 0 BEGIN
+		ALTER_TLK_LIST BEGIN strref END BEGIN
+			SPRINT old (AT 20305)
+			SPRINT new (AT 20307)
+			REPLACE_TEXTUALLY ~%old%~ ~%new%~
+		END
+	END
+END
+
+ACTION_PHP_EACH flail AS strref => n BEGIN
+	ACTION_IF strref > 0 BEGIN
+		ALTER_TLK_LIST BEGIN strref END BEGIN
+			SPRINT old (AT 20305)
+			SPRINT new (AT 20308)
+			REPLACE_TEXTUALLY ~%old%~ ~%new%~
+		END
+	END
+END
+
+ACTION_PHP_EACH mace AS strref => n BEGIN
+	ACTION_IF strref > 0 BEGIN
+		ALTER_TLK_LIST BEGIN strref END BEGIN
+			SPRINT old (AT 20306)
+			SPRINT new (AT 20307)
+			SPRINT old2 (AT 20309)
+			SPRINT new2 (AT 20310)
+			REPLACE_TEXTUALLY ~%old%~ ~%new%~
+			REPLACE_TEXTUALLY ~%old2%~ ~%new2%~
+		END
+	END
+END	
+	
+/* 近战和投射武器调整：
+//1. 基础伤害调整与统一：巨剑1D10、长剑1D8、短剑1D6、斧1D8、双手剑1D12、武士刀1D10、弯刀1D8、匕首1D4+1、战锤2D4、矛1D8、戟1D12、链枷1D8、钉头锤/流星锤1D6+1、手杖1D8、木棒1D6
+//2. 双手武器重击骰+1
+//3. 武器伤害/命中加成与附魔等级统一 */
+
+//回避的特殊武器: 丑陋之杖, 毁灭者+4+5, 3种碎魔, 战锤+1对巨人族+4, 大法师杖, 平衡者, 冰与火, 翡翠斧, 短柄斧, 伊巫瑞特'伊莱克提尔+3
+ACTION_FOR_EACH exclude IN 
+	u#staf01 s#sw2h02 s#sw2h03 blun12 blun25 s#mace01 hamm04 sw1h54 s#ax1h01 deitm006 deitm007 deitm093 
+BEGIN
+	OUTER_SET $exlucded_weapon(~%exclude%~)=1
+END
+
+//有特殊伤害加成的武器：打击之杖、破城锤+4+6
+ACTION_DEFINE_ASSOCIATIVE_ARRAY special_damage BEGIN
+	staf05 => 9
+	staf21 => 10
+	staf22 => 12
+END
+
+//根据专精分类
+ACTION_DEFINE_ASSOCIATIVE_ARRAY proficiency BEGIN
+	0x59 => 10	//巨剑1D10
+	0x5a => 8		//长剑1D8
+	0x5b => 6		//短剑1D6
+	0x5c => 8		//斧1D8
+	0x5d => 12	//双手剑1D12
+	0x5e => 10	//武士刀1D10
+	0x5f => 8		//弯刀1D8
+	0x60 => 4		//匕首1D4+1
+	0x61 => 4		//战锤2D4
+	0x62 => 8		//矛1D8
+	0x63 => 12	//戟1D12
+	0x64 => 8		//链枷1D8
+	0x65 => 6		//钉头锤/流星锤1D6+1
+	0x66 => 8		//手杖1D8
+	0x73 => 6		//木棒1D6
+END
+
+//武器分类设置
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF item_flag RET valid moveable two_hand END
+	PATCH_IF valid && moveable BEGIN
+		//预读取说明并确保不会有多次修改
+		READ_LONG 0x50 unid
+		READ_LONG 0x54 id
+		PATCH_IF id=unid BEGIN WRITE_LONG 0x50 ~-1~ END
+		
+		//判断
+		SET skip=0
+		PHP_EACH exlucded_weapon AS weapon => int BEGIN
+			PATCH_IF ~%weapon%~ STR_EQ ~%SOURCE_RES%~ BEGIN
+				SET skip=1
+			END
+		END
+		PATCH_IF skip=0 BEGIN
+			READ_BYTE 0x31 wtype
+			READ_LONG 0x60 enchantment
+			PHP_EACH proficiency AS type => dicesize BEGIN
+				PATCH_IF type=wtype BEGIN
+					PATCH_IF wtype=0x60 || wtype=0x65 BEGIN
+						SET damage_bonus=1 //匕首、钉头锤/流星锤基础伤害+1，其他0
+					END ELSE SET damage_bonus=0
+					PATCH_IF wtype=0x61 BEGIN
+						SET dicenumber=2 //战锤骰数为2
+					END ELSE SET dicenumber=1
+					
+					//根据附魔匹配伤害和命中加成
+					SET thac0_bonus=enchantment
+					SET damage_bonus=enchantment
+					PHP_EACH special_damage AS spitem => spdamage BEGIN //特殊武器伤害
+						PATCH_IF ~%SOURCE_RES%~ STR_EQ ~%spitem%~ BEGIN
+							SET damage_bonus=spdamage
+						END
+					END
+					LPF ALTER_ITEM_HEADER INT_VAR dicesize dicenumber damage_bonus thac0_bonus END
+					
+					//更新说明
+					SPRINT unold (AT 20315)
+					SPRINT unnew (AT 20312)
+					SPRINT old1 (AT 20313)
+					SPRINT new1 (AT 20314)
+					SPRINT old2 (AT 20315)
+					SPRINT new2_suffix (AT 20316)
+					PATCH_IF damage_bonus>0 BEGIN //当damage_bonus为0时不出现+x的字段
+						SPRINT new2 ~%unnew%~^~%new2_suffix%~
+					END ELSE SPRINT new2 ~%unnew%~
+					
+					PATCH_IF unid>0 BEGIN
+						GET_STRREF unid undesc
+						INNER_PATCH_SAVE undesc ~%undesc%~ BEGIN
+							REPLACE_TEXTUALLY ~%unold%~ ~%unnew%~
+						END
+						INNER_ACTION BEGIN
+							STRING_SET_EVALUATE ~%unid%~ ~%undesc%~
+						END
+					END
+					
+					PATCH_IF id>0 BEGIN
+						GET_STRREF id desc
+						INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+							REPLACE_TEXTUALLY ~%old1%~ ~%new1%~
+							REPLACE_TEXTUALLY ~%old2%~ ~%new2%~
+						END
+						INNER_ACTION BEGIN
+							STRING_SET_EVALUATE ~%id%~ ~%desc%~
+						END
+					END
+			
+					//双手武器重击骰+1
+					PATCH_IF wtype=0x5d || wtype=0x62 || wtype=0x63 || wtype=0x66 BEGIN
+						LPF ADD_ITEM_EQEFFECT INT_VAR opcode=301 target=1 timing=2 parameter1=1 END
+					
+						//更新说明
+						SPRINT old (AT 20317)
+						SPRINT new (AT 20318)
+						SPRINT remove (AT 20319)
+						
+						PATCH_IF unid>0 BEGIN
+							GET_STRREF unid undesc
+							INNER_PATCH_SAVE undesc ~%undesc%~ BEGIN
+								REPLACE_TEXTUALLY ~%remove%~ ~~
+								REPLACE_TEXTUALLY ~%old%~ ~%new%~
+							END
+							INNER_ACTION BEGIN
+								STRING_SET_EVALUATE ~%unid%~ ~%undesc%~
+							END
+						END
+						
+						PATCH_IF id>0 BEGIN
+							GET_STRREF id desc
+							INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+								REPLACE_TEXTUALLY ~%remove%~ ~~
+								REPLACE_TEXTUALLY ~%old%~ ~%new%~
+							END
+							INNER_ACTION BEGIN
+								STRING_SET_EVALUATE ~%id%~ ~%desc%~
+							END
+						END
+					END
+				END
+			END	
+		END
+	END
+BUT_ONLY
+			
+/* 武器攻击动画一致性 - 直接使用05年的代码 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	type=0
+	READ_BYTE		0x18 flag
+	READ_SHORT 	0x1c weaptype
+	READ_BYTE 	0x31 weapprof
+	FOR (i=0x59;i<0x67;i+=1) BEGIN
+		PATCH_IF weapprof=i OR weapprof=0x73 BEGIN
+			LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=50 animation_backhand=50 animation_thrust=0 END
+			type=7
+		END
+	END
+	PATCH_IF weapprof=0x60 BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=0 animation_backhand=20 animation_thrust=80 END
+		type=1
+	END
+	PATCH_IF weaptype=0x13 AND (weapprof=0x5b OR weapprof=0x5f) BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=10 animation_backhand=25 animation_thrust=60 END
+		type=2
+	END
+	PATCH_IF weapprof=0x5d BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=60 animation_backhand=40 animation_thrust=0 END
+		type=3
+	END
+	PATCH_IF weapprof=0x63 BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=0 animation_backhand=65 animation_thrust=35 END
+		type=4
+	END
+	PATCH_IF weapprof=0x62 BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=0 animation_backhand=0 animation_thrust=100 END
+		type=5
+	END
+	PATCH_IF weapprof=0x66 AND (flag BAND 0b00000010)=0b00000010 BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=1 animation_overhand=10 animation_backhand=70 animation_thrust=20 END
+		type=6
+	END
+	PATCH_IF type>0 BEGIN
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=2 animation_overhand=100 animation_backhand=0 animation_thrust=0 END
+	END
+BUT_ONLY			
+
+/* 将所有带有毒素抗性或免疫中毒的装备修改为毒素伤害全免 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ ~override~
+	SET exists=0
+	LPF item_flag RET valid moveable two_hand END
+	PATCH_IF valid && moveable BEGIN
+		GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+8 parameter2
+			PATCH_IF opcode=173 || (opcode=101 && parameter2=25) BEGIN // 带有毒抗或免疫中毒
+				exists=1
+			END
+		END
+		PATCH_IF exists=1 BEGIN
+			//清除之前存在的效果
+			LPF DELETE_EFFECT INT_VAR match_opcode=173 END 
+			LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=25 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=30 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=169 match_parameter2=6 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=14017 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=14662 END
+			//添加效果
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=173 parameter1=100 timing=2 target=1 END
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=101 parameter2=25 timing=2 target=1 END
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=142 parameter2=30 timing=2 target=1 END
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=169 parameter2=6 timing=2 target=1 END
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=267 parameter1=14017 timing=2 target=1 END
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=267 parameter1=14662 timing=2 target=1 END
+		END
+	END
+BUT_ONLY
+
+/* 增加攻击次数的装备统一为只增加1/2次 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	READ_SHORT 0x1c itype
+	READ_LONG 0x54 desc
+	LPF item_flag RET moveable two_hand END
+	SET melee=0
+	GET_OFFSET_ARRAY header ITM_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		READ_BYTE index type
+		PATCH_IF type=1 THEN BEGIN
+			SET melee=1
+		END
+	END
+	GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+	PHP_EACH effect AS int => offset BEGIN
+		READ_SHORT offset opcode
+		READ_LONG offset+4 parameter1
+		READ_LONG offset+8 parameter2
+		PATCH_IF opcode=1 && parameter1=1 && parameter2=0 && moveable && two_hand=0 && (melee=1 || itype=10) THEN BEGIN
+			WRITE_LONG offset+4 6
+			INNER_ACTION BEGIN
+				LAF file_replace_string INT_VAR offset=0x54 old=20325 new=20326 STR_VAR file=~%SOURCE_RES%.itm~ END
+			END
+		END
+	END
+BUT_ONLY
+
+/* 各类加速鞋不受自由行动影响，统一为移动速度翻倍 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF item_flag RET moveable END
+	PATCH_IF moveable BEGIN
+		READ_SHORT 0x1c type
+		READ_LONG 0x54 desc_strref
+		PATCH_IF type=4 BEGIN
+			LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=16 opcode=176 parameter1=200 parameter2=2 END
+			LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=126 opcode=176 parameter1=200 parameter2=2 END
+			PATCH_IF desc_strref>0 BEGIN
+				GET_STRREF desc_strref desc
+				SPRINT old1 (AT 20320)
+				SPRINT old2 (AT 20321)
+				SPRINT new (AT 20322)
+				INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+					REPLACE_TEXTUALLY ~%old1%~ ~%new%~
+					REPLACE_TEXTUALLY ~%old2%~ ~%new%~
+				END
+				INNER_ACTION BEGIN
+					STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+/* 装备上的自由行动效果与法术一致，具体为: 免疫定身、缓慢、麻痹、油腻、蛛网和缠绕 */
+//读取自由行动术的效果
+COPY ~.../inlined/blank.baf~ ~override/freeaction.2da~
+COPY_EXISTING - sppr403.spl override
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			READ_LONG offset+4 parameter1
+			READ_LONG offset+8 parameter2
+			READ_ASCII offset+20 resource
+			PATCH_IF
+						!(opcode=215)
+				&&	!(opcode=174)
+				// &&	!(opcode=233 && parameter2=0x83)
+			BEGIN
+				PATCH_IF STRING_LENGTH ~%resource%~=0 BEGIN
+					SPRINT resource ~*~
+				END
+				INNER_ACTION BEGIN
+					APPEND ~freeaction.2da~ ~%opcode% %parameter1% %parameter2% %resource%~
+					UNLESS ~%opcode% %parameter1% %parameter2% %resource%~
+				END
+			END
+		END
+	END
+	
+APPEND ~freeaction.2da~ ~318 1 403 *~ UNLESS ~318 1 403 *~ //DW_ITEM_HOLD
+APPEND ~freeaction.2da~ ~318 1 406 *~ UNLESS ~318 1 406 *~ //DW_ITEM_STUN
+APPEND ~freeaction.2da~ ~318 1 409 *~ UNLESS ~318 1 409 *~ //DW_ITEM_SLOW
+					
+//处理装备
+ACTION_FOR_EACH item IN
+	blun30 c2keld01 c2mazz01 deitm019 deitm116 ring09 s#ring01 s#ring02 solabla2 solablad sper12 sw2h06 sw2h13 thring01 thring02
+BEGIN
+	//文本
+	LAF file_replace_string INT_VAR offset=0x54 old=20323 new=20324 STR_VAR file=~%item%.itm~ END
+	
+	//复制效果	
+	COPY_EXISTING - freeaction.2da override
+		READ_2DA_ENTRIES_NOW rows 4
+		FOR (i=0;i<rows;++i) BEGIN
+			READ_2DA_ENTRY_FORMER rows i 0 opcode
+			READ_2DA_ENTRY_FORMER rows i 1 parameter1
+			READ_2DA_ENTRY_FORMER rows i 2 parameter2
+			READ_2DA_ENTRY_FORMER rows i 3 resource
+			PATCH_IF ~%resource%~ STR_EQ ~*~ BEGIN
+				SPRINT resource ~~
+			END
+			// PATCH_PRINT ~%opcode% %parameter1% %parameter2% %resource%~
+			INNER_ACTION BEGIN
+				COPY_EXISTING ~%item%.itm~ override
+					LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=opcode match_parameter1=parameter1 match_parameter2=parameter2 STR_VAR match_resource=~%resource%~ END
+					LPF ADD_ITEM_EQEFFECT INT_VAR insert_point=~-1~ opcode parameter1 parameter2 STR_VAR resource END
+				BUT_ONLY
+			END
+		END
+		
+	//删除对加速和震慑的免疫
+	COPY_EXISTING ~%item%.itm~ override
+		//加速
+		PATCH_FOR_EACH match_parameter2 IN 16 126 176 317 BEGIN
+			LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=101 match_parameter2 END
+		END
+		PATCH_FOR_EACH match_resource IN spwi305 dw#0w305 spwi613 dw#0w613 spin828 BEGIN
+			LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=206 STR_VAR match_resource END
+		END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=169 match_parameter2=38 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=169 match_parameter2=110 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=240 match_parameter2=38 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=240 match_parameter2=110 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=267 match_parameter1=14023 END
+		//震慑
+		PATCH_FOR_EACH match_parameter2 IN 45 210 BEGIN
+			LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=101 match_parameter2 END
+		END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=169 match_parameter2=55 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=240 match_parameter2=55 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=267 match_parameter1=1280 END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=318 match_parameter2=406 END
+END
+
+DELETE ~override/freeaction.2da~
+	
+	

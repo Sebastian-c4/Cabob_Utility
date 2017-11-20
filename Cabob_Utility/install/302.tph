@@ -1,0 +1,94 @@
+
+/* //////////////////////////////////// */
+/* 法术相关 */
+/* 魔法攻防系统调整 */
+/* //////////////////////////////////// */
+
+//破魔法术均是单体有效
+ACTION_FOR_EACH spell IN 321 419 513 608 704 705 805 903 BEGIN
+	COPY_EXISTING ~SPWI%spell%.spl~ override
+		WRITE_BYTE 0x27 4
+		LPF ALTER_SPELL_HEADER INT_VAR target=1 projectile=221 END
+		LAF file_replace_string INT_VAR offset=0x50 old=30201 new=30202 STR_VAR file=~SPWI%spell%.spl~ END
+		
+	COPY_EXISTING_REGEXP GLOB ~SPWI%spell%[BC].spl~ override
+		WRITE_BYTE 0x27 4
+		LPF ALTER_SPELL_HEADER INT_VAR target=1 projectile=1 END
+END
+	
+//匹配免疫法术等级对法术穿透和密言术的影响
+COPY_EXISTING_REGEXP GLOB ~SPWI321.*\.spl~	override
+	LPF ALTER_EFFECT INT_VAR power=4 END
+
+COPY_EXISTING_REGEXP GLOB ~SPWI419.*\.spl~	override
+	LPF ALTER_EFFECT INT_VAR power=5 END
+	
+//密言术：还原为防护系
+COPY_EXISTING_REGEXP GLOB ~SPWI419.*\.spl~	override
+	WRITE_SHORT 0x1e BIT13
+	WRITE_SHORT 0x22 12
+	WRITE_BYTE 0x25 1
+	LAF file_replace_string INT_VAR offset=0x50 old=30004 new=30001 STR_VAR file=~SPWI419.spl~ END
+	LAF file_replace_string INT_VAR offset=0x50 old=30203 new=30204 STR_VAR file=~SPWI419.spl~ END
+	
+COPY_EXISTING SCRL6O.itm override
+	WRITE_BYTE 0x2d BIT5
+			
+//破解术：无法穿透法免防护/法术偏转/法术反转/法术陷阱
+COPY_EXISTING_REGEXP ~SPWI513.*\.spl~ override
+	WRITE_SHORT 0x27 0
+	LAF file_replace_string INT_VAR offset=0x50 old=30206 new=30207 STR_VAR file=~SPWI513.spl~ END
+		
+//法术免疫：无法叠加生效，但可重复释放同一系的法术免疫以延长持续时间
+OUTER_SET string=RESOLVE_STR_REF (@30205)
+OUTER_FOR (i=0;i<8;i+=1) BEGIN
+	COPY_EXISTING ~SPWI59%i%.spl~ ~override\SPWI59%i%B.spl~
+		FOR (j=0;j<8;j+=1) BEGIN
+			PATCH_IF i != j BEGIN
+				LPF CLONE_EFFECT INT_VAR match_opcode=204 opcode=206 parameter1=string parameter2=0 STR_VAR insert=last resource=~SPWI59%j%B~END
+			END
+		END
+END
+
+//法术免疫基础法术指向新文件
+COPY_EXISTING SPWI510.2da override
+	REPLACE_TEXTUALLY ~\([a-z]+\)\(59[0-7]\)~ ~\1\2B~
+BUT_ONLY
+
+//更新法术说明
+COPY_EXISTING spwi510.spl override
+	READ_LONG 0x50 desc_strref
+	GET_STRREF desc_strref desc
+	SPRINT suffix (AT 30208)
+	SPRINT desc ~%desc%~^~%suffix%~
+	STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
+
+/* /////////////////////////////////////////////////// */	
+//两类法术无效结界不受解除魔法效果影响
+ACTION_FOR_EACH spell IN spwi406 spwi602 dw#0w406 dw#0w602 dw#sw406 dw#sw602 rr#wi406 spwm126 BEGIN
+	COPY_EXISTING ~%spell%.spl~ override
+		LPF ALTER_EFFECT INT_VAR silent=1 match_resist_dispel=1 resist_dispel=2 END
+		LPF ALTER_EFFECT INT_VAR silent=1 match_resist_dispel=3 resist_dispel=2 END
+	IF_EXISTS BUT_ONLY
+END
+	
+//识破护盾恢复原版效果：解除一个法术防护并降低魔法抗力
+COPY_EXISTING spwi805b.spl override
+	LPF ALTER_EFFECT INT_VAR match_opcode=221 opcode=166 timing=0 duration=96 parameter1=0 parameter2=0 END
+	LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=17 END
+	LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=166 parameter1=~-26~ multi_parameter1=~-1~ multi_duration=6 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=166 opcode=142 parameter1=0 parameter2=106 END
+	LPF DELETE_EFFECT INT_VAR match_parameter1=34558 END
+	LAF file_replace_string INT_VAR offset=0x50 old=30209 new=30210 STR_VAR file=~SPWI805.spl~ END
+		
+//法术重击：学派改为通用，可瞄准半隐形生物
+COPY_EXISTING_REGEXP GLOB ~SPWI903.*\.spl~ override
+	WRITE_LONG 0x1e 0
+	WRITE_SHORT 0x22 12
+	WRITE_BYTE 0x25 0
+	WRITE_BYTE 0x1b THIS BOR 0b00000001
+	LAF file_replace_string INT_VAR offset=0x50 old=30001 new=30000 STR_VAR file=~SPWI903.spl~ END
+	LAF file_replace_string INT_VAR offset=0x50 old=30211 new=30212 STR_VAR file=~SPWI903.spl~ END
+	
+COPY_EXISTING ~SCRL9M.itm~ override
+	WRITE_BYTE 0x2d 0	

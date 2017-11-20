@@ -1,0 +1,17 @@
+
+IF
+	!InParty(Myself)
+	!HasItem("minhp1",Myself)
+THEN
+	RESPONSE #100
+		CreateItem("minhp1",0,0,0)
+		EquipItem("minhp1")
+END
+
+IF
+	InParty(Myself)
+	HasItem("minhp1",Myself)
+THEN
+	RESPONSE #100
+		DestroyItem("minhp1")
+END

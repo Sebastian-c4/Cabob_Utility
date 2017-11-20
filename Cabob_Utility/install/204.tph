@@ -1,0 +1,435 @@
+
+/* //////////////////////////////////// */
+/* 物品相关 */
+/* 特殊物品属性修订 */
+/* //////////////////////////////////// */
+
+//////原版物品//////
+//防护侦测斗篷：修改效果与3级奥术一致				
+COPY_EXISTING clck06.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=204 opcode=69 parameter2=0 END
+	LPF DELETE_EFFECT INT_VAR match_opcode=282 END
+
+//维克那之袍：法师/诗人施法速度提高2，术士只提高1
+COPY_EXISTING wa2robe.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=2 END
+COPY_EXISTING TB#VECNA.eff override
+	WRITE_LONG 0x1c ~-1~
+	WRITE_LONG 0x20 0
+	LAF file_replace_string INT_VAR offset=0x54 old=20401 new=20402 STR_VAR file=~wa2robe.itm~ END
+	
+//白昼之星：初始附魔等级降为2，物品升级提升为+4
+COPY_EXISTING SW1H31.itm override
+	WRITE_LONG 0x60 2
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=109 parameter1=2 END
+	READ_LONG	0x0c name_strref
+	GET_STRREF ~%name_strref%~ name
+STRING_SET_EVALUATE %name_strref% ~%name%+2~
+
+//碎魔钉头锤+2：附魔降至+4以匹配洛斯合成的+5
+COPY_EXISTING BLUN25.itm override
+	WRITE_LONG 0x60 4
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=109 parameter1=4 END
+
+//卡索弥尔+5：解除魔法几率为50%，解除魔法技能等级按自身等级-8计算
+COPY_EXISTING SW2H10.itm override
+	PATCH_FOR_EACH match_opcode IN 58 215 139 240 77 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode probability1=49 END
+	END
+	// LPF ALTER_EFFECT INT_VAR match_opcode=177 match_parameter2=7 probability1=49 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=148 parameter1=0 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20403 new=20404 STR_VAR file=~SW2H10.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20405 new=20406 STR_VAR file=~SW2H10.itm~ END
+
+//卡索弥尔+6：解除魔法几率为75%；解除魔法技能等级按自身等级-8计算
+COPY_EXISTING SW2H19.itm override
+	PATCH_FOR_EACH match_opcode IN 58 215 139 240 77 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode probability1=74 END
+	END
+	// LPF ALTER_EFFECT INT_VAR match_opcode=177 match_parameter2=7 probability1=74 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=148 parameter1=0 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20407 new=20408 STR_VAR file=~SW2H19.itm~ END
+			
+//去掉魔力法杖的震慑闪电技能
+COPY_EXISTING STAF12.itm override
+	LPF ALTER_ITEM_HEADER INT_VAR header_type=3 header=3 new_header_type=99 END
+	LPF DELETE_ITEM_HEADER INT_VAR header_type=3 END
+	LPF ALTER_ITEM_HEADER INT_VAR header_type=99 new_header_type=3 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20485 STR_VAR file=~STAF12.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20486 STR_VAR file=~STAF12.itm~ END
+			
+//游戏中屏蔽反射之盾与纳巴卡遗赠
+COPY_EXISTING ar2100.are override
+	LPF DELETE_AREA_ITEM STR_VAR item_to_delete=PSTAFM1 END
+BUT_ONLY
+
+EXTEND_BOTTOM baldur.bcs ~%SCRIPTS%/no_reflect_shield.baf~
+
+COPY_EXISTING_REGEXP ~.*\.cre~ override
+	GET_OFFSET_ARRAY items CRE_V10_ITEMS
+	PHP_EACH items AS int => item BEGIN
+		READ_ASCII item name
+		PATCH_IF ~%name%~ STR_EQ shld24 BEGIN
+			WRITE_BYTE item+0x1c 0b00001010
+		END
+	END
+BUT_ONLY
+
+//////强化战斗//////
+//坚忍之袍：不限种族
+COPY_EXISTING B#ROBE02.itm override
+	WRITE_LONG	0x1e 0b01000000011111111111111111000000
+	
+//战斗法师袍：法师/诗人施法速度提高2，术士只提高1
+COPY_EXISTING b#robe03.itm override
+	LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 target=1 timing=2 parameter1=19 parameter2=5 STR_VAR resource=tb#vecna insert=below END
+	LAF file_replace_string INT_VAR offset=0x54 old=20409 new=20402 STR_VAR file=~b#robe03.itm~ END
+	
+//////战术//////	
+//邪恶掠夺者+5：解除魔法几率为50%
+COPY_EXISTING REAVER.itm override
+	PATCH_FOR_EACH match_opcode IN 58 215 139 112 240 77 174 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode probability1=49 END
+	END
+	LPF ALTER_EFFECT INT_VAR match_opcode=177 match_parameter2=7 probability1=49 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20410 new=20406 STR_VAR file=~REAVER.itm~ END
+	
+//酸刀+4：再生每3秒1点降为每6秒1点，降低酸抗的时间缩短为12秒
+COPY_EXISTING SOLAK1.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=98 parameter1=6 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=27 duration=12 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20411 new=20412 STR_VAR file=~SOLAK1.itm~ END
+	
+/* 庇护之靴：无法侦测，移动速度加倍，每天三次石肤术（施法等级=10） */
+COPY_EXISTING mysboot.itm override
+	PATCH_FOR_EACH match_parameter2 IN 0x6b 0x3a 0xdd 0xe6 0xf0 0xdc BEGIN
+		LPF DELETE_EFFECT INT_VAR match_parameter2 END
+	END
+	LPF DELETE_EFFECT INT_VAR match_opcode=292 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=69 opcode=176 parameter1=200 parameter2=2 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=69 opcode=142 parameter2=0x26 END
+	LPF ADD_ITEM_HEADER INT_VAR target=5 range=1 charges=3 drained=3 flag_recharge=1 STR_VAR icon=SPWI408B name=~@20493~ END
+	LPF ADD_ITEM_EFFECT INT_VAR opcode=146 target=1 timing=0 duration=2400 parameter1=10 STR_VAR resource=spwi408 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20496 STR_VAR file=~mysboot.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20494 new=20495 STR_VAR file=~mysboot.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20497 new=20498 STR_VAR file=~mysboot.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20499 new=20500 STR_VAR file=~mysboot.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20501 new=20502 STR_VAR file=~mysboot.itm~ END
+
+//////Item_Pack//////
+//泰摩拉的礼物：幸运加值降为2
+COPY_EXISTING d1belt01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=22 parameter1=2 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20413 new=20414 STR_VAR file=~d1belt01.itm~ END
+			
+//天堂与大地+4：装备属性添加+2体质，防护邪恶
+COPY_EXISTING D1BLUN02.itm override
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=10 target=1 timing=2 parameter1=2 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=142 target=1 timing=2 parameter2=9 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=100 target=1 timing=2 parameter1=9 parameter2=7 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=219 target=1 timing=2 parameter1=3 parameter2=8 END
+	FOR (i=0;i<7;i+=1) BEGIN
+		parameter2=0x140000+%i%
+		LPF ADD_ITEM_EQEFFECT INT_VAR opcode=9 target=1 timing=2 parameter1=0x5d6f0000 parameter2 END
+	END
+	LAF file_replace_string INT_VAR offset=0x54 old=20489 new=20490 STR_VAR file=~D1BLUN02.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20491 new=20492 STR_VAR file=~D1BLUN02.itm~ END
+
+//复合长弓"锤弓"：攻击次数4降为2
+COPY_EXISTING D1BOW01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=1 parameter1=2 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20415 new=20416 STR_VAR file=~D1BOW01.itm~ END
+
+//卡署斯之血：法师/诗人施法速度提高2，术士只提高1
+COPY_EXISTING D1KOSBL.itm override
+	LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 target=1 timing=2 parameter1=19 parameter2=5 STR_VAR resource=tb#vecna insert=below END
+	LAF file_replace_string INT_VAR offset=0x54 old=20409 new=20402 STR_VAR file=~D1KOSBL.itm~ END
+
+//德拉古的地狱十字弓：每轮攻击次数降为3次
+COPY_EXISTING D1XBOW01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=1 parameter1=3 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20417 new=20418 STR_VAR file=~D1XBOW01.itm~ END
+
+//////美德//////
+//陶玛里穿心弓+5：附魔等级降为4, 伤害降为1D6+4
+COPY_EXISTING DEITM001.itm override
+	WRITE_LONG 0x60 4
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=109 parameter1=4 END
+	LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=5 dicesize=6 damage_bonus=4 END
+	LAF file_replace_string INT_VAR offset=0xc old=20419 new=20420 STR_VAR file=~DEITM001.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20421 new=20422 STR_VAR file=~DEITM001.itm~ END
+	
+//库斯伯特的钉头锤+5：附魔等级降为3
+COPY_EXISTING DEITM003.itm override
+	WRITE_LONG 0x60 3
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=109 parameter1=3 END
+	LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=3 damage_bonus=4 END
+	LAF file_replace_string INT_VAR offset=0xc old=20423 new=20424 STR_VAR file=~DEITM003.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20425 new=20426 STR_VAR file=~DEITM003.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20427 new=20428 STR_VAR file=~DEITM003.itm~ END
+
+//秩序破坏者+2：攻击次数+2降为+1
+COPY_EXISTING DEITM008.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=1 parameter1=1 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20429 new=20430 STR_VAR file=~DEITM008.itm~ END
+
+//血腥统治+3：精通类型改为短弓（长弓太多），每轮攻击2次
+COPY_EXISTING DEITM013.itm override
+	WRITE_BYTE 	0x1e 0b10000100
+	WRITE_BYTE 	0x20 0b00000100
+	WRITE_SHORT 0x31 0x69
+	WRITE_LONG	0x08 6864
+	WRITE_LONG	0x50 6866
+	WRITE_ASCII 0x3a ~IBOW25~
+	WRITE_ASCII 0x44 ~GBOW02~
+	WRITE_ASCII 0x58 ~CBOW13~
+	READ_LONG 0x54 desc_strref
+	GET_STRREF ~%desc_strref%~ desc
+	SPRINT unusable_regexp (AT 20106)
+	SPRINT unusable_replacement (AT 20107)
+	SPRINT class_regexp (AT 20433)
+	LPF ~REMOVE_CLASS_LINE_FROM_USABILITIES~
+		INT_VAR
+			offset=0x54
+		STR_VAR
+			desc
+			unusable_regexp
+			unusable_replacement
+			class_regexp
+      // class_prefix = ~~
+	END
+	LAF file_replace_string INT_VAR offset=0x54 old=20431 new=20432 STR_VAR file=~DEITM013.itm~ END
+
+//楚格拉的末日+3：删除施法速度奖励
+COPY_EXISTING DEITM027.itm override
+	LPF DELETE_EFFECT INT_VAR match_opcode=189 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20434 STR_VAR file=~DEITM027.itm~ END
+
+//雅拉+4：背刺倍数加成2降为1
+COPY_EXISTING DEITM028.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=263 parameter1=1 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20435 new=20436 STR_VAR file=~DEITM028.itm~ END
+
+//奥卡斯卓的飞镖+5：定身概率降为15%，时间降为12秒，附魔等级降为4，每轮攻击次数降为3，价格上调至35000
+COPY_EXISTING DEITM030.itm override
+	WRITE_LONG 0x34 35000
+	WRITE_LONG 0x60 4
+	LPF ALTER_EFFECT INT_VAR match_opcode=1 match_parameter1=4 parameter1=3 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=109 parameter1=4 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=109 duration=12 probability1=14 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=215 duration=12 probability1=14 END
+	LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=4 damage_bonus=4 END
+	LAF file_replace_string INT_VAR offset=0xc old=20437 new=20438 STR_VAR file=~DEITM030.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20439 new=20440 STR_VAR file=~DEITM030.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20441 STR_VAR file=~DEITM030.itm~ END
+	
+//游戏中去掉泼溅+2和凯旋+4
+COPY_EXISTING AR2400.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY EXACT_MATCH ~GiveItemCreate("DeITM065","udmaster",0,0,0)~ ~~
+	END
+	
+COPY_EXISTING TRMER02.sto override
+	LPF DELETE_STORE_ITEM STR_VAR item_to_delete = DEITM071 END
+	
+//帕利昂之矛+5：幸运+5降为+2
+COPY_EXISTING DEITM075.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=22 match_parameter1=5 parameter1=2 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20442 new=20443 STR_VAR file=~DEITM075.itm~ END
+
+//邪恶比利+3：施法速度提高4降为2
+COPY_EXISTING DEITM099.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=189 match_parameter1=4 parameter1=2 END
+	WRITE_LONG 0x1e 0b01100000010011000001000001000000
+	LAF file_replace_string INT_VAR offset=0x54 old=20444 new=20445 STR_VAR file=~DEITM099.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20446 new=20447 STR_VAR file=~DEITM099.itm~ END
+	
+//坎达尔马的护腕：只有吟游诗人可以使用，施法速度提高2降为1
+COPY_EXISTING DEITM102.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=189 match_parameter1=2 parameter1=1 END
+	WRITE_SHORT 0x1f THIS BOR 0b0111111111111111
+	LAF file_replace_string INT_VAR offset=0x54 old=20448 new=20449 STR_VAR file=~DEITM102.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20450 STR_VAR file=~DEITM102.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20451 STR_VAR file=~DEITM102.itm~ END
+
+//腐败之瘟疫+5：从商店移除（效果可叠加op懒得修改）
+COPY_EXISTING DESTO#05.sto override
+	LPF DELETE_STORE_ITEM STR_VAR item_to_delete = DEITM111 END
+	
+//刚毅之戒：增加2点力量惩罚
+COPY_EXISTING DEITM113.itm override
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=44 target=1 timing=2 parameter1=~-2~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20452 new=20453 STR_VAR file=~DEITM113.itm~ END
+
+//美德国度：去掉免疫时停，改为常驻防死结界
+COPY_EXISTING DEITM116.itm override
+	LPF DELETE_EFFECT INT_VAR match_opcode=310 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=142 target=1 timing=2 parameter2=99 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=282 target=1 timing=2 parameter1=1 parameter2=1 END
+	PATCH_FOR_EACH parameter2 IN 13 55 209 238 BEGIN
+		LPF ADD_ITEM_EQEFFECT INT_VAR opcode=101 target=1 timing=2 parameter2 END
+	END
+	LAF file_replace_string INT_VAR offset=0x54 old=20454 new=20455 STR_VAR file=~DEITM116.itm~ END
+
+//////Vault//////
+//审判者之戟：解除魔法几率为25%
+COPY_EXISTING BW05HL1.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=58 probability1=25 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20456 new=20457 STR_VAR file=~BW05HL1.itm~ END
+	
+//死亡交易者：设计有问题修改太烦，设置为不可掉落
+COPY_EXISTING BLUNDTH.itm override
+	WRITE_BYTE 0x18 THIS BAND 0b11111011
+	
+//巴拉皮甲：魔抗和魔法伤害抗性从30降为15
+COPY_EXISTING LEATBAL.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=31 parameter1=15 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=166 parameter1=15 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20458 new=20459 STR_VAR file=~LEATBAL.itm~ END
+	
+//幽暗地域锁子甲+1：魔抗降为10%
+COPY_EXISTING ECHAN02.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=166 parameter1=10 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20460 new=20461 STR_VAR file=~ECHAN02.itm~ END
+	
+//吸血鬼剑（地窖）：不可出售且数量不溢出，无法通过该剑回到BG1
+COPY_EXISTING SW1HVAM.itm override
+	WRITE_LONG 0x18 THIS BOR 0b00000001
+	LPF ALTER_ITEM_HEADER INT_VAR header_type=3 charges=0 END
+	
+COPY_EXISTING JC_VS2.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~Detect~ ~Global("ENDOFBG1","GLOBAL",0)%LNL%Detect~
+	END
+BUT_ONLY
+EXTEND_BOTTOM JC_VS2.bcs ~%SCRIPTS%/jc_vs2new.baf~
+
+//////ItemUpgrade//////
+//支点附带棍棒专精降为4星
+COPY_EXISTING C2BLUN03.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 match_parameter2=115 parameter1=4 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20487 new=20488 STR_VAR file=~C2BLUN03.itm~ END
+
+//圣之救赎+5：解除魔法和沉默须以-4不利进行对法术的豁免检定
+COPY_EXISTING C2KELD02.itm override
+	LPF ALTER_EFFECT INT_VAR check_globals=0 resist_dispel=3 savingthrow=1 savebonus=~-4~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20463 new=20464 STR_VAR file=~C2KELD02.itm~ END
+	
+//勾魂者+6：解除魔法几率75%，同卡索弥尔+6
+COPY_EXISTING C2SW2H02.itm override
+	PATCH_FOR_EACH match_opcode IN 58 215 139 240 77 81 141 174 BEGIN
+		LPF ALTER_EFFECT INT_VAR match_opcode probability1=74 END
+	END
+	// LPF ALTER_EFFECT INT_VAR match_opcode=177 match_parameter2=7 probability1=74 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20407 new=20408 STR_VAR file=~C2SW2H02.itm~ END
+	
+//水爪+4：毒伤害降为每秒1点，持续时间降为36秒
+COPY_EXISTING C2SW1H03.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=142 duration=36 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=25 duration=36 parameter1=1 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20465 new=20466 STR_VAR file=~C2SW1H03.itm~ END
+	
+//辉煌腰带：改为分别对4种类型的AC+5
+COPY_EXISTING C2BELT01.itm override
+	LPF ALTER_EFFECT INT_VAR match_parameter1=3 parameter1=5 parameter2=8 END
+	LPF CLONE_EFFECT INT_VAR match_parameter2=8 parameter2=1 END
+	LPF CLONE_EFFECT INT_VAR match_parameter2=8 parameter2=2 END
+	LPF CLONE_EFFECT INT_VAR match_parameter2=8 parameter2=4 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20467 new=20468 STR_VAR file=~C2BELT01.itm~ END
+	
+//////Rolles//////	
+//复原的史卓汉三世面具：改为每天2次真视
+COPY_EXISTING S#HELM01.itm override
+	PATCH_FOR_EACH match_opcode IN 142 215 232 BEGIN
+		LPF DELETE_EFFECT INT_VAR match_opcode END
+	END
+	LPF ADD_ITEM_HEADER INT_VAR new_header_type=3 location=3 target=5 range=1 damage_type=1 charges=2 drained=3 projectile=1 flag_recharge=1 STR_VAR icon=SPWI609A name=~@20469~ RET new_header END
+	LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=146 target=1 timing=1 parameter1=10 parameter2=1 STR_VAR resource=SPPR505 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20470 STR_VAR file=~S#HELM01.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20471 new=20472 STR_VAR file=~S#HELM01.itm~ END
+	
+COPY_EXISTING ROLLES.dlg override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~GiveItemCreate("S#helm01",Player1,1,1,1)~ ~GiveItemCreate("S#helm01",Player1,1,2,1)~
+	END
+	
+//单/双手神圣正义+6：单手附魔等级6降为为5，解除魔法几率75%，解除魔法技能等级依自身等级
+COPY_EXISTING S#SW1H01.itm override
+	WRITE_LONG 0x60 5
+	LPF ALTER_EFFECT INT_VAR match_opcode=58 probability1=74 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=146 parameter1=0 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=233 parameter1=5 END
+	LAF file_replace_string INT_VAR offset=0xc old=20473 new=20474 STR_VAR file=~S#SW1H01.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20407 new=20408 STR_VAR file=~S#SW1H01.itm~ END
+	
+COPY_EXISTING S#SW2H01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=58 probability1=74 END
+	LPF ALTER_EFFECT INT_VAR match_opcode=146 parameter1=0 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20407 new=20408 STR_VAR file=~S#SW2H01.itm~ END
+	
+//强化大法师之杖：智力要求16，限制只有专职法师可用
+COPY_EXISTING S#STAF02.itm override
+	WRITE_SHORT 0x1f 0b1111111101111011
+	WRITE_BYTE 0x2a 16
+	LAF file_replace_string INT_VAR offset=0x54 old=20475 new=20476 STR_VAR file=~S#STAF02.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20477 new=20478 STR_VAR file=~S#STAF02.itm~ END
+	
+//强化坚忍束带、吸血鬼之手：再生每3秒1点降为每6秒1点
+COPY_EXISTING S#BELT01.itm override S#BRAC02.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=98 parameter1=6 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20479 new=20480 STR_VAR file=~S#BELT01.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20479 new=20480 STR_VAR file=~S#BRAC02.itm~ END
+
+//////Ruad//////
+//白炽艾欧石：再生每3秒1点降为每6秒1点
+COPY_EXISTING U#HELM01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=98 parameter1=6 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20479 new=20480 STR_VAR file=~U#HELM01.itm~ END
+	
+//敲击法杖：改为非奥术效果，避免敲锁时引来蒙面法师
+COPY_EXISTING U#WAND01.itm override
+	LPF ALTER_EFFECT STR_VAR match_resource=spwi207 resource=u#wand01 END
+	
+COPY_EXISTING SPWI207.spl ~override/U#WAND01.spl~
+	WRITE_SHORT 0x1c 4
+	
+//灵犀之指：AC设定4改为+4
+COPY_EXISTING U#BRAC02.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=0 parameter2=0 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20481 new=20482 STR_VAR file=~U#BRAC02.itm~ END
+	
+//////Thalantyr//////
+//勇气束带：再生每轮1点降为每2轮1点
+COPY_EXISTING THBELT01.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=98 parameter1=12 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20483 new=20484 STR_VAR file=~THBELT01.itm~ END
+
+/* /////////////////////////////////////////////////// */	
+/* 小幅削弱盾牌萨特撒的复仇+1的属性，不满足可用性的人物一旦装备将立刻被杀死 */
+COPY_EXISTING shld07p.itm override
+	LPF ALTER_EFFECT INT_VAR match_opcode=301 parameter1=2 END
+	LPF DELETE_EFFECT INT_VAR match_opcode=175 END
+	LAF file_replace_string INT_VAR offset=0x54 old=20503 new=20504 STR_VAR file=~shld07p.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20505 new=20506 STR_VAR file=~shld07p.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20507 new=20508 STR_VAR file=~shld07p.itm~ END
+	LAF file_replace_string INT_VAR offset=0x54 old=20509 new=20510 STR_VAR file=~shld07p.itm~ END
+
+COPY_EXISTING spcl151.spl ~override/shld07pk.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=141 parameter1=0 parameter2=0x27 END
+	SAY NAME1 @20511
+
+OUTER_FOR (n=1;n<7;++n) BEGIN
+	EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%SCRIPTS%/shld07p_check.baf~ EVAL
+END
+
+//提高常用法杖的价格：麻痹杖、火球杖8000=>12000，怪物召唤杖12500=>25000，死云杖 8000=>15000，蛛网袋1500/1发=>30000/20发
+COPY_EXISTING WAND04.itm override WAND05.itm override
+	WRITE_LONG 0x34 12000
+COPY_EXISTING WAND10.itm override
+	WRITE_LONG 0x34 25000
+COPY_EXISTING WAND13.itm override
+	WRITE_LONG 0x34 15000
+COPY_EXISTING WAND14.itm override
+	WRITE_LONG 0x34 30000
+	LPF ALTER_ITEM_HEADER INT_VAR primary_type = 0x6 secondary_type = 0x9 charges = 20 flag_hostile = 1 flag_recharge = 1 END
+	

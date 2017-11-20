@@ -1,0 +1,36 @@
+
+//开场计时
+IF
+  Allegiance(Myself,ENEMY)
+	G("c4#SummonDemonsTimerSet",0)
+THEN
+	RESPONSE #100
+		SG("c4#SummonDemonsTimerSet",1)
+    SetGlobalTimer("c4#SummonDemonsTeam","LOCALS",30)
+    SetGlobalTimer("c4#SummonDemonsSingle","LOCALS",18)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("c4#SummonDemonsTeam","Locals")
+  !GlobalTimerNotExpired("castspell","LOCALS")
+	!NumCreatureGT([ENEMY.0.DEMONIC],5)
+THEN
+	RESPONSE #100
+    SetGlobalTimer("castspell","LOCALS",ONE_ROUND)
+    SetGlobalTimer("c4#SummonDemonsTeam","LOCALS",60)
+		DisplayStringHead(Myself,70998)
+		SpellNoDec(Myself,SUMMON_INFERNAL_HOST)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("c4#SummonDemonsSingle","Locals")
+  !GlobalTimerNotExpired("castspell","LOCALS")
+THEN
+	RESPONSE #100
+    SetGlobalTimer("castspell","LOCALS",ONE_ROUND)
+    SetGlobalTimer("c4#SummonDemonsSingle","LOCALS",18)
+		DisplayStringHead(Myself,70998)
+		SpellNoDec(Myself,DEMOGORGON_GATE)
+END

@@ -1,0 +1,86 @@
+OUTER_TEXT_SPRINT ~WORK_FOLDER~ ~%LIBS%/Enhanced_Enemies~
+	
+COPY - ~%WORK_FOLDER%/Enhanced_Enemies.txt~ override
+	READ_2DA_ENTRIES_NOW rows 4
+	FOR (x=0;x<rows;++x) BEGIN
+		READ_2DA_ENTRY_FORMER rows x 0 type
+		READ_2DA_ENTRY_FORMER rows x 1 opcode
+		READ_2DA_ENTRY_FORMER rows x 2 value
+		PATCH_IF ~%type%~ STRING_CONTAINS_REGEXP ~ex~ BEGIN
+			SET $bonus(~%opcode%~)=~%value%~
+		END ELSE SET $exbonus(~%opcode%~)=~%value%~
+	END
+	
+COPY_EXISTING c_status.spl override
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			PHP_EACH bonus AS opcode0 => value BEGIN
+				PATCH_IF opcode=opcode0 BEGIN
+					PATCH_IF value>0 BEGIN
+						WRITE_LONG offset+4 value
+					END ELSE WRITE_LONG offset+4 0
+				END
+			END
+		END
+	END
+BUT_ONLY
+	
+COPY_EXISTING c_xsave.spl override
+	GET_OFFSET_ARRAY header SPL_V10_HEADERS
+	PHP_EACH header AS int => index BEGIN
+		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT offset opcode
+			PHP_EACH exbonus AS opcode0 => value BEGIN
+				PATCH_IF opcode=opcode0 BEGIN
+					PATCH_IF value>0 BEGIN
+						WRITE_LONG offset+4 value
+					END ELSE WRITE_LONG offset+4 0
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+OUTER_FOR (i=1;i<17;++i) BEGIN
+	COPY_EXISTING ~c_save%i%.spl~ override
+		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		PHP_EACH header AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PHP_EACH bonus AS opcode0 => value BEGIN
+					PATCH_IF opcode=opcode0 BEGIN
+						PATCH_IF value>0 BEGIN
+							WRITE_LONG offset+4 value*i
+						END ELSE WRITE_LONG offset+4 0
+					END
+				END
+			END
+		END
+	BUT_ONLY
+END
+
+OUTER_FOR (i=1;i<25;++i) BEGIN
+	COPY_EXISTING ~c_ehp%i%.spl~ override
+		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		PHP_EACH header AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PHP_EACH bonus AS opcode0 => value BEGIN
+					PATCH_IF opcode=opcode0 BEGIN
+						PATCH_IF value>5 BEGIN
+							WRITE_LONG offset+4 100+value*i
+						END ELSE WRITE_LONG offset+4 100+5*i
+					END
+				END
+			END
+		END
+		LPF DELETE_EFFECT INT_VAR silent=1 check_globals=0 match_opcode=17 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=17 parameter2=2 STR_VAR insert=below END
+	BUT_ONLY
+END

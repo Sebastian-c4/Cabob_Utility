@@ -1,0 +1,36 @@
+
+IF
+	HasItemEquiped("belt05",Player%n%)
+	HasItemEquiped("SHLD07p",Player%n%)
+THEN
+	RESPONSE #100
+		ActionOverride(Player%n%,ReallyForceSpellRES("shld07pk",Myself))
+		ActionOverride(Player%n%,DestroyItem("SHLD07p"))
+		ActionOverride(Player%n%,Kill(Myself))
+		Continue()
+END
+
+IF
+	!HasItemEquiped("belt05",Player%n%)
+	HasItemEquiped("SHLD07p",Player%n%)
+	!Gender(Player%n%,FEMALE)
+THEN
+	RESPONSE #100
+		ActionOverride(Player%n%,ReallyForceSpellRES("shld07pk",Myself))
+		ActionOverride(Player%n%,DestroyItem("SHLD07p"))
+		ActionOverride(Player%n%,Kill(Myself))
+		Continue()
+END
+
+IF
+	!HasItemEquiped("belt05",Player%n%)
+	HasItemEquiped("SHLD07p",Player%n%)
+	!Class(Player%n%,RANGER)
+	!Class(Player%n%,CLERIC_RANGER)
+THEN
+	RESPONSE #100
+		ActionOverride(Player%n%,ReallyForceSpellRES("shld07pk",Myself))
+		ActionOverride(Player%n%,DestroyItem("SHLD07p"))
+		ActionOverride(Player%n%,Kill(Myself))
+		Continue()
+END

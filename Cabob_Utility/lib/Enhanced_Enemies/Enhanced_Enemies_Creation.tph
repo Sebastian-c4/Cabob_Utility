@@ -1,0 +1,158 @@
+OUTER_TEXT_SPRINT ~WORK_FOLDER~ ~%LIBS%/Enhanced_Enemies~
+	
+//清除非敌对的加值
+ADD_SECTYPE ~c_EnhancedEnemies~ @444201
+COPY_EXISTING spcl151.spl ~override/c_clear.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=221 timing=1 parameter1=0 parameter2=c_EnhancedEnemies END
+
+//stats初始化
+ACTION_FOR_EACH enhance IN ~Status~ ~HP~ ~Save~ ~ExSave~ BEGIN 
+	LAF find_stat STR_VAR identifier=~c_Bonus%enhance%OfEnemy~ RET ~%enhance%stat~ =stat_value END
+	OUTER_SET  ~%enhance%stat~ +=%engine_stat_type%
+END
+		
+//4项状态 c_status
+COPY_EXISTING spcl151.spl ~override/c_status.spl~
+	WRITE_BYTE 0x27 c_EnhancedEnemies
+	//stats
+	LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=Statusstat special=engine_special_type END
+	//防护
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c_status insert=last END
+	//ac
+	PATCH_FOR_EACH parameter2 IN 1 2 4 8 BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=0 parameter1=0 parameter2 END
+	END
+	//命中
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=278 parameter1=0 parameter2=0 END
+	//最小值
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=250 parameter1=0 parameter2=0 END
+	//重击
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=301 parameter1=0 parameter2=0 END
+		
+//高经验豁免加值 c_xsave
+COPY_EXISTING spcl151.spl ~override/c_xsave.spl~
+	WRITE_BYTE 0x27 c_EnhancedEnemies
+	LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=ExSavestat special=engine_special_type END
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c_xsave insert=last END
+	FOR (opcode=33;opcode<38;++opcode) BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode parameter1=0 parameter2=0 END
+	END
+		
+//成长型豁免 75万1档 c_save%1-16%
+OUTER_FOR (i=1;i<17;++i) BEGIN
+	COPY_EXISTING spcl151.spl ~override/c_save%i%.spl~
+		WRITE_BYTE 0x27 c_EnhancedEnemies
+		LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=Savestat special=engine_special_type END
+		FOR (opcode=33;opcode<38;++opcode) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode parameter1=0 parameter2=0 END
+		END
+		//一次性修正
+		FOR (j=1;j<17;++j) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR insert=last resource=~c_save%j%~ END
+		END
+END
+		
+//生命成长 50万1档 c_ehp%1-24%
+OUTER_FOR (i=1;i<25;++i) BEGIN
+	COPY_EXISTING spcl151.spl ~override/c_ehp%i%.spl~
+		WRITE_BYTE 0x27 c_EnhancedEnemies
+		LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=HPstat special=engine_special_type END
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=18 parameter1=0 parameter2=5 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c_potn09 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c_potn41 END
+		//一次性修正
+		FOR (j=1;j<25;++j) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR insert=last resource=~c_ehp%j%~ END
+		END
+END
+
+//防止与英雄/威力药水叠加造成的无敌状态, 以及未知原因的锁血
+ACTION_FOR_EACH potion IN potn09 potn41 BEGIN
+	COPY_EXISTING ~%potion%.itm~ override
+		GET_OFFSET_ARRAY header ITM_V10_HEADERS
+		PHP_EACH header AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index ITM_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+8 parameter2
+				PATCH_IF opcode=18 && parameter2=2 BEGIN
+					READ_BYTE offset+2 target
+					READ_BYTE offset+3 power
+					READ_LONG offset+4 parameter1
+					READ_BYTE offset+0xc timing
+					READ_BYTE offset+0xd resist_dispel
+					READ_LONG offset+0xe duration
+					READ_BYTE offset+0x12 probability1
+					READ_BYTE offset+0x13 probability2
+					READ_ASCII offset+0x14 resource
+					READ_LONG offset+0x1c dicenumber
+					READ_LONG offset+0x20 dicesize
+					READ_LONG offset+0x24 savingthrow
+					READ_LONG offset+0x28 savebonus
+					INNER_ACTION BEGIN
+						COPY_EXISTING spcl151.spl ~override/c_%potion%.spl~
+							LPF ALTER_SPELL_HEADER INT_VAR projectile=79 END
+							LPF ALTER_EFFECT INT_VAR opcode target power parameter1 parameter2 timing duration resist_dispel probability1 probability2 dicenumber dicesize savingthrow savebonus STR_VAR resource END
+					END
+				END
+			END
+		END
+		LPF ALTER_EFFECT INT_VAR match_opcode=18 opcode=146 target=1 timing=1 parameter1=10 parameter2=1 STR_VAR resource=~c_%potion%~ END
+END
+
+COPY_EXISTING potn09.itm ~override/dw#ptn09.itm~
+COPY_EXISTING potn41.itm ~override/dw#ptn41.itm~
+
+//脚本
+COPY ~.../inlined/blank.baf~ ~%WORK_FOLDER%/creature_figures.baf~
+	APPEND_FILE_EVALUATE ~%WORK_FOLDER%/ClearBonusForNonEnemy.baf~
+	APPEND_FILE_EVALUATE ~%WORK_FOLDER%/BonusStatusOfEnemy.baf~
+	APPEND_FILE_EVALUATE ~%WORK_FOLDER%/BonusExSaveOfEnemy.baf~
+	FOR (i=24;i>0;i -=1) BEGIN
+		xplevel=i*500000
+		APPEND_FILE_EVALUATE ~%WORK_FOLDER%/BonusHPOfEnemy.baf~
+	END
+	FOR (i=16;i>0;i -=1) BEGIN
+		xplevel=i*750000
+		APPEND_FILE_EVALUATE ~%WORK_FOLDER%/BonusSaveOfEnemy.baf~
+	END
+	
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+	//修正错误的EA
+	READ_BYTE 0x270 ea
+	PATCH_IF 
+		ea=28 OR //goodbutred
+		ea=200 //evilcutoff
+	BEGIN
+		WRITE_BYTE 0x270 255 //enemy
+	END
+	
+	//血量在20hp以上
+	READ_SHORT 0x26 maxhp
+	PATCH_IF maxhp>20 BEGIN
+		READ_ASCII 0x248 script_override
+		PATCH_IF
+				(~%script_override%~ STR_EQ ~none~)	OR
+				(STRING_LENGTH ~%script_override%~=0)
+		THEN BEGIN
+			WRITE_ASCII 0x248 ~c#crefig~
+			SET $target_scripts(c#crefig)=1
+		END ELSE SET $target_scripts(~%script_override%~)=1
+	END
+BUT_ONLY
+
+COPY_EXISTING blank.bcs ~override/c#crefig.bcs~
+	
+ACTION_PHP_EACH target_scripts AS script => int BEGIN
+	COPY_EXISTING ~%script%.bcs~ override
+		R_B_B EVAL ~%WORK_FOLDER%/creature_figures.baf~ ~%WORK_FOLDER%/creature_figures.baf~
+		ON_MISMATCH
+			INNER_ACTION BEGIN
+				EXTEND_TOP ~%script%.bcs~ ~%WORK_FOLDER%/creature_figures.baf~
+			END
+		END
+	IF_EXISTS BUT_ONLY
+END
+
+//设置数值
+INCLUDE ~%WORK_FOLDER%/Enhanced_Enemies_Values.tph~

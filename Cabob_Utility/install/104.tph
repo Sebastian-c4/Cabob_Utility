@@ -1,0 +1,90 @@
+
+/* //////////////////////////////////// */
+/* 生物相关 */
+/* 其他修改和修正 */
+/* //////////////////////////////////// */
+
+//修复地狱试炼沙洛佛克怒魂在cutscene下死亡导致游戏无法继续的问题
+COPY_EXISTING b#sarevo.bcs override
+	SET last_shout = RESOLVE_STR_REF (@10401)
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~DestroyItem("MINHP1")~ ~~
+		REPLACE_TEXTUALLY ~\(DisplayStringHead(Player1,%last_shout%)\)~ ~\1 DestroyItem("MINHP1")~
+	END
+		
+//BG1贾希拉个人任务大德鲁伊：<阿玛雷德>价值3500经验，修正脚本
+COPY_EXISTING AMARAN.cre override
+	WRITE_LONG 0x14 3500
+	WRITE_ASCII 0x268 dw#1dru5
+BUT_ONLY
+
+//传兹克求饶一次
+COPY_EXISTING TRANZIG.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~HPLT(Myself,20)~ ~HPLT(Myself,20) Global("BegForLife","Locals",0)~
+		REPLACE_TEXTUALLY ~Dialog.+~ ~SetGlobal("BegForLife","Locals",1) Dialog([PC])~
+	END
+BUT_ONLY
+	
+//恢复喜儿可战前施法
+COPY_EXISTING silke.cre override
+	REMOVE_CRE_ITEM ~DW#NOPRE~
+BUT_ONLY
+
+//巨魔类生物倒地后有8点生命，对除火焰、强酸之外的伤害类型全免疫
+COPY_EXISTING spin700.spl override
+	LPF ALTER_EFFECT INT_VAR parameter1=8 END
+	PATCH_FOR_EACH opcode IN 28 29 31 85 86 87 88 89 BEGIN
+		LPF ADD_SPELL_EFFECT INT_VAR opcode target=1 timing=1 parameter1=100 parameter2=1 END
+	END
+	PATCH_FOR_EACH parameter1 IN 14017 14662 BEGIN
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=267 target=1 timing=1 parameter1 END 
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode=101 target=1 timing=1 parameter2=25 END
+
+//清扫魔像法术免疫修正	
+COPY_EXISTING IGOLEM01.CRE override
+	LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=102 END
+	FOR (i=1;i<10;i+=1) BEGIN
+		LPF ADD_CRE_EFFECT INT_VAR opcode=102 timing=9 target=1 parameter1=%i% END
+	END
+BUT_ONLY
+
+//删除北方森林希瑞克牧师错误的投石索，可导致游戏崩溃
+COPY_EXISTING AR18PRIE.cre override
+	LPF DELETE_CRE_ITEM STR_VAR item_to_delete=slng01 END
+BUT_ONLY
+		
+//强尼使徒任务对话bug修正
+COMPILE ~%SCRIPTS%/bjonel25fix.d~
+
+/* 赋予不同专精的蒙面法师不同名字 */
+COPY_EXISTING COWENF1.cre override
+	SAY NAME1 @10402
+	SAY NAME2 @10402
+BUT_ONLY
+
+COPY_EXISTING COWENF2.cre override
+	SAY NAME1 @10403
+	SAY NAME2 @10403
+BUT_ONLY
+
+COPY_EXISTING COWENF3.cre override
+	SAY NAME1 @10404
+	SAY NAME2 @10404
+BUT_ONLY
+
+COPY_EXISTING COWENF4.cre override
+	SAY NAME1 @10405
+	SAY NAME2 @10405
+BUT_ONLY
+
+COPY_EXISTING MAGE16C.cre override
+	SAY NAME1 @10406
+	SAY NAME2 @10406
+BUT_ONLY
+
+COPY_EXISTING MAGE18A.cre override
+	SAY NAME1 @10407
+	SAY NAME2 @10407
+BUT_ONLY

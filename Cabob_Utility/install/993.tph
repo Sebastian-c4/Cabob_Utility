@@ -1,0 +1,34 @@
+
+/* //////////////////////////////////// */
+/* 全局和文本 */
+/* 全局设定 */
+/* //////////////////////////////////// */
+
+////经验调整
+//去SoA 295万经验限制
+COPY bgmain.exe bgmain.exe
+	WRITE_LONG 0x006B7260 ~0x3B9ACA00~
+BUT_ONLY
+	
+//bg1经验上限30万
+OUTER_FOR (n=6;n>0;n+=~-1~) BEGIN
+	EXTEND_TOP ~BALDUR.bcs~ ~%SCRIPTS%/bg1_exp_cap.baf~ EVAL
+END
+
+COPY_EXISTING spcl151.spl ~override\bg1xpcap.spl~
+	WRITE_BYTE 0x1b THIS BOR 0b00000001
+	LPF ALTER_EFFECT INT_VAR opcode=104 target=2 timing=1 parameter1=300000 parameter2=1 END	
+
+//设置专属读取界面游戏提示
+OUTER_FOR (i=1;i<7;++i) BEGIN
+	OUTER_SET string=i+99500
+	OUTER_SET strref= RESOLVE_STR_REF ((AT %string%))
+	OUTER_SPRINT tag ~Cabob%i%~
+	APPEND LOADHINT.2da ~%tag% %strref%~
+END
+
+/* 主角死亡后是否结束游戏，通过“细节设置工具”进行设置 */
+COPY_EXISTING spcl151.spl ~override/c#p1dead.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=271 target=3 parameter1=0 parameter2=0 END
+	
+EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%SCRIPTS%/Disable_End_On_Player1_Dead.baf~

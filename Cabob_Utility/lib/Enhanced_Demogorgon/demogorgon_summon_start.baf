@@ -1,0 +1,20 @@
+
+IF
+  Allegiance(Myself,ENEMY)
+	G("c4#DemogorgonSummonedFirst",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+    CutSceneId("demogor2")  
+		SG("c4#DemogorgonSummonedFirst",1)
+		DisplayStringHead(Myself,70999)
+		Wait(1)
+		ReallyForceSpellPoint([937.1152],DEMOGORGON_GATE)
+		ReallyForceSpellPoint([1197.1037],DEMOGORGON_GATE)
+		ReallyForceSpellPoint([1146.882],DEMOGORGON_GATE)
+		ReallyForceSpellPoint([849.847],DEMOGORGON_GATE)
+		ReallyForceSpellPoint([730.1024],DEMOGORGON_GATE)
+		Wait(1)
+		EndCutSceneMode()
+END
