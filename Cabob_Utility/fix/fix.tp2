@@ -1,0 +1,42 @@
+BACKUP ~Cabob_Utility/backup/fix~
+AUTHOR ~c4demon@gmail.com~
+
+AUTO_EVAL_STRINGS
+ASK_EVERY_COMPONENT
+// AUTO_TRA ~Cabob_Utility/lib/%s~
+
+ALWAYS
+	CLEAR_MEMORY
+	
+	OUTER_TEXT_SPRINT ~MOD_FOLDER~ ~Cabob_Utility~
+	OUTER_TEXT_SPRINT ~SCRIPTS~ ~%MOD_FOLDER%/scripts~
+	OUTER_TEXT_SPRINT ~LIBS~ ~%MOD_FOLDER%/lib~
+	OUTER_TEXT_SPRINT ~INST_FOLDER~ ~%MOD_FOLDER%/install~
+	OUTER_TEXT_SPRINT ~TEMP_FOLDER~ ~%MOD_FOLDER%/temp_file~
+	
+	INCLUDE ~%LIBS%/macros.tph~
+	INCLUDE ~%LIBS%/functions.tpa~
+	INCLUDE ~%LIBS%/cabob_functions.tpa~
+	INCLUDE ~%LIBS%/hla_actions.tpa~
+	INCLUDE ~%LIBS%/settings.tph~
+	
+END
+
+LANGUAGE	~¼òÌåÖÐÎÄ~
+					~schinese~ 
+					~Cabob_Utility/tra/schinese/prompts-%WEIDU_OS%.tra~ 
+					~Cabob_Utility/tra/schinese/setup.tra~
+
+
+/* /////////////////////////////////////////////////// */
+BEGIN ~Do Fix~
+DESIGNATED 99
+NO_LOG_RECORD
+	
+ACTION_FOR_EACH ver IN
+	20171121
+BEGIN
+	ACTION_IF NOT FILE_EXISTS ~data/patch_%ver%.mrk~ BEGIN
+		INCLUDE ~%MOD_FOLDER%/fix/%ver%.tph~
+	END
+END

@@ -49,9 +49,9 @@ ACTION_PHP_EACH weapons AS old => new BEGIN
 		//修改头部
 		LPF DELETE_ITEM_HEADER INT_VAR header_type=2 END
 		LPF ADD_ITEM_HEADER INT_VAR new_header_type=3 target=5 STR_VAR icon=SPPR711B name=~@20302~ RET new_header END
-		//添加效果
-		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%new%~ END
-		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%old%~ END
+		//添加效果 //之前写反了!!! 122是添加, 112是移除!!!
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%new%~ END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%old%~ END
 		//修改名字
 		READ_LONG 0xc name_strref
 		GET_STRREF name_strref name
@@ -64,11 +64,11 @@ ACTION_PHP_EACH weapons AS old => new BEGIN
 	COPY_EXISTING ~%new%.itm~ override
 		//修改头部
 		LPF DELETE_ITEM_HEADER INT_VAR header_type=1 END
-		LPF ALTER_ITEM_HEADER INT_VAR header_type=2 drained=0 END
+		LPF ALTER_ITEM_HEADER INT_VAR header_type=2 drained=0 END //设置数量不减, 防止白板武器切换远程后数量为1
 		LPF ADD_ITEM_HEADER INT_VAR new_header_type=3 target=5 STR_VAR icon=SPPR711B name=~@20304~ RET new_header END
-		//添加效果
-		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%old%~ END
-		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%new%~ END
+		//添加效果 //之前写反了!!! 122是添加, 112是移除!!!
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=122 target=1 timing=1 STR_VAR resource=~%old%~ END
+		LPF ADD_ITEM_EFFECT INT_VAR header=new_header opcode=112 target=1 timing=1 STR_VAR resource=~%new%~ END
 		//修改名字
 		READ_LONG 0xc name_strref
 		GET_STRREF name_strref name
@@ -468,7 +468,7 @@ BEGIN
 			INNER_ACTION BEGIN
 				COPY_EXISTING ~%item%.itm~ override
 					LPF DELETE_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=opcode match_parameter1=parameter1 match_parameter2=parameter2 STR_VAR match_resource=~%resource%~ END
-					LPF ADD_ITEM_EQEFFECT INT_VAR insert_point=~-1~ opcode parameter1 parameter2 STR_VAR resource END
+					LPF ADD_ITEM_EQEFFECT INT_VAR insert_point=~-1~ opcode timing=2 duration=0 parameter1 parameter2 STR_VAR resource END //注意添加timing!!!
 				BUT_ONLY
 			END
 		END

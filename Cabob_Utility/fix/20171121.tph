@@ -1,0 +1,172 @@
+
+	
+//维康妮娅修正错误的无敌状态和错误的声音集
+//正确文件
+ACTION_FOR_EACH n IN ~~ 4 61 BEGIN
+	COPY ~%MOD_FOLDER%/cre/viconi_a.cre~ ~override/viconi%n%.cre~
+END
+
+ACTION_FOR_EACH n IN 6 8 9 11 13 BEGIN
+	COPY ~%MOD_FOLDER%/cre/viconi_b.cre~ ~override/viconi%n%.cre~
+END
+
+COPY ~%MOD_FOLDER%/cre/viconi_c.cre~ ~override/viconi16.cre~
+
+//修正属性和添加minhp1
+ACTION_FOR_EACH n IN ~~ 4 61 6 8 9 11 13 16 BEGIN
+	COPY_EXISTING ~viconi%n%.cre~ override
+		ADD_CRE_ITEM minhp1 #0 #0 #0 ~UNDROPPABLE~ ~RRING~
+		WRITE_BYTE 0x10 0x40 //was thief
+		WRITE_LONG 0x14 0 //XP for kill
+		WRITE_LONG 0x18 0 //XP now
+		WRITE_SHORT 0x24 30 //hp now
+		WRITE_SHORT 0x26 30 //max hp
+		WRITE_BYTE 0x52 20 //thac0
+		WRITE_BYTE 0x53 1 //APR
+		WRITE_BYTE 0x54 10 //save vs deathr
+		WRITE_BYTE 0x55 14 //save vs wands
+		WRITE_BYTE 0x56 13 //save vs polymorph
+		WRITE_BYTE 0x57 16 //save vs breath
+		WRITE_BYTE 0x58 15 //save vs breath
+		WRITE_BYTE 0x45 80 //hide in shadows
+		WRITE_BYTE 0x68 20 //stealth
+		WRITE_BYTE 0x234 1 // level1
+		WRITE_BYTE 0x235 5 // level2
+		WRITE_BYTE 0x236 0 // level3
+		WRITE_BYTE 0x237 2 // gender
+		WRITE_LONG 0x244 0x400a0000 //kit=assassin
+		WRITE_LONG 0x273 15 //class
+		WRITE_LONG 0x275 2 //gender
+		LPF DELETE_EFFECT INT_VAR match_opcode=233 END
+		PATCH_FOR_EACH parameter2 IN 0x66 0x6b BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=295 opcode=233 parameter1=1 parameter2 END
+		END
+		PATCH_FOR_EACH parameter2 IN 0x60 0x5b 0x6f BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=295 opcode=233 parameter1=8 parameter2 END
+		END
+	BUT_ONLY
+END		
+
+//入队后删除minhp1
+<<<<<<<< .../inlined/viconia.baf
+IF
+	InParty(Myself)
+	HasItem("minhp1",Myself)
+THEN
+	RESPONSE #100
+		DestroyItem("minhp1")
+END
+>>>>>>>>
+
+EXTEND_TOP bgvicnia.bcs ~.../inlined/viconia.baf~
+EXTEND_TOP viconia.bcs ~.../inlined/viconia.baf~
+EXTEND_TOP VICO25.bcs ~.../inlined/viconia.baf~
+
+//修正精灵熊伙伴免疫属性无效的错误
+COPY_EXISTING_REGEXP GLOB ~c#bmbe.*\.cre~ override
+	LPF ALTER_EFFECT INT_VAR timing=9 END
+BUT_ONLY
+
+//修正部分物品装备效果无效的错误
+//自由行动物品处理时漏了timing设定
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	LPF ALTER_EFFECT INT_VAR check_headers=0 silent=1 match_timing=0 match_duration=0 timing=2 target=1 END
+BUT_ONLY
+
+//修正武器切换近战/远程时的错误
+//之前写反了!
+COPY_EXISTING - tooltip.2da override
+	READ_2DA_ENTRIES_NOW rows 4
+	FOR (i=0;i<rows;++i) BEGIN
+		FOR (j=1;j<4;++j) BEGIN
+			READ_2DA_ENTRY_FORMER rows i j strref
+			PATCH_IF ~%strref%~ STR_EQ 151070 || ~%strref%~ STR_EQ 151072 BEGIN
+				READ_2DA_ENTRY_FORMER rows i 0 item
+				SET $items(~%item%~)=1
+			END
+		END
+	END
+	
+ACTION_PHP_EACH items AS item => int BEGIN
+	COPY_EXISTING ~%item%.itm~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=112 opcode=999 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=122 opcode=112 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=999 opcode=122 END
+	BUT_ONLY
+END
+	
+//扩展宗派特定装备对阵营的限制，避免修改过职业的NPC无法使用的情况
+COPY_EXISTING_REGEXP GLOB ~xd.*\.itm~ override ~c4b.*\.itm~ override
+	WRITE_BYTE 0x1e THIS BAND 0b11000000
+BUT_ONLY
+
+//混元武僧修正：
+OUTER_FOR (i=1;i<6;++i) BEGIN
+	//修正高阶技能错误的名字和说明
+	COPY_EXISTING ~c#mkc%i%.spl~ override
+		name=9900000 + i*2 -1
+		desc=name+1
+		WRITE_LONG 8 RESOLVE_STR_REF ((AT ~%name%~))
+		WRITE_LONG 0x50 RESOLVE_STR_REF ((AT ~%desc%~))
+	BUT_ONLY
+
+	OUTER_PATCH_SAVE level ~%i%~ BEGIN
+		WRITE_BYTE 0 THIS+48
+	END	
+
+	//修正混元拳法缺失的伤害惩罚加成
+	COPY_EXISTING_REGEXP GLOB ~c#mkf[1-6]%level%.spl~ override
+		decrease=i*~-2~
+		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		PHP_EACH header AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=288 BEGIN
+					WRITE_LONG offset+4 i
+				END
+				PATCH_IF opcode=73 BEGIN
+					WRITE_LONG offset+4 decrease
+				END
+			END
+		END
+	BUT_ONLY
+	
+	//更新疾风斩的持续伤害机制：穿刺伤害每轮生效一次持续3轮，每次伤害调整为10/15/20/25/30但无法叠加
+	COPY_EXISTING ~c#mkf6%level%.spl~ override
+		LPF DELETE_EFFECT INT_VAR match_opcode=248 END
+		PATCH_FOR_EACH effect IN 1 a BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=73 opcode=248 parameter1=0 STR_VAR resource=~c#mkf6%level%%effect%~ END
+		END
+	LAF CREATE_EFFECT INT_VAR opcode=146 timing=1 duration=0 parameter1=0 parameter2=1 STR_VAR name=~c#mkf6%level%1~ resource=~c#mkf6%level%0~ END
+	LAF CREATE_EFFECT INT_VAR opcode=12 timing=1 parameter2=16777216 dicenumber=i dicesize=4 STR_VAR name=~c#mkf6%level%a~ END
+	
+	COPY_EXISTING spcl151.spl ~override/c#mkf6%level%0.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=79 range=3 END
+		LPF ALTER_EFFECT INT_VAR opcode=206 timing=0 duration=18 parameter1=0 STR_VAR resource=~%DEST_RES%~ END
+		PATCH_FOR_EACH duration IN 6 12 18 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=206 opcode=12 timing=4 duration parameter1=5+%i%*5 parameter2=1048576 STR_VAR resource=~~ END
+		END
+END
+
+//五气朝元的再生能力从每轮2点提升为每秒1点（此前文本错误的写为每秒2点）
+COPY_EXISTING_REGEXP GLOB ~c#mkmt3.*.spl~ override
+	LPF ALTER_EFFECT INT_VAR match_opcode=98 parameter1=1 parameter2=2 END
+BUT_ONLY
+		
+//更新文本
+OUTER_SPRINT ~f6old~ @9900011
+OUTER_SPRINT ~f6new~ @9900012
+OUTER_SPRINT ~mt3old~ @9900013
+OUTER_SPRINT ~mt3new~ @9900014
+ALTER_TLK BEGIN
+	REPLACE_TEXTUALLY ~%f6old%~ ~%f6new%~
+	REPLACE_TEXTUALLY ~%mt3old%~ ~%mt3new%~
+END
+
+/////////////////////////////////
+OUTER_SPRINT patch_version ~进行博德之门(TM)和剑湾传奇(TM)或进行安姆阴影(TM)
+		
+最后修正日期: %ver%~
+STRING_SET 73245 ~%patch_version%~
+COPY_EXISTING ring01.itm ~data/patch_%ver%.mrk~
