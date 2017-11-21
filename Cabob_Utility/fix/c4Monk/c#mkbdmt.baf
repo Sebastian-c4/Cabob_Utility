@@ -1,0 +1,1020 @@
+
+IF
+	Class(Player1,MONK)
+	TriggerOverride(Player1,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer1SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer1SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player2,MONK)
+	TriggerOverride(Player2,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer2SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer2SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player3,MONK)
+	TriggerOverride(Player3,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer3SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer3SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player4,MONK)
+	TriggerOverride(Player4,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer4SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer4SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player5,MONK)
+	TriggerOverride(Player5,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer5SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer5SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player6,MONK)
+	TriggerOverride(Player6,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer6SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer6SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////
+
+IF
+	Class(Player1,MONK)
+	CheckStat(Player1,444,c4MonkIronShirt)
+	!CheckStat(Player1,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player1,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P1","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player1)
+		SetGlobalTimer("c4MonkIronShirtShield-P1","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	CheckStat(Player1,444,c4MonkIronShirt)
+	CheckStat(Player1,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player1,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P1","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player1)
+		SetGlobalTimer("c4MonkIronShirtShield-P1","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	CheckStat(Player1,444,c4MonkProtectionGlobe)
+	!CheckStat(Player1,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player1,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P1","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player1)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P1","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	CheckStat(Player1,444,c4MonkProtectionGlobe)
+	CheckStat(Player1,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player1,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P1","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player1)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P1","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	CheckStat(Player1,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player1,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	CheckStat(Player2,444,c4MonkIronShirt)
+	!CheckStat(Player2,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player2,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P2","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player2)
+		SetGlobalTimer("c4MonkIronShirtShield-P2","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	CheckStat(Player2,444,c4MonkIronShirt)
+	CheckStat(Player2,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player2,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P2","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player2)
+		SetGlobalTimer("c4MonkIronShirtShield-P2","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	CheckStat(Player2,444,c4MonkProtectionGlobe)
+	!CheckStat(Player2,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player2,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P2","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player2)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P2","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	CheckStat(Player2,444,c4MonkProtectionGlobe)
+	CheckStat(Player2,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player2,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P2","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player2)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P2","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	CheckStat(Player2,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player2,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player2,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	CheckStat(Player3,444,c4MonkIronShirt)
+	!CheckStat(Player3,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player3,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P3","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player3)
+		SetGlobalTimer("c4MonkIronShirtShield-P3","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	CheckStat(Player3,444,c4MonkIronShirt)
+	CheckStat(Player3,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player3,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P3","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player3)
+		SetGlobalTimer("c4MonkIronShirtShield-P3","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	CheckStat(Player3,444,c4MonkProtectionGlobe)
+	!CheckStat(Player3,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player3,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P3","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player3)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P3","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	CheckStat(Player3,444,c4MonkProtectionGlobe)
+	CheckStat(Player3,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player3,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P3","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player3)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P3","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	CheckStat(Player3,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player3,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player3,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	CheckStat(Player4,444,c4MonkIronShirt)
+	!CheckStat(Player4,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player4,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P4","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player4)
+		SetGlobalTimer("c4MonkIronShirtShield-P4","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	CheckStat(Player4,444,c4MonkIronShirt)
+	CheckStat(Player4,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player4,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P4","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player4)
+		SetGlobalTimer("c4MonkIronShirtShield-P4","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	CheckStat(Player4,444,c4MonkProtectionGlobe)
+	!CheckStat(Player4,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player4,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P4","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player4)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P4","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	CheckStat(Player4,444,c4MonkProtectionGlobe)
+	CheckStat(Player4,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player4,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P4","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player4)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P4","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	CheckStat(Player4,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player4,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player4,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	CheckStat(Player5,444,c4MonkIronShirt)
+	!CheckStat(Player5,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player5,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P5","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player5)
+		SetGlobalTimer("c4MonkIronShirtShield-P5","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	CheckStat(Player5,444,c4MonkIronShirt)
+	CheckStat(Player5,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player5,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P5","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player5)
+		SetGlobalTimer("c4MonkIronShirtShield-P5","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	CheckStat(Player5,444,c4MonkProtectionGlobe)
+	!CheckStat(Player5,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player5,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P5","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player5)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P5","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	CheckStat(Player5,444,c4MonkProtectionGlobe)
+	CheckStat(Player5,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player5,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P5","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player5)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P5","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	CheckStat(Player5,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player5,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player5,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	CheckStat(Player6,444,c4MonkIronShirt)
+	!CheckStat(Player6,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player6,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P6","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player6)
+		SetGlobalTimer("c4MonkIronShirtShield-P6","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	CheckStat(Player6,444,c4MonkIronShirt)
+	CheckStat(Player6,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player6,444,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P6","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player6)
+		SetGlobalTimer("c4MonkIronShirtShield-P6","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	CheckStat(Player6,444,c4MonkProtectionGlobe)
+	!CheckStat(Player6,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player6,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P6","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player6)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P6","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	CheckStat(Player6,444,c4MonkProtectionGlobe)
+	CheckStat(Player6,444,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player6,444,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P6","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player6)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P6","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	CheckStat(Player6,444,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player6,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player6,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	TriggerOverride(Player1,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player1,See(NearestEnemyOf()))
+	!CheckStat(Player1,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer1SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	!TriggerOverride(Player1,See(NearestEnemyOf()))
+	CheckStat(Player1,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer1SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	TriggerOverride(Player2,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player2,See(NearestEnemyOf()))
+	!CheckStat(Player2,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer2SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	!TriggerOverride(Player2,See(NearestEnemyOf()))
+	CheckStat(Player2,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer2SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	TriggerOverride(Player3,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player3,See(NearestEnemyOf()))
+	!CheckStat(Player3,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer3SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	!TriggerOverride(Player3,See(NearestEnemyOf()))
+	CheckStat(Player3,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer3SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	TriggerOverride(Player4,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player4,See(NearestEnemyOf()))
+	!CheckStat(Player4,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer4SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	!TriggerOverride(Player4,See(NearestEnemyOf()))
+	CheckStat(Player4,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer4SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	TriggerOverride(Player5,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player5,See(NearestEnemyOf()))
+	!CheckStat(Player5,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer5SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	!TriggerOverride(Player5,See(NearestEnemyOf()))
+	CheckStat(Player5,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer5SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	TriggerOverride(Player6,Global("c4MonkMentalTraining1","Locals",1))
+	TriggerOverride(Player6,See(NearestEnemyOf()))
+	!CheckStat(Player6,444,c4MonkMentalTraining1Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer6SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt1a",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	!TriggerOverride(Player6,See(NearestEnemyOf()))
+	CheckStat(Player6,444,c4MonkMentalTraining1Act)
+	GlobalTimerExpired("c4MonkPlayer6SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	TriggerOverride(Player1,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player1,See(NearestEnemyOf()))
+	!CheckStat(Player1,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer1SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	!TriggerOverride(Player1,See(NearestEnemyOf()))
+	CheckStat(Player1,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer1SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	TriggerOverride(Player2,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player2,See(NearestEnemyOf()))
+	!CheckStat(Player2,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer2SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	!TriggerOverride(Player2,See(NearestEnemyOf()))
+	CheckStat(Player2,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer2SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	TriggerOverride(Player3,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player3,See(NearestEnemyOf()))
+	!CheckStat(Player3,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer3SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	!TriggerOverride(Player3,See(NearestEnemyOf()))
+	CheckStat(Player3,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer3SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	TriggerOverride(Player4,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player4,See(NearestEnemyOf()))
+	!CheckStat(Player4,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer4SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	!TriggerOverride(Player4,See(NearestEnemyOf()))
+	CheckStat(Player4,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer4SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	TriggerOverride(Player5,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player5,See(NearestEnemyOf()))
+	!CheckStat(Player5,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer5SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	!TriggerOverride(Player5,See(NearestEnemyOf()))
+	CheckStat(Player5,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer5SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	TriggerOverride(Player6,Global("c4MonkMentalTraining2","Locals",1))
+	TriggerOverride(Player6,See(NearestEnemyOf()))
+	!CheckStat(Player6,444,c4MonkMentalTraining2Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer6SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt2a",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	!TriggerOverride(Player6,See(NearestEnemyOf()))
+	CheckStat(Player6,444,c4MonkMentalTraining2Act)
+	GlobalTimerExpired("c4MonkPlayer6SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	TriggerOverride(Player1,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player1,See(NearestEnemyOf()))
+	!CheckStat(Player1,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer1SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	!TriggerOverride(Player1,See(NearestEnemyOf()))
+	CheckStat(Player1,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer1SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	TriggerOverride(Player2,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player2,See(NearestEnemyOf()))
+	!CheckStat(Player2,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer2SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	!TriggerOverride(Player2,See(NearestEnemyOf()))
+	CheckStat(Player2,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer2SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	TriggerOverride(Player3,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player3,See(NearestEnemyOf()))
+	!CheckStat(Player3,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer3SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	!TriggerOverride(Player3,See(NearestEnemyOf()))
+	CheckStat(Player3,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer3SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	TriggerOverride(Player4,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player4,See(NearestEnemyOf()))
+	!CheckStat(Player4,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer4SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	!TriggerOverride(Player4,See(NearestEnemyOf()))
+	CheckStat(Player4,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer4SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	TriggerOverride(Player5,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player5,See(NearestEnemyOf()))
+	!CheckStat(Player5,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer5SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	!TriggerOverride(Player5,See(NearestEnemyOf()))
+	CheckStat(Player5,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer5SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	TriggerOverride(Player6,Global("c4MonkMentalTraining3","Locals",1))
+	TriggerOverride(Player6,See(NearestEnemyOf()))
+	!CheckStat(Player6,444,c4MonkMentalTraining3Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer6SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt3a",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	!TriggerOverride(Player6,See(NearestEnemyOf()))
+	CheckStat(Player6,444,c4MonkMentalTraining3Act)
+	GlobalTimerExpired("c4MonkPlayer6SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	TriggerOverride(Player1,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player1,See(NearestEnemyOf()))
+	!CheckStat(Player1,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer1SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player1,MONK)
+	!TriggerOverride(Player1,See(NearestEnemyOf()))
+	CheckStat(Player1,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer1SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player1)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	TriggerOverride(Player2,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player2,See(NearestEnemyOf()))
+	!CheckStat(Player2,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer2SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player2,MONK)
+	!TriggerOverride(Player2,See(NearestEnemyOf()))
+	CheckStat(Player2,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer2SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player2)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	TriggerOverride(Player3,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player3,See(NearestEnemyOf()))
+	!CheckStat(Player3,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer3SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player3,MONK)
+	!TriggerOverride(Player3,See(NearestEnemyOf()))
+	CheckStat(Player3,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer3SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player3)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	TriggerOverride(Player4,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player4,See(NearestEnemyOf()))
+	!CheckStat(Player4,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer4SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player4,MONK)
+	!TriggerOverride(Player4,See(NearestEnemyOf()))
+	CheckStat(Player4,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer4SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player4)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	TriggerOverride(Player5,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player5,See(NearestEnemyOf()))
+	!CheckStat(Player5,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer5SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player5,MONK)
+	!TriggerOverride(Player5,See(NearestEnemyOf()))
+	CheckStat(Player5,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer5SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player5)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	TriggerOverride(Player6,Global("c4MonkMentalTraining4","Locals",1))
+	TriggerOverride(Player6,See(NearestEnemyOf()))
+	!CheckStat(Player6,444,c4MonkMentalTraining4Act)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer6SeeEnemyTimer","Global",6)
+		ReallyForceSpellRES("c#mkmt4a",Player6)
+		//Continue()
+END
+
+IF
+	Class(Player6,MONK)
+	!TriggerOverride(Player6,See(NearestEnemyOf()))
+	CheckStat(Player6,444,c4MonkMentalTraining4Act)
+	GlobalTimerExpired("c4MonkPlayer6SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkmtcl",Player6)
+		//Continue()
+END

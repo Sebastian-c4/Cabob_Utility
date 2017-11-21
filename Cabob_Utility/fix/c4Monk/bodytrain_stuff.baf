@@ -1,0 +1,66 @@
+
+IF
+	Class(Player%n%,MONK)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkIronShirt)
+	!CheckStat(Player%n%,%engine_value_type%,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player%n%,%engine_value_type%,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P%n%","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd11",Player%n%)
+		SetGlobalTimer("c4MonkIronShirtShield-P%n%","Locals",12) //格挡效果还是需要一个计时器
+		//Continue()
+END
+
+IF
+	Class(Player%n%,MONK)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkIronShirt)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player%n%,%engine_value_type%,c4MonkIronShirtShield)
+		!GlobalTimerNotExpired("c4MonkIronShirtShield-P%n%","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd12",Player%n%)
+		SetGlobalTimer("c4MonkIronShirtShield-P%n%","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player%n%,MONK)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkProtectionGlobe)
+	!CheckStat(Player%n%,%engine_value_type%,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player%n%,%engine_value_type%,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P%n%","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd21",Player%n%)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P%n%","Locals",12)
+		//Continue()
+END
+
+IF
+	Class(Player%n%,MONK)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkProtectionGlobe)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkBodyTrainingHLA)
+	OR(2)
+		!CheckStat(Player%n%,%engine_value_type%,c4MonkProtectionGlobeDeflect)
+		!GlobalTimerNotExpired("c4MonkProtectionGlobeDeflect-P%n%","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c#mkbd22",Player%n%)
+		SetGlobalTimer("c4MonkProtectionGlobeDeflect-P%n%","Locals",6)
+		//Continue()
+END
+
+IF
+	Class(Player%n%,MONK)
+	CheckStat(Player%n%,%engine_value_type%,c4MonkBodyTrainingHLA)
+	TriggerOverride(Player%n%,Global("c4MonkBodyTrainingHLA","Locals",0))
+THEN
+	RESPONSE #100
+		ActionOverride(Player%n%,StartDialogOverride("c4monkd",Myself))
+		//Continue()
+END

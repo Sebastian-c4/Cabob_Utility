@@ -1,7 +1,7 @@
 
 	
 //维康妮娅修正错误的无敌状态和错误的声音集
-//正确文件
+//从最初的安装提取正确文件...偷懒不行啊......
 ACTION_FOR_EACH n IN ~~ 4 61 BEGIN
 	COPY ~%MOD_FOLDER%/cre/viconi_a.cre~ ~override/viconi%n%.cre~
 END
@@ -100,7 +100,41 @@ COPY_EXISTING_REGEXP GLOB ~xd.*\.itm~ override ~c4b.*\.itm~ override
 	WRITE_BYTE 0x1e THIS BAND 0b11000000
 BUT_ONLY
 
-//混元武僧修正：
+////////混元武僧修正：
+OUTER_TEXT_SPRINT c4Monk_fix ~%MOD_FOLDER%/fix/c4monk~
+LOAD_TRA ~%c4Monk_fix%/game.tra~
+
+//重新编译脚本和对话防止身法次数错误叠加
+COPY ~.../inlined/blank.baf~ ~%c4Monk_fix%/c#mkbdmt.baf~
+	FOR (n=1;n<7;++n) BEGIN
+		APPEND_FILE_EVALUATE ~%c4Monk_fix%/see_enemy_check.baf~ //纯粹的遇敌扫描...不记得当初搞来干啥的了, 好像没什么鸟用
+	END
+	FOR (n=1;n<7;++n) BEGIN
+		APPEND_FILE_EVALUATE ~%c4Monk_fix%/bodytrain_stuff.baf~
+	END
+	FOR (x=1;x<5;++x) BEGIN
+		FOR (n=1;n<7;++n) BEGIN
+			APPEND_FILE_EVALUATE ~%c4Monk_fix%/mental_stuff.baf~
+		END
+	END
+	
+COMPILE EVAL ~%c4Monk_fix%/c#mkbdmt.baf~
+COMPILE EVAL ~%c4Monk_fix%/c4monkd.d~
+
+COPY_EXISTING spcl151.spl ~override/c#mkbd0-.spl~ //身法更新时需要172号移除技能
+	LPF ALTER_EFFECT INT_VAR timing=9 opcode=172 parameter1=0 parameter2=0 STR_VAR resource=c#mkbda- END
+	PATCH_FOR_EACH x IN b c d e BEGIN
+		LPF CLONE_EFFECT INT_VAR multi_match=1 STR_VAR resource=~c#mkbd%x%-~ insert=last END
+	END
+	
+COPY_EXISTING_REGEXP GLOB ~c#mk.*\.spl~ override //更新一下engine_value省的单独设置
+	LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=318 match_parameter1=1 parameter1=engine_value_type END
+BUT_ONLY
+
+ADD_SECTYPE ~c4MonkBodyTraining~ @206 //铁布衫和真元护体格挡效果缺少次要类型
+COPY_EXISTING_REGEXP GLOB ~c#mkbd[12][12]\.spl~ override
+	WRITE_BYTE 0x27 c4MonkBodyTraining
+
 OUTER_FOR (i=1;i<6;++i) BEGIN
 	//修正高阶技能错误的名字和说明
 	COPY_EXISTING ~c#mkc%i%.spl~ override

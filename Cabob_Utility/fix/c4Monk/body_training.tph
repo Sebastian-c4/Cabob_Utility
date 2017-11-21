@@ -1,0 +1,157 @@
+
+////身法
+LAF skill_creation STR_VAR spellname=c#mkbd END
+
+// COPY_EXISTING c#mkbd.spl override
+	// SAY NAME1 @200
+// BUT_ONLY
+
+OUTER_FOR (i=1;i<6;++i) BEGIN
+	OUTER_PATCH_SAVE level ~%i%~ BEGIN
+		WRITE_BYTE 0 THIS+48
+	END
+	
+	//实效法术: 添加当前等级根法术, 移除之前法术. 不再需要, 由脚本完成
+/*	COPY_EXISTING ~c#mkbd%level%.spl~ override
+		name=i+200
+		WRITE_LONG 8 RESOLVE_STR_REF ((AT %name%))
+		FOR (j=1;j<6;++j) BEGIN
+			INNER_PATCH_SAVE remove ~%j%~ BEGIN
+				WRITE_BYTE 0 THIS+48
+			END
+			LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=172 STR_VAR resource=~c#mkbd%remove%-~ END
+		END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=~c#mkbd%level%-~ END
+		FOR (m=1;m<i;++m) BEGIN
+			LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=171 END
+		END
+*/		
+	//创建根法术
+	COPY_EXISTING ~c#mkbd0-.spl~ ~override/c#mkbd%level%-.spl~
+		name=i+200
+		WRITE_LONG 8 RESOLVE_STR_REF ((AT %name%))
+		LPF ALTER_EFFECT STR_VAR resource=~c#mkbd%level%~ END	
+	//使用的表格
+	COPY ~%MOD_FOLDER%/2da/c#mkbd0.2da~ ~override/c#mkbd%level%.2da~
+		SET_2DA_ENTRY 0 1 3 ~c#mkbd1%level%~
+		SET_2DA_ENTRY 1 1 3 ~c#mkbd2%level%~
+		SET_2DA_ENTRY 2 1 3 ~c#mkbd3%level%~
+		
+	//铁布衫
+	COPY_EXISTING c#mkbd1.spl ~override/c#mkbd1%level%.spl~
+		SAY NAME1 @211
+		LPF ALTER_EFFECT INT_VAR duration=60*i parameter1=10*i END
+		LPF find_stat STR_VAR identifier=c4MonkIronShirt RET stat=stat_value END
+		stat+=%engine_stat_type%
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=%engine_mark_type% parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=215 timing=1 STR_VAR resource=spstones insert=below END //动画
+	
+	//真元护体
+	COPY_EXISTING c#mkbd2.spl ~override/c#mkbd2%level%.spl~
+		SAY NAME1 @221
+		LPF ALTER_EFFECT INT_VAR duration=90*i parameter1=15*i END
+		LPF find_stat STR_VAR identifier=c4MonkProtectionGLobe RET stat=stat_value END
+		stat+=%engine_stat_type%
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=%engine_mark_type% parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=155 duration=2 parameter1=0 parameter2=0 STR_VAR insert=below END //动画
+	
+	//天罡战气
+	COPY_EXISTING c#mkbd3.spl ~override/c#mkbd3%level%.spl~
+		SAY NAME1 @231
+		LPF ALTER_EFFECT INT_VAR match_opcode=146 STR_VAR resource=~c#mkbd3%i%~ END
+		FOR (j=1;j<i*15;++j) BEGIN
+			delay=j*6
+			LPF CLONE_EFFECT INT_VAR match_opcode=146 match_timing=1 timing=4 duration=delay STR_VAR insert=last END
+		END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=215 timing=0 duration=1 STR_VAR resource=SPGRWHRL END //动画
+		
+	COPY_EXISTING c#mkbd3_.spl ~override/c#mkbd3%i%.spl~
+		LPF ALTER_EFFECT INT_VAR match_timing=0 duration=6 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=278 parameter1=i END
+		LPF ALTER_EFFECT INT_VAR match_opcode=73 parameter1=i*2 END
+		LPF ALTER_EFFECT INT_VAR power=0 resist_dispel=0 END
+END
+		
+//铁布衫效果
+COPY_EXISTING spcl151.spl ~override/c#mkbd11.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=218 timing=0 duration=12 parameter1=1 END
+	LPF find_stat STR_VAR identifier=c4MonkIronShirtShield RET stat=stat_value END
+	stat+=%engine_stat_type%
+	LPF CLONE_EFFECT INT_VAR match_opcode=218 opcode=%engine_mark_type% parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+		
+//真元护体效果
+COPY_EXISTING spcl151.spl ~override/c#mkbd21.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=50 timing=0 duration=12 parameter1=0x460000 parameter2=0x140000 END
+	LPF find_stat STR_VAR identifier=c4MonkProtectionGlobeDeflect RET stat=stat_value END
+	stat+=%engine_stat_type%
+	LPF CLONE_EFFECT INT_VAR match_opcode=50 opcode=%engine_mark_type% timing=0 duration=12 parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+	FOR (i=1;i<11;++i) BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=50 opcode=201 parameter1=1 parameter2=i END
+	END
+
+
+////高等身法
+COPY_EXISTING spcl151.spl ~override/c#mkbdx.spl~
+	SAY NAME1 @2007
+	SAY UNIDENTIFIED_DESC @2008
+	WRITE_ASCII 0x3a c#mkbdxb
+	LPF ALTER_SPELL_HEADER STR_VAR icon=c#mkbdxb END
+	LPF find_stat STR_VAR identifier=c4MonkBodyTrainingHLA RET stat=stat_value END
+	stat+=%engine_stat_type%
+	LPF ALTER_EFFECT INT_VAR multi_match=1 timing=9 opcode=%engine_mark_type% parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+	
+COPY_EXISTING c#mkbd.bam ~override/c#mkbdxb.bam~
+
+COPY ~%MOD_FOLDER%/2da/c#mkbd0.2da~ ~override/c#mkbdx.2da~
+	SET_2DA_ENTRY 0 1 3 ~c#mkbd1x~
+	SET_2DA_ENTRY 1 1 3 ~c#mkbd2x~
+	SET_2DA_ENTRY 2 1 3 ~c#mkbd3x~
+	
+COPY_EXISTING ~c#mkbd0-.spl~ ~override/c#mkbdx-.spl~
+	SAY NAME1 @2007
+	LPF ALTER_EFFECT STR_VAR resource=~c#mkbdx~ END
+
+//铁布衫
+COPY_EXISTING c#mkbd1e.spl ~override/c#mkbd1x.spl~
+	LPF ALTER_EFFECT INT_VAR match_parameter1=50 parameter1=65 END
+	LPF ALTER_EFFECT INT_VAR match_timing=0 duration=900 END
+
+COPY_EXISTING c#mkbd11.spl ~override/c#mkbd12.spl~
+	LPF ALTER_EFFECT INT_VAR duration=6 END
+	
+//真元护体
+COPY_EXISTING c#mkbd2e.spl ~override/c#mkbd2x.spl~
+	LPF ALTER_EFFECT INT_VAR match_parameter1=75 parameter1=100 END
+	LPF ALTER_EFFECT INT_VAR match_timing=0 duration=900 END
+
+COPY_EXISTING c#mkbd21.spl ~override/c#mkbd22.spl~
+	LPF ALTER_EFFECT INT_VAR duration=6 END
+	
+//天罡战气
+COPY_EXISTING c#mkbd3e.spl ~override/c#mkbd3x.spl~
+	LPF ALTER_EFFECT INT_VAR match_opcode=146 STR_VAR resource=c#mkbd3y END
+	LPF DELETE_EFFECT INT_VAR match_timing=4 END
+	FOR (j=1;j<90;++j) BEGIN
+		delay=j*6
+		LPF CLONE_EFFECT INT_VAR match_opcode=146 match_timing=1 timing=4 duration=delay STR_VAR insert=last END
+	END
+	
+COPY_EXISTING c#mkbd35.spl ~override/c#mkbd3y.spl~
+	LPF CLONE_EFFECT INT_VAR match_opcode=73 opcode=250 parameter1=3 END
+	LPF CLONE_EFFECT INT_VAR match_opcode=73 opcode=301 parameter1=2 END
+	
+//身法刷新
+ADD_SECTYPE ~c4MonkBodyTraining~ @206
+COPY_EXISTING_REGEXP GLOB ~c#mkbd[123][abcdex12]\.spl~ override
+	WRITE_BYTE 0x27 c4MonkBodyTraining
+	LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 duration=0 parameter1=0 parameter2=c4MonkBodyTraining STR_VAR insert=first resource=~~ END
+BUT_ONLY
+COPY_EXISTING_REGEXP GLOB ~c#mkbd3.*\.spl~ override
+	WRITE_BYTE 0x27 c4MonkBodyTraining
+BUT_ONLY
+
+//脚本
+COPY ~%workspace%/c#mkbdmt.baf~ ~%workspace%/c#mkbdmt.baf~
+	FOR (n=1;n<7;++n) BEGIN
+		APPEND_FILE_EVALUATE ~%BAF_FOLDER%/bodytrain_stuff.baf~
+	END

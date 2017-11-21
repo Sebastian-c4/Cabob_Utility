@@ -1,0 +1,12 @@
+
+IF
+	Class(Player%n%,MONK)
+	TriggerOverride(Player%n%,See(NearestEnemyOf()))
+	!GlobalTimerNotExpired("c4MonkPlayer%n%SeeEnemyTimer","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4MonkPlayer%n%SeeEnemyTimer","Global",6)
+		Continue()
+END
+
+//////////////////////////////////////////////////////////

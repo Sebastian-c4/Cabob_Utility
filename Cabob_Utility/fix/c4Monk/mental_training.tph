@@ -1,0 +1,32 @@
+
+////ÐÄ·¨
+// COPY_EXISTING c#mkmt.spl override
+	// SAY NAME1 @300
+	
+ADD_SECTYPE ~c4MonkMentalTraining~ @301
+
+COPY_EXISTING spcl151.spl ~override/c#mkmtcl.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=221 parameter1=0 parameter2=c4MonkMentalTraining END
+BUT_ONLY
+	
+OUTER_FOR (x=1;x<5;++x) BEGIN
+	// COPY_EXISTING ~c#mkmt%x%.spl~ override
+		// name=301+x*10
+		// WRITE_LONG 8 RESOLVE_STR_REF ((AT %name%))		
+		
+	LAF skill_creation INT_VAR apply_manully=1 STR_VAR spellname=~c#mkmt%x%~ END
+	COPY_EXISTING ~c#mkmt%x%a.spl~ override
+		WRITE_LONG 8 ~-1~
+		WRITE_BYTE 0x27 c4MonkMentalTraining
+		LPF ALTER_EFFECT INT_VAR timing=0 duration=360000 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=215 timing=0 duration=1 END
+		LPF find_stat STR_VAR identifier=~c4MonkMentalTraining%x%Act~ RET stat=stat_value END
+		stat+=%engine_stat_type%
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=%engine_mark_type% parameter1=%engine_value_type% parameter2=stat special=%engine_special_type% STR_VAR resource=~~ END
+		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=206 parameter1=0 STR_VAR resource=~c#mkmt%x%a~ insert=last END
+		
+	COPY ~%workspace%/c#mkbdmt.baf~ ~%workspace%/c#mkbdmt.baf~
+		FOR (n=1;n<7;++n) BEGIN
+			APPEND_FILE_EVALUATE ~%BAF_FOLDER%/mental_stuff.baf~
+		END
+END
