@@ -1,0 +1,69 @@
+
+//修正偷盗号角之后赛蒙可能不出现的错误
+//从bg2ee脚本复制并修改
+<<<<<<<< .../inlined/ar1600_fix.baf
+IF
+  Global("cd_saemon_spawn","MYAREA",0)
+  Global("StealShip","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("cd_saemon_spawn","MYAREA",1)
+    CreateCreature("ppsaem3",[2949.2504],0)
+END
+>>>>>>>>
+EXTEND_BOTTOM ar1600.bcs ~.../inlined/ar1600_fix.baf~
+
+//修正恩格在次元空间重复刷新导致剧情卡住的错误
+COPY_EXISTING shop04.cre override
+	WRITE_ASCII DEATHVAR SHOP04
+BUT_ONLY
+
+//修正北方森林和锐齿林道无法正常进入的错误
+COPY_EXISTING ar1700.are override
+	LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = 3375
+			fj_loc_y = 142
+			fj_orientation = 0
+		STR_VAR
+			fj_structure_type = entrance
+			fj_name = CDExit
+	END
+	LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = 591
+			fj_loc_y = 3103
+			fj_orientation = 0
+		STR_VAR
+			fj_structure_type = entrance
+			fj_name = L-Exit
+	END
+BUT_ONLY
+
+COPY_EXISTING ar1800.are override
+	LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = 1325
+			fj_loc_y = 56
+			fj_orientation = 0
+		STR_VAR
+			fj_structure_type = entrance
+			fj_name = CDExit
+	END
+	LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = 42
+			fj_loc_y = 1430
+			fj_orientation = 0
+		STR_VAR
+			fj_structure_type = entrance
+			fj_name = L-Exit
+	END
+BUT_ONLY
+
+/////////////////////////////////
+OUTER_SPRINT patch_version ~进行博德之门(TM)和剑湾传奇(TM)或进行安姆阴影(TM)
+		
+最后修正日期: %ver%~
+STRING_SET 73245 ~%patch_version%~
+COPY_EXISTING ring01.itm ~data/patch_%ver%.mrk~

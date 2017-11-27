@@ -204,7 +204,7 @@ INCLUDE ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies_Creation.tph~
 /* ******************* */						
 /* ******************* */									
 	
-BEGIN ~Make Biff~
+BEGIN ~Make Biff (code borrowed from Generalized Biffing by theBigg)~
 DESIGNATED 999999
 
 ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
