@@ -1,8 +1,27 @@
+/* //////////////////////////////////////////////////////////////////////////////////////                                              
+TobEx expands the use of STATS.IDS to support new hard-coded stats and custom stats, this function aims ease-to-use and work in EE engine as well.
+Should be used along with script trigger:
+CheckStat(O:Object*,I:Value*,I:StatNum*Stats) for vanilla games and CheckSpellState(O:Object*,I:State*splstate) for EE games.                                    
+Note I:Value* should be 1.
+Take mage spell Blur (spwi201.spl) for example:
 
-	////////////////////////////////////////////////////
+COPY_EXISTING ~spwi201.spl~ ~override~
+	LPF C4_ADD_UNIQUE_MARK INT_VAR match_opcode=65 STR_VAR identifier=~example~ END
+BUT_ONLY
+
+in script:
+
+IF
+	CheckStat(Player1, 1, %example%) //vanilla game or
+	CheckSpellState(Player1, %example%)
+THEN
+	......
+*/
+
+////////////////////////////////////////////////////
 //define variables 初始化一些变量
 
-OUTER_SET stats_offset=501 // Start with 501, 'cause some 4xx value are already used in some mods like SCS, though those value will be skipped in the loop.
+OUTER_SET stats_offset=501 // Start with 501, 'cause some 4xx value are already used in some mods like SCS.
 ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
 	OUTER_SET __opcode=328
 	OUTER_SET __stat_mod=0
