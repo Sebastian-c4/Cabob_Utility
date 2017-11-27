@@ -1,0 +1,294 @@
+
+	////////////////////////////////////////////////////
+//define variables 初始化一些变量
+
+OUTER_SET stats_offset=501 // Start with 501, 'cause some 4xx value are already used in some mods like SCS, though those value will be skipped in the loop.
+ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+	OUTER_SET __opcode=328
+	OUTER_SET __stat_mod=0
+	OUTER_SET __value=0
+	OUTER_SET __special=1
+	OUTER_TEXT_SPRINT ~__ids_file~ ~SPLSTATE~
+END ELSE BEGIN 
+	OUTER_SET __opcode=318
+	OUTER_SET __stat_mod=0x10000 // according to ToBEx, higher bytes set to 1: Flat Value Modifier -> Value = 'Statistic Modifier' value
+	OUTER_SET __value=1
+	OUTER_SET __special=0
+	OUTER_TEXT_SPRINT ~__ids_file~ ~STATS~
+END
+
+////////////////////////////////////////////////////
+// Need FJ_SPL_ITM_REINDEX to make sure this function run correctly. Codes borrowed from: 
+// https://github.com/Gibberlings3/ItemRevisions/blob/master/item_rev/lib/macros.tpa
+
+DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
+
+	PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.spl~) BEGIN
+		hs = 0x28
+		WRITE_LONG 0xc ~-1~ //Identified name
+		WRITE_LONG 0x54 ~-1~ //Identified description
+		PATCH_FOR_EACH tz IN 0x44 0x48 0x58 0x5c BEGIN
+			WRITE_LONG tz 0
+		END
+	END ELSE PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.itm~) BEGIN
+		hs = 0x38
+	END
+	READ_LONG 0x64 hf //Extended header offset
+	READ_SHORT 0x68 hc //Extended header count
+	READ_LONG 0x6a fb //Feature block table offset
+	READ_SHORT 0x70 fc //Feature block count
+	PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN // Ardanis: fixed "hc > 1" to "hc > 0"
+		READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+		PATCH_IF (~%eh%~ STRING_EQUAL ~fail~) BEGIN
+			WHILE ((~%eh%~ STRING_EQUAL ~fail~) AND (hc > 0)) BEGIN
+				READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+				hc -= 1
+			END
+		END
+		DELETE_BYTES hf (hs * hc)
+		hf = 0x72
+		WRITE_LONG 0x64 hf
+		WRITE_SHORT 0x68 hc
+		fb = (0x72 + (hs * hc))
+		WRITE_LONG 0x6a fb
+		PATCH_IF !(~%eh%~ STRING_EQUAL ~fail~) BEGIN
+			INSERT_BYTES hf (hs * hc)
+			WRITE_ASCIIE hf ~%eh%~
+		END
+	END ELSE PATCH_IF ((hf != 0x72) AND (hc = 0)) BEGIN
+		hf = 0x72
+		WRITE_LONG 0x64 hf
+	END
+	FOR (i1 = 0; i1 < (hs * hc); i1 += hs) BEGIN
+		WRITE_SHORT (hf + i1 + 0x20) fc
+		READ_SHORT (hf + i1 + 0x1e) cx
+		fc += cx
+	END
+	PATCH_IF (SOURCE_SIZE > (0x72 + (hs * hc) + (0x30 * fc))) BEGIN
+		DELETE_BYTES (0x72 + (hs * hc) + (0x30 * fc)) (SOURCE_SIZE - (0x72 + (hs * hc) + (0x30 * fc)))
+	END
+
+	// added by Ardanis
+	WRITE_SHORT 0x6e 0
+
+END // end of function
+
+////////////////////////////////////////////////////
+//Check all effects in creature, item and spell files use "__opcode" and not included in ids file, and append to it. 
+//It could be really slow doing this check, so we need a mark. And delete the mark at the end of installation.
+
+DEFINE_ACTION_MACRO check_existance BEGIN
+	PRINT ~This setup could take some time...Pleas wait...~
+
+	//creatures
+	COPY_EXISTING_REGEXP GLOB ~.*\.cre~ ~override~ 
+		LPF FJ_CRE_VALIDITY RET valid END // validity check and reindex
+		PATCH_IF valid=1 BEGIN
+			GET_OFFSET_ARRAY effect CRE_V10_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				SET offset -= 8
+				READ_LONG 	offset+0x10 opcode
+				READ_SHORT 	offset+0x20 parameter2 //only read the lower bytes if higher bytes are used.
+				PATCH_IF opcode=__opcode BEGIN
+					SPRINT $stat_exists(~%parameter2%~) ~%SOURCE_RES%~ //use the file name as the identifier in IDS file, though means nothing
+				END
+			END
+		END
+	BUT_ONLY
+		
+	//items
+	COPY_EXISTING_REGEXP GLOB ~.*\.itm~ ~override~
+		LPF FJ_SPL_ITM_REINDEX END
+		
+		//first effects when equipped 装备效果
+		GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS 
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT 	offset opcode
+			READ_SHORT 	offset+0x8 parameter2 //only read the lower bytes if higher bytes are used.
+			PATCH_IF opcode=__opcode BEGIN
+				SPRINT $stat_exists(~%parameter2%~) ~%SOURCE_RES%~
+			END
+		END
+			
+		//then header effects 头部效果
+		GET_OFFSET_ARRAY head ITM_V10_HEADERS 
+		PHP_EACH head AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index ITM_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT 	offset opcode
+				READ_SHORT 	offset+0x8 parameter2 //only read the lower bytes if higher bytes are used.
+				PATCH_IF opcode=__opcode BEGIN
+					SPRINT $stat_exists(~%parameter2%~) ~%SOURCE_RES%~
+				END
+			END
+		END
+	BUT_ONLY
+		
+	//spells
+	COPY_EXISTING_REGEXP GLOB ~.*\.spl~ ~override~
+		LPF FJ_SPL_ITM_REINDEX END
+		
+		//first casting-feature 施法时产生的效果
+		GET_OFFSET_ARRAY effect SPL_V10_GEN_EFFECTS 
+		PHP_EACH effect AS int => offset BEGIN
+			READ_SHORT 	offset opcode
+			READ_SHORT 	offset+0x8 parameter2 //only read the lower bytes if higher bytes are used.
+			PATCH_IF opcode=__opcode BEGIN
+				SPRINT $stat_exists(~%parameter2%~) ~%SOURCE_RES%~
+			END
+		END
+			
+		//then header effects 头部效果
+		GET_OFFSET_ARRAY head SPL_V10_HEADERS 
+		PHP_EACH head AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT 	offset opcode
+				READ_SHORT 	offset+0x8 parameter2 //only read the lower bytes if higher bytes are used.
+				PATCH_IF opcode=__opcode BEGIN
+					SPRINT $stat_exists(~%parameter2%~) ~%SOURCE_RES%~
+				END
+			END
+		END
+	BUT_ONLY
+	
+	//append the existing stats to ids file 添加至IDS文件
+	ACTION_PHP_EACH stat_exists AS value0 => identifier0 BEGIN
+		ACTION_IF value0 >= stats_offset BEGIN
+			APPEND ~%__ids_file%.ids~ ~%value0% %identifier0%~ UNLESS ~%value0%~
+		END
+	END
+	
+	//mark
+	<<<<<<<< .../inlined/mark.baf
+	>>>>>>>>
+	COPY ~.../inlined/mark.baf~ ~override/c4_stats_check.mrk~
+
+	ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ BEGIN
+		AT_EXIT ~rm -f override/c4_stats_check.mrk~
+	END ELSE BEGIN
+		AT_EXIT ~del override/c4_stats_check.mrk~
+	END
+	
+END // end of macro
+
+////////////////////////////////////////////////////
+//Core funtion 1: Try to find a slot free to use in the ids file
+
+DEFINE_ACTION_FUNCTION ~C4_FIND_STAT_SLOT~ STR_VAR identifier=~~ RET available_stat BEGIN
+	
+	ACTION_IF (STRING_LENGTH ~%identifier%~) >0 BEGIN // The identifier must been set
+
+		//Run check for the first time using this function 
+		ACTION_IF !FILE_EXISTS ~override/c4_stats_check.mrk~ BEGIN
+			LAM check_existance
+		END
+		
+		COPY_EXISTING - ~%__ids_file%.ids~ override
+			READ_2DA_ENTRIES_NOW rows 2
+			FOR (i=0;i<rows;i+=1) BEGIN
+				READ_2DA_ENTRY_FORMER rows i 0 value_
+				READ_2DA_ENTRY_FORMER rows i 1 identifier_
+				SPRINT $stats_in_file(~%value_%~) ~%identifier_%~
+			END
+				
+		OUTER_SET available_stat=0
+		
+		//check if the identifier already exists, return the value in the ids file.
+		ACTION_PHP_EACH stats_in_file AS value => string BEGIN
+			ACTION_IF ~%identifier%~ STR_EQ ~%string%~ BEGIN
+				OUTER_SET available_stat = value
+				PRINT ~%identifier% exists, value = %value%~
+			END
+		END
+		
+		ACTION_IF available_stat=0 BEGIN
+			OUTER_SET x=stats_offset
+			OUTER_WHILE x<32768 BEGIN
+				OUTER_SET skip=0
+				ACTION_PHP_EACH stats_in_file AS value => string BEGIN
+					ACTION_IF x=value BEGIN
+						OUTER_SET skip=1
+					END
+				END
+				ACTION_IF skip=0 BEGIN 
+					OUTER_SET available_stat=x
+					APPEND ~%__ids_file%.ids~ ~%available_stat% %identifier%~ UNLESS ~%available_stat% %identifier%~
+					OUTER_SET x=32768 // escape loop
+				END ELSE BEGIN 
+					OUTER_SET x+=1
+				END
+			END
+		END
+		
+		//Fail when all slot from 501 to 32767, though that's impossible...I think.
+		ACTION_IF available_stat=0 BEGIN
+			FAIL ~Cannot find a available slot.~
+		END
+		
+	END ELSE PRINT ~The identifier must been set.~
+	
+END // end of function
+
+////////////////////////////////////////////////////
+//Core funtion 2: Find the slot using C4_FIND_STAT_SLOT, then use CLONE_EFFECT to add an effect to creature/item/spell file.
+//Must set the "identifier" parameter, others are same to CLONE_EFFECT 
+
+DEFINE_PATCH_FUNCTION C4_ADD_UNIQUE_MARK
+	INT_VAR 
+		check_globals=1
+		check_headers=1
+		match_opcode = ~-1~
+		match_target = ~-1~
+		match_power = ~-1~
+		match_parameter1 = ~-1~
+		match_parameter2 = ~-1~
+		match_timing = ~-1~
+		match_resist_dispel = ~-1~
+		match_duration = ~-1~
+		match_probability1 = ~-1~
+		match_probability2 = ~-1~
+		match_dicenumber = ~-1~
+		match_dicesize = ~-1~
+		match_savingthrow = ~-1~
+		match_savebonus = ~-11~
+		match_special = ~-1~
+	STR_VAR 
+		identifier=~~
+		match_resource=~SAME~
+BEGIN
+	INNER_ACTION BEGIN
+		LAF C4_FIND_STAT_SLOT STR_VAR identifier RET available_stat END
+	END
+	SET available_stat += %__stat_mod% // set the higher bytes to 1
+	LPF CLONE_EFFECT 
+		INT_VAR 
+			silent=1
+			multi_match=1
+			check_globals
+			check_headers
+			match_opcode
+			match_target
+			match_power
+			match_parameter1
+			match_parameter2
+			match_timing
+			match_resist_dispel
+			match_duration
+			match_probability1
+			match_probability2
+			match_dicenumber
+			match_dicesize
+			match_savingthrow
+			match_savebonus
+			match_special
+			opcode=%__opcode%
+			parameter1=%__value%
+			parameter2=%available_stat%
+			special=%__special%
+		STR_VAR
+			resource=~~
+			insert=below
+			match_resource
+	END
+END
