@@ -1,0 +1,128 @@
+
+//移除新增宗派高阶技能列表中不应存在的技能（由新版Refinements错误的添加）
+
+//凯尔特诗人
+ACTION_FOR_EACH remove_ability IN
+	GA_TG#MASS GA_TG#ENTH GA_TG#SOUN GA_TG#BFLU AP_LI#EN01 AP_TG#LI01 GA_TG#SCRB GA_TG#EVAS GA_SPCL917
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name=~c4CelticBard~ remove_ability END
+END
+
+//绝地与西斯
+ACTION_FOR_EACH remove_ability IN
+	AP_TG#TOUG AP_TG#HOLA GA_TG#EXOR GA_TG#PURG GA_TG#RIGH GA_TG#SHOL
+BEGIN
+	ACTION_FOR_EACH kit_name IN
+		c#JediTrainee c#JediKnight c#JedimasterA c#JedimasterB c#SithTrainee c#SithWarrior
+	BEGIN
+		LAF action_remove_hla STR_VAR kit_name remove_ability END
+	END
+END
+
+//白银之手
+ACTION_FOR_EACH remove_ability IN
+	AP_TG#TOUG AP_TG#HOLA GA_TG#EXOR GA_TG#PURG GA_TG#RIGH GA_TG#SHOL
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name=~qin06pal~ remove_ability END
+END
+
+//战争领主
+ACTION_FOR_EACH remove_ability IN
+	AP_TG#IMCR AP_TG#TOUG
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name=~q06war~ remove_ability END
+END
+
+//暗夜猎手
+ACTION_FOR_EACH remove_ability IN
+	GA_SPCL917 GA_SPCL914 GA_TG#CRIP GA_TG#EVAS AP_TG#USSC GA_LI#SCRT
+BEGIN
+	ACTION_FOR_EACH kit_name IN
+		vn vntF vntw
+	BEGIN
+		LAF action_remove_hla STR_VAR kit_name remove_ability END
+	END
+END
+
+//自然之心
+ACTION_FOR_EACH remove_ability IN
+	GA_TG#ELSU GA_LI#IMPL GA_TG#NATW GA_LI#WHIR GA_TG#TRAN GA_LI#ELTR AP_TG#BLON
+BEGIN
+	LAF action_remove_hla STR_VAR kit_name=~XD~ remove_ability END
+END
+	
+//修正高阶技能：召唤神界侍者、召唤深渊侍者、召唤使徒、召唤堕落使徒存在于法术书中的错误
+//脚本
+<<<<<<<< .../inlined/SummonDevaFix.baf
+IF
+	TriggerOverride(Player%n%,Global("c4#%spell_to_fix%Fix","Locals",1))
+THEN
+	RESPONSE #100
+		ActionOverride(Player%n%,ReallyForceSpellRES("%spell_to_fix%F",Myself))
+		ActionOverride(Player%n%,SetGlobal("c4#%spell_to_fix%Fix","Locals",2))
+		Continue()
+END
+>>>>>>>>
+
+ACTION_FOR_EACH spell_to_fix IN SPPR726 SPPR727 SPWI923 SPWI924 BEGIN
+	//修改法术
+	COPY_EXISTING ~%spell_to_fix%B.spl~ override
+		WRITE_SHORT 0x1c 4 //类型必须改为天生
+	BUT_ONLY
+	
+	//重新添加天赋
+	COPY_EXISTING spcl151.spl ~override/%spell_to_fix%F.spl~
+		LPF ALTER_EFFECT INT_VAR opcode=313 parameter1=0 STR_VAR resource=~%spell_to_fix%B~ END
+		LPF CLONE_EFFECT INT_VAR opcode=171 END
+		
+	//添加脚本
+	OUTER_FOR (n=1;n<7;++n) BEGIN
+		EXTEND_BOTTOM_REGEXP ~baldur[25]*\.bcs~ ~.../inlined/SummonDevaFix.baf~ EVAL
+	END
+END
+
+//存档修正
+COPY_ALL_GAM_FILES
+	READ_LONG 0x20 player_offset // 存档内人物部分的地址偏移量
+	READ_LONG 0x24 player_count // 存档内人物总数
+	FOR (i=0;i<player_count;++i) BEGIN // 读取每一个人物的部分
+		SET npc_offset=player_offset+i*0x160 // 读取当前人物属性的偏移量, 人物属性部分
+		READ_LONG npc_offset+0x4 cre_offset //0x4是该人物cre文件的偏移量
+		//修改已学会法术
+		READ_LONG cre_offset+0x2a0 kspell_offset
+		READ_LONG cre_offset+0x2a4 kspell_num
+		FOR (j=0;j<kspell_num;++j) BEGIN
+			READ_ASCII cre_offset + kspell_offset + j*0xc spell_name // 每一步需要偏移量叠加
+			PATCH_FOR_EACH spell_to_fix IN SPPR726 SPPR727 SPWI923 SPWI924 BEGIN //修正的目标法术
+				PATCH_IF ~%spell_name%~ STR_EQ ~%spell_to_fix%B~ BEGIN
+					WRITE_SHORT cre_offset + kspell_offset + j*0xc + 0xa 2 // 天赋
+				END
+			END
+		END // end of FOR j
+		//修改存储的高阶标记当中识别符号
+    READ_LONG cre_offset+0x2c4 effect_offset // 读取生物效果的偏移量
+		SET effect_offset += cre_offset -0x8 // 上一步读取的偏移量是生物文件里的值, 还要加上该人物本身在gam文件的偏移量. -0x8是因为cre文件的效果块并不包含eff2.0文件的头8个字节. 为了方便与IESDP里eff2.0文件说明对应, 没有实际效果.
+		READ_LONG cre_offset+0x2c8 effect_count  // 读取总效果数
+		FOR (k=0;k<effect_count;++k) BEGIN // 开始判断并修改每个符合的效果
+			READ_LONG effect_offset + k*0x108 +0x10 opcode // 操作码
+			READ_ASCII effect_offset + k*0x108 +0x30 resource // 资源
+			PATCH_FOR_EACH spell_to_fix IN SPPR726 SPPR727 SPWI923 SPWI924 BEGIN //修正的目标法术
+				PATCH_IF opcode=313 AND ~%resource%~ STR_EQ ~%spell_to_fix%B~ BEGIN // 效果符合要求时修改成需要的状态
+					WRITE_LONG effect_offset + k*0x108 +0x10 187 // #187: 修改拒不变变量
+					WRITE_LONG effect_offset + k*0x108 +0x14 0 // 目标: 0 无
+					WRITE_LONG effect_offset + k*0x108 +0x1c 1 // 变量值=1
+					WRITE_ASCII effect_offset + k*0x108 +0x30 ~~ #8 // 资源名
+					WRITE_ASCII effect_offset + k*0x108 +0xa8 ~c4#%spell_to_fix%Fix~ // 变量名
+				END // end of PATCH_IF
+			END 
+		END // end of FOR k
+	END // end of FOR i
+BUT_ONLY
+
+
+/////////////////////////////////
+OUTER_SPRINT patch_version ~进行博德之门(TM)和剑湾传奇(TM)或进行安姆阴影(TM)
+		
+最后修正日期: %ver%~
+STRING_SET 73245 ~%patch_version%~
+COPY_EXISTING ring01.itm ~data/patch_%ver%.mrk~
