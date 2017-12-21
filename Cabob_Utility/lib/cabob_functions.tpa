@@ -1,4 +1,73 @@
 
+DEFINE_PATCH_FUNCTION STRING_TO_INT
+STR_VAR
+	string = ~~
+RET
+	value
+BEGIN
+	DEFINE_ASSOCIATIVE_ARRAY format BEGIN
+		0b => 2
+		0o => 8
+		0x => 16
+	END
+
+	SET value=0
+	
+	PATCH_IF ((STRING_LENGTH ~%string%~)>0) AND ((~%string%~ STRING_MATCHES_REGEXP ~[0-9A-Fa-fx]~)=0) BEGIN
+		SET type=10
+		
+		PATCH_IF (STRING_LENGTH ~%string%~)>2 BEGIN
+			LPF SUBSTRING INT_VAR length=2 STR_VAR string RET substring END
+			PHP_EACH format AS prefix => int BEGIN
+				PATCH_IF ~%substring%~ STRING_EQUAL_CASE ~%prefix%~ BEGIN
+					SET type=int
+				END
+			END
+		END
+		
+		PATCH_IF type=10 BEGIN
+			SET start_point=0
+			SET get_length= (STRING_LENGTH ~%string%~)
+		END ELSE BEGIN
+			SET start_point=2
+			SET get_length= (STRING_LENGTH ~%string%~) -2
+		END
+		LPF SUBSTRING INT_VAR start=start_point length=get_length STR_VAR string RET true_string=substring END
+		
+		PATCH_IF (type != 16) AND ((~%true_string%~ STRING_CONTAINS_REGEXP ~[A-Fa-f]~)=0) BEGIN
+			PATCH_FAIL ~Illigal string!~
+		END
+		
+		TO_UPPER ~true_string~
+		
+		INNER_PATCH ~%true_string%~ BEGIN
+			SET true_length = (STRING_LENGTH ~%true_string%~)
+			FOR (i=0;i<true_length;++i) BEGIN
+				READ_BYTE i char
+				PATCH_IF char>64 BEGIN
+					SET char -= 55
+				END ELSE char -= 48
+				SET value += (char * (type ** (true_length - i - 1)))
+			END
+		END
+		
+		PATCH_PRINT ~%value%~
+		
+	END //end of (STRING_LENGTH ~%string%~)>0
+	
+END // end of define function
+
+DEFINE_ACTION_FUNCTION STRING_TO_INT
+STR_VAR
+	string = ~~
+RET
+	value
+BEGIN
+  OUTER_PATCH ~~ BEGIN
+		LPF STRING_TO_INT STR_VAR string RET value=value END
+	END
+END
+
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY npcitem BEGIN
 	NPSHLD			=> ANOMEN

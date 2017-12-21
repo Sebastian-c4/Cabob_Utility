@@ -1,0 +1,75 @@
+//初始 => 关闭
+IF
+	Global("c4#ar0907Preset","GLOBAL",0)
+THEN
+	RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+    SetGlobal("c4#ar0907Preset","GLOBAL",1)
+END
+
+//低于第三章 => 关闭
+IF
+  GlobalLT("Chapter","Global",3)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+END
+
+//菲德加入但没被绑架 => 关闭
+IF
+  Global("E3MallonTalk","GLOBAL",0)
+	Global("c4#FadeJoined","Global",1)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",TRUE)
+    TriggerActivation("No0907b",TRUE)
+    TriggerActivation("Tran0907a",FALSE)
+    TriggerActivation("Tran0907b",FALSE)
+END
+
+//第三章且菲德被绑架 => 开启
+IF
+  GlobalGT("Chapter","Global",2)
+  Global("E3MallonTalk","GLOBAL",1)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+END
+
+//第三章艾朗任务完成且菲德没加入 => 开启
+IF
+  GlobalGT("Chapter","Global",2)
+  Global("AranJob","GLOBAL",3)
+  Global("LassalVampires","GLOBAL",3)
+	Global("c4#FadeJoined","Global",0)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+END
+
+//第三章加入影贼之外其它阵营 => 开启
+IF
+  GlobalGT("Chapter","Global",2)
+	OR(3)
+		GlobalGT("BodhiJob","GLOBAL",0)
+		GlobalGT("B!Alternatives","GLOBAL",5)
+		GlobalGT("B!Tourist","GLOBAL",7)
+THEN
+  RESPONSE #100
+    TriggerActivation("No0907a",FALSE)
+    TriggerActivation("No0907b",FALSE)
+    TriggerActivation("Tran0907a",TRUE)
+    TriggerActivation("Tran0907b",TRUE)
+END

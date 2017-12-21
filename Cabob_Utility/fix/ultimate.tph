@@ -1,0 +1,229 @@
+
+
+/* 检查是否安装mod */
+OUTER_SET logsize= SIZE_OF_FILE weidu.log
+ACTION_IF logsize>191 BEGIN
+
+	PRINT ~检查到游戏中可能安装了其他mod。
+为保证本次修正正常安装且不被后续安装或卸载mod所影响，在修正的安装过程中将自动卸载所有已安装的mod。
+当前mod安装情况将被保存在游戏根目录下“WeiDU.log.txt”。
+	
+请输入数字【1】继续安装修正，或输入【2】终止安装进程。~
+
+	ACTION_READLN confirm
+	OUTER_SET _length = STRING_LENGTH ~%confirm%~
+	OUTER_WHILE (~%confirm%~ STRING_MATCHES_REGEXP ~[12]~) || (%_length% > 1) BEGIN
+		PRINT ~输入错误，请重新输入。~
+		PRINT ~检查到游戏中可能安装了其他mod。
+为保证本次修正正常安装且不被后续安装或卸载mod所影响，在修正的安装过程中将自动卸载所有已安装的mod。
+当前mod安装情况将被保存在游戏根目录下“WeiDU.log.txt”。
+	
+请输入数字【1】继续安装修正，或输入【2】终止安装进程。~
+		ACTION_READLN confirm
+		OUTER_SET _length = STRING_LENGTH ~%confirm%~
+	END
+	
+END ELSE OUTER_SET confirm=0
+
+ACTION_FOR_EACH _confirm IN 0 1 2 BEGIN 
+	ACTION_IF confirm=_confirm BEGIN
+		COPY_EXISTING ring01.itm ~%_confirm%.x~
+	END
+END
+/* **************************************** */
+
+ACTION_IF confirm<2 BEGIN
+
+/* 卸载mods */
+COPY weidu.log weidu.log.txt
+	READ_2DA_ENTRIES_NOW rows 4
+	SET j=rows -1
+	FOR (i=j;i>=0;i -= 1) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 0 mod0
+		READ_2DA_ENTRY_FORMER rows i 2 component
+		PATCH_IF ~%mod0%~ STRING_CONTAINS_REGEXP "~" =0 BEGIN
+			INNER_PATCH_SAVE mod ~%mod0%~ BEGIN
+				REPLACE_TEXTUALLY "~" ""
+			END
+			INNER_PATCH_SAVE component ~%component%~ BEGIN
+				REPLACE_TEXTUALLY "#" ""
+			END
+			INNER_ACTION BEGIN
+				UNINSTALL ~%mod%~ ~%component%~
+			END
+		END
+	END
+	
+OUTER_TEXT_SPRINT ~MOD_FOLDER~ ~Cabob_Utility~
+	
+/* 修正初进观察者壁垒地图时有可能出现错误的任务进度 */
+COPY_EXISTING ar3000.bcs override
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY ~SpellCastInnateRES("SPIN592",\[PC\])~ ~Global("c4HelmRi","Global",1)~
+	END
+BUT_ONLY
+
+COPY_EXISTING spin592.spl override
+	LPF CLONE_EFFECT INT_VAR match_opcode=174 opcode=265 parameter1=~1~ STR_VAR resource=~c4HelmRi~ END
+BUT_ONLY
+
+/* 修正守卫豪宅二楼在读档后无法进入的错误 */
+COPY_EXISTING ar0906.bcs override
+	R_B_B ~%SCRIPTS%/fade_ar0906.baf~ ~%MOD_FOLDER%/fix/fade_ar0906.baf~
+BUT_ONLY
+
+/* 移除某些冗余字符串提示，例如白银之手的光环类技能 */
+ACTION_FOR_EACH prefix IN "qpal" "qwar" "vn" "xd" "c4" "c#" BEGIN
+	COPY_EXISTING_REGEXP GLOB ~%prefix%.*\.spl~ override
+		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		PHP_EACH header AS int => index BEGIN
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+4 parameter1
+				PATCH_IF opcode=206 && parameter1=4742 BEGIN
+					WRITE_LONG offset+4 ~-1~
+				END
+			END
+		END
+	BUT_ONLY
+END
+
+/* 吸血鬼之手等武僧专用物品移除种族限制 */
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+	READ_BYTE 0x18 flag
+	READ_LONG	0x1e usability
+	PATCH_IF 
+					((flag BAND 0b00000100) = 0b00000100)
+			AND	((usability BAND 0b11010111111111111111111111000000) = 0b11010111111111111111111111000000) 
+	BEGIN
+		WRITE_LONG 0x1e (THIS BAND 0b01000000011111111111111111111111)
+	END
+BUT_ONLY
+
+/* 长剑平衡者：添加匹配附魔等级的命中奖励，对不同阵营的伤害奖励对双持时另一把武器同样有效 */
+COPY_EXISTING sw1h54.itm override
+	LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=3 END
+	FOR (i=1;i<9;++i) BEGIN
+		LPF DELETE_EFFECT STR_VAR match_resource=~equal0%i%~ END
+		LPF CLONE_EFFECT STR_VAR match_resource=~equal09~ resource=~equal0%i%~ END
+	END
+	SAY NAME2 @9901001
+	SAY DESC @9901002
+BUT_ONLY
+
+OUTER_FOR (i=1;i<9;++i) BEGIN
+	OUTER_SET j=i+8
+	ACTION_IF i=1 BEGIN OUTER_SPRINT j ~0%j%~ END
+	COPY_EXISTING ~equal%j%.eff~ ~override/equal0%i%.eff~
+		WRITE_LONG 0x10 179
+		WRITE_LONG 0x60 THIS*2
+END
+
+/* 移除自然之心宗派不应存在的经验惩罚 */
+COPY_EXISTING xdd1.spl override
+	LPF DELETE_EFFECT INT_VAR match_opcode=104 END
+BUT_ONLY
+
+COPY_ALL_GAM_FILES
+	READ_LONG 0x20 player_offset
+	READ_LONG 0x24 player_count
+	FOR (i=0;i<player_count;++i) BEGIN
+		npc_offset=player_offset+i*0x160
+		READ_LONG npc_offset+0x4 cre_offset
+		READ_LONG cre_offset+0x8 name_strref
+		GET_STRREF name_strref name
+		READ_LONG cre_offset+0x244 kit /* 宗派 */
+		READ_LONG cre_offset+0x2c4 effect_offset
+		effect_offset+=cre_offset -0x8
+		READ_LONG cre_offset+0x2c8 effect_count
+		FOR (j=0;j<effect_count;++j) BEGIN
+			READ_LONG effect_offset + j*0x108 +0x10 opcode
+			READ_ASCII effect_offset + j*0x108 +0x30 resource
+			READ_ASCII effect_offset + j*0x108 +0x94 parent_resource
+			READ_ASCII effect_offset + j*0x108 +0xa8 variable (32)
+			PATCH_IF !(~%parent_resource%~ STRING_CONTAINS_REGEXP ~xdd1~) 
+						/*  OR !(~%variable%~ STRING_CONTAINS_REGEXP ~C4#ATTACKBONUS~) */
+						&& opcode=104
+			THEN BEGIN
+				WRITE_LONG effect_offset + j*0x108 +0x10 0
+				WRITE_SHORT  effect_offset + j*0x108 +0x24 0
+				WRITE_LONG  effect_offset + j*0x108 +0x28 0
+			END
+		END
+	END
+BUT_ONLY
+
+/* 玩家将只能使用本版大世界内置宗派，自行安装的宗派mod将无法正常生效 */
+OUTER_TEXT_SPRINT ~KR~ ~%LIBS%/KitRestriction~
+INCLUDE ~%KR%/KitRestriction.tph~
+
+/*
+更新敌对生物强化模组
+基础强化中移除：重击投骰奖励
+基础强化中新增：魔法抗力强化、全类型伤害百分比强化
+新增设置：基础强化在BG1部分是否生效
+最大生命成长的百分比最低值从5提高到10
+新增“抗性成长”设置：如最大生命和豁免奖励一样随主角经验的增加而成长
+*/
+
+PRINT ~即将安装新版“敌对生物强化”模组，其中包含了新制作的更富挑战的“抗性成长”组件。
+但因需要对大量文件进行读写操作，预计完整安装时间将超过半小时。
+如果不需要该部分内容，可以选择跳过该部分的安装过程，之后仍然可以通过“细节设置工具”来安装“抗性成长”组件。
+	
+请输入数字【1】完整安装，或输入【2】跳过“抗性成长”部分。~
+
+ACTION_READLN boostresist
+OUTER_SET _length = STRING_LENGTH ~%boostresist%~
+OUTER_WHILE (~%boostresist%~ STRING_MATCHES_REGEXP ~[12]~) || (%_length% > 1) BEGIN
+	PRINT ~输入错误，请重新输入。~
+	PRINT ~即将安装新版“敌对生物强化”模组，其中包含了新制作的更富挑战的“抗性成长”部分。
+但因需要对大量文件进行读写操作，预计完整安装时间将超过半小时。
+如果不需要该部分内容，可以选择跳过该部分的安装过程，之后仍然可以通过“细节设置工具”来安装“抗性成长”组件。
+	
+请输入数字【1】完整安装，或输入【2】跳过“抗性成长”部分。~
+	ACTION_READLN boostresist
+	OUTER_SET _length = STRING_LENGTH ~%boostresist%~
+END
+
+OUTER_TEXT_SPRINT ~EES~ ~%LIBS%/Enhanced_Enemies_V2~
+OUTER_TEXT_SPRINT ~EES_SCRIPTS~ ~%EES%/Scripts~
+OUTER_TEXT_SPRINT ~EES_OLD~ ~%LIBS%/Enhanced_Enemies~
+INCLUDE ~%EES%/Enhanced_Enemies.tph~
+
+/* **************************************** */
+/* 功能性操作 */
+/* **************************************** */
+PRINT ~********** 即将完成…… **********~
+SILENT
+
+/* 清除旧版c4AI残余 */
+COPY_EXISTING_REGEXP GLOB ~.*\.spl~ override
+	LPF DELETE_EFFECT INT_VAR silent=1 STR_VAR match_resource=~c4#cast1~ END
+	LPF DELETE_EFFECT INT_VAR silent=1 STR_VAR match_resource=~c4#cast2~ END
+	LPF DELETE_EFFECT INT_VAR silent=1 match_opcode=318 match_parameter1=1 match_parameter2=0x10408 STR_VAR match_resource=~~ END
+BUT_ONLY
+
+/* 进行最后一次Biff */
+OUTER_TEXT_SPRINT bifmark ~final~
+LAM biff_files
+
+// ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
+	// AT_UNINSTALL ~rm -rf %MOD_FOLDER%/BIFF_%bifmark%~
+// END ELSE BEGIN
+	// AT_UNINSTALL ~rd /q /s %MOD_FOLDER%/BIFF_%bifmark%~
+	// AT_UNINSTALL ~del data/%bifmark%*.bif~
+// END
+
+/* **************************************** */
+/* 文本更新 */
+/* **************************************** */
+STRING_SET 73245 ~烤肉版大世界 Ver.Ultimate
+
+主集成：吟游诗人（四是而非）~
+STRING_SET 73246 ~汉化发布：http://trow.cc/
+
+汉化补丁版本 v120923~
+/* **************************************** */
+
+END /* end of confirm<2 */

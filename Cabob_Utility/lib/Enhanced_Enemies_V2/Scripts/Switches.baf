@@ -1,0 +1,16 @@
+
+IF
+	!Global("c4EnhancedEnemiesWorkInBG1","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4EnhancedEnemiesWorkInBG1","Global",0)
+		Continue()
+END
+
+IF
+	!Global("c4EnhancedEnemiesBoostResist","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4EnhancedEnemiesBoostResist","Global",0)
+		Continue()
+END

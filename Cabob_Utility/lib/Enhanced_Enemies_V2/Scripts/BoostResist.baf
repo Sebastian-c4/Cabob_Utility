@@ -1,0 +1,15 @@
+
+IF
+	CheckStat(Myself,0,c4EE_Resist)
+	Allegiance(Myself,ENEMY)
+	OR(2)
+		Global("EndOfBG1","Global",2)
+		!Global("c4EnhancedEnemiesWorkInBG1","Global",0)
+	See(NearestEnemyOf())
+	Global("c4EnhancedEnemiesXPGearResist","Global",%gear%)
+	!Global("c4EnhancedEnemiesBoostResist","Global",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c4!res%level%",Myself)
+		Continue()
+END

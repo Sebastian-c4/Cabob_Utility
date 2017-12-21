@@ -1,0 +1,10 @@
+
+IF
+	XPGT(Player1,%low%)
+	XPLT(Player1,%high%)
+	!Global("c4EnhancedEnemiesXPGear%subject%","Global",%gear%)
+THEN
+	RESPONSE #100
+		SetGlobal("c4EnhancedEnemiesXPGear%subject%","Global",%gear%)
+		Continue()
+END

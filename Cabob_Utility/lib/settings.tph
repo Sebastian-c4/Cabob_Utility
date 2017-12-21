@@ -77,7 +77,9 @@ END
 
 DEFINE_ACTION_MACRO biff_files BEGIN
 	
-	OUTER_SPRINT bifmark c4#bif
+	ACTION_IF NOT VARIABLE_IS_SET bifmark BEGIN
+		OUTER_SPRINT bifmark ~c4~
+	END
 
 	<<<<<<<< .../list-of-files
 	>>>>>>>>
@@ -91,24 +93,24 @@ DEFINE_ACTION_MACRO biff_files BEGIN
 	OUTER_TEXT_SPRINT ~myRegExp~ ~^%8char%\.%ext%$~
 	// OUTER_TEXT_SPRINT ~myRegExp~ ~^[^ ]*\..*$~
 
-	MKDIR ~%MOD_FOLDER%/biffs/0~
-	MKDIR ~%MOD_FOLDER%/biffs/rej~
+	MKDIR ~%MOD_FOLDER%/BIFF_%bifmark%/0~
+	MKDIR ~%MOD_FOLDER%/BIFF_%bifmark%/rej~
 
 	OUTER_SET currentTotal = 0
 	OUTER_SET currentFile = 0
 	ACTION_BASH_FOR ~override~ ~%myRegExp%~ BEGIN
 		ACTION_IF (~%BASH_FOR_SIZE%~ + currentTotal > 30000000) /* 30M */ && (currentTotal > 0) && !(~%BASH_FOR_RES%~ STR_EQ ~c4_stat_temp~) BEGIN
-			MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/biffs/%currentFile%~ ~^.*$~ END
+			MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/BIFF_%bifmark%/%currentFile%~ ~^.*$~ END
 			OUTER_SET currentFile = currentFile + 1
 			OUTER_SET currentTotal = 0
-			MKDIR ~%MOD_FOLDER%/biffs/%currentFile%~
+			MKDIR ~%MOD_FOLDER%/BIFF_%bifmark%/%currentFile%~
 		END
-		MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/biffs/%currentFile%/%BASH_FOR_FILE%~
+		MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/BIFF_%bifmark%/%currentFile%/%BASH_FOR_FILE%~
 		OUTER_SET currentTotal += BASH_FOR_SIZE
 	END
 		
 	ACTION_IF currentTotal > 0 BEGIN
-		MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/biffs/%currentFile%~ ~^.*$~ END
+		MAKE_BIFF ~%bifmark%%currentFile%~ BEGIN ~%MOD_FOLDER%/BIFF_%bifmark%/%currentFile%~ ~^.*$~ END
 	END
 
 	OUTER_TEXT_SPRINT ~myRegExp~ ~^%9char%.%ext%$~
@@ -118,7 +120,7 @@ DEFINE_ACTION_MACRO biff_files BEGIN
 			DELETE_BYTES 8 (INDEX_BUFFER (EXACT_MATCH ~.~) - 8)
 		END
 		ACTION_IF FILE_EXISTS_IN_GAME ~%8name%~ THEN BEGIN
-			MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/biffs/rej/%BASH_FOR_FILE%~
+			MOVE ~override/%BASH_FOR_FILE%~ ~%MOD_FOLDER%/BIFF_%bifmark%/rej/%BASH_FOR_FILE%~
 		END
 	END
 

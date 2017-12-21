@@ -13,6 +13,12 @@ ALWAYS
 	OUTER_TEXT_SPRINT ~LIBS~ ~%MOD_FOLDER%/lib~
 	OUTER_TEXT_SPRINT ~INST_FOLDER~ ~%MOD_FOLDER%/install~
 	OUTER_TEXT_SPRINT ~TEMP_FOLDER~ ~%MOD_FOLDER%/temp_file~
+	OUTER_TEXT_SPRINT ~KR~ ~%LIBS%/KitRestriction~
+	
+	//Enhanced_Enemies_V2
+	OUTER_TEXT_SPRINT ~EES~ ~%LIBS%/Enhanced_Enemies_V2~
+	OUTER_TEXT_SPRINT ~EES_SCRIPTS~ ~%EES%/Scripts~
+	OUTER_TEXT_SPRINT ~EES_OLD~ ~%LIBS%/Enhanced_Enemies~
 	
 	INCLUDE ~%LIBS%/macros.tph~
 	INCLUDE ~%LIBS%/functions.tpa~
@@ -28,7 +34,7 @@ LANGUAGE	~简体中文~
 					~Cabob_Utility/tra/schinese/setup.tra~
 
 
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
 BEGIN ~默认汉化字体~
 DESIGNATED 101
 SUBCOMPONENT ~字体设置~
@@ -59,7 +65,7 @@ COPY_EXISTING baldur.ini baldur.ini
 	REPLACE_TEXTUALLY ~^F STONESML=.*$~ ~F STONESML=REALMS~
 BUT_ONLY
 
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
 BEGIN ~屏蔽小图标~
 DESIGNATED 201
 SUBCOMPONENT ~是否显示装备特效在头像上的小图标~
@@ -78,7 +84,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=0 match_opcode=142 match_probability2=100 probability2=0 END
 BUT_ONLY
 
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
 BEGIN ~安装美化版的法术动画~
 DESIGNATED 301
 // NO_LOG_RECORD
@@ -87,7 +93,40 @@ PRINT ~动画制作：小强魔法学院~
 
 INCLUDE ~%LIBS%/PrettySpell/PrettySpell.tph~
 
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
+BEGIN ~敌对生物强化：抗性成长组件~		
+DESIGNATED 1001
+NO_LOG_RECORD
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~c4!clear.spl~ ~未安装基础敌对生物强化~
+REQUIRE_PREDICATE NOT FILE_EXISTS_IN_GAME ~c4!res00.spl~ ~已安装抗性成长组件~
+
+PRINT ~预计耗时超过半小时，请注意规划时间……~
+
+INCLUDE ~%EES%/Defination.tph~
+INCLUDE ~%EES%/Resistance_Part.tph~
+AT_NOW ~%EES%/Enhanced_Enemies.txt~
+INCLUDE ~%EES%/Assign_Values.tph~
+
+OUTER_TEXT_SPRINT bifmark ~resist~
+LAM biff_files
+
+// ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
+	// AT_UNINSTALL ~rm -rf %MOD_FOLDER%/BIFF_%bifmark%~
+// END ELSE BEGIN
+	// AT_UNINSTALL ~rd /q /s %MOD_FOLDER%/BIFF_%bifmark%~
+	// AT_UNINSTALL ~del data\%bifmark%*.bif~
+// END
+
+BEGIN ~敌对生物强化：自定义设置~
+DESIGNATED 1000
+NO_LOG_RECORD
+
+AT_NOW ~%EES%/Enhanced_Enemies.txt~
+
+INCLUDE ~%EES%/Defination.tph~
+INCLUDE ~%EES%/Assign_Values.tph~
+
+/* **************************************** */
 BEGIN ~主角死亡后不会马上结束游戏，但无法再控制其他人物~
 DESIGNATED 401
 SUBCOMPONENT ~设置主角死亡之后的游戏状态~
@@ -133,16 +172,7 @@ COPY_EXISTING_REGEXP GLOB ~baldur.*\.bcs~ override
 	END
 BUT_ONLY
 
-/* /////////////////////////////////////////////////// */
-BEGIN ~敌对生物属性强化设置~
-DESIGNATED 1000
-NO_LOG_RECORD
-
-AT_NOW ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies.txt~
-
-INCLUDE ~%LIBS%/Enhanced_Enemies/Enhanced_Enemies_Values.tph~
-
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
 BEGIN ~c4AI 快捷键设置~
 DESIGNATED 2000
 NO_LOG_RECORD
@@ -150,18 +180,20 @@ NO_LOG_RECORD
 LAM c4AI_hotkey	
 
 
-/* /////////////////////////////////////////////////// */
-BEGIN ~资源文件biff操作(有助于加快游戏速度)~
+/* **************************************** */
+BEGIN ~MakeBiff~
 DESIGNATED 0
 DEPRECATED ~~
 
+OUTER_SPRINT bifmark ~c4test~
+
 ACTION_IF ~%WEIDU_OS%~ STRING_COMPARE_CASE ~WIN32~ THEN BEGIN
-	AT_UNINSTALL ~rm -rf %MOD_FOLDER%/biffs~
+	AT_UNINSTALL ~rm -rf %MOD_FOLDER%/BIFF_c4test~
 END ELSE BEGIN
-	AT_UNINSTALL ~rd /q /s %MOD_FOLDER%/biffs~ EXACT
-	AT_UNINSTALL ~del data\c4#bif*.bif~ EXACT
+	AT_UNINSTALL ~rd /s/q  ./%MOD_FOLDER%/BIFF_c4test~
+	AT_UNINSTALL ~del ./data/c4test*.bif~
 END
 
 LAM biff_files
 	
-COPY_EXISTING RING01.itm ~data/biffed.mrk~
+COPY_EXISTING ~ring01.itm~ ~data/biffed.mrk~

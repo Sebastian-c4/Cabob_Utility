@@ -1,0 +1,161 @@
+
+SILENT
+COPY - ~%EES%/Enhanced_Enemies.log~ override
+	READ_2DA_ENTRIES_NOW rows 3
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 0 type
+		READ_2DA_ENTRY_FORMER rows i 1 mark
+		READ_2DA_ENTRY_FORMER rows i 2 value
+		PATCH_IF ~%mark%~ STR_EQ ~=~ BEGIN
+			SET ~%type%~ = ~%value%~
+		END
+	END
+		
+/* 创建法术 */			
+/* 子法术和为母法术添加条目 */
+OUTER_FOR (i=0;i<=Resist_total;++i) BEGIN
+
+	/* 个位数前面添加0保持一致性 */
+	ACTION_IF i<10 BEGIN
+		OUTER_TEXT_SPRINT x1 ~0%i%~
+	END ELSE OUTER_TEXT_SPRINT x1 ~%i%~
+
+	/* 母法术 */
+	COPY_EXISTING spcl131.spl ~override/c4!res%x1%.spl~
+		/* 次要类型 */
+		WRITE_BYTE 0x27 c4EnhancedEnemies
+		/* Stat */
+		LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2 = ~ResistStat~ special=engine_special_type END
+		/* 防护本法术 */
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+		/* 确保仅修正一次，防护本系列其他法术 */
+		FOR (j=0;j<=Resist_total;++j) BEGIN
+			PATCH_IF j != i BEGIN
+				PATCH_IF j<10 BEGIN
+					TEXT_SPRINT x2 ~0%j%~
+				END ELSE TEXT_SPRINT x2 ~%j%~ 
+				LPF CLONE_EFFECT INT_VAR match_opcode=206 parameter1=0 parameter2=0 STR_VAR match_resource=~%DEST_RES%~ resource=~c4!res%x2%~ END
+			END
+		END
+		
+	ACTION_PHP_EACH resist_opcodes AS opcode => subject BEGIN
+		/* 类型代号 */		
+		ACTION_PHP_EACH resist_mark AS mark => subject2 BEGIN
+			ACTION_IF ~%subject%~ STR_EQ ~%subject2%~ BEGIN
+				OUTER_TEXT_SPRINT type ~%mark%~
+			END
+		END
+		
+		/* 母法术 */
+		COPY_EXISTING ~c4!res%x1%.spl~ override
+			/* 施放单项抗性法术 */
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=146 parameter1=0 parameter2=1 STR_VAR resource=~c4!%type%%x1%~ END
+		
+		COPY_EXISTING spcl131.spl ~override/c4!%type%%x1%.spl~
+			/* 次要类型 */
+			WRITE_BYTE 0x27 c4EnhancedEnemies
+			/* Stat */
+			LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=~%subject%Stat~ special=engine_special_type END
+			/* 防护本法术 */
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+			/* 抗性 */
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode parameter1=0 parameter2=0 END
+			/* 确保仅修正一次，防护本系列其他法术 */
+			FOR (j=0;j<=Resist_total;++j) BEGIN
+				PATCH_IF j != i BEGIN
+					PATCH_IF j<10 BEGIN
+						TEXT_SPRINT x2 ~0%j%~
+					END ELSE TEXT_SPRINT x2 ~%j%~ 
+					LPF CLONE_EFFECT INT_VAR match_opcode=206 parameter1=0 parameter2=0 STR_VAR match_resource=~%DEST_RES%~ resource=~c4!%type%%x2%~ END
+				END
+			END
+	END	
+END
+
+/* 统计个总数，显示用 */
+OUTER_SET count=1
+COPY_EXISTING_REGEXP - GLOB ~.*\.cre~ override
+	SET count+=1
+	
+/* 识别生物基础抗性，免疫超出的强化法术 */
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override		
+	SET count -= 1
+	PATCH_IF ~%count%~ REM 100 = 0 BEGIN
+		PATCH_PRINT ~剩余 %count% 个文件待处理……………… 请耐心等待………………~
+	END
+	PATCH_SILENT
+		
+	READ_SHORT 0x26 maxhp
+	PATCH_IF maxhp>20 BEGIN //血量在20hp以上
+	
+		/* 初始化 */
+		PHP_EACH resist_opcodes AS opcode => subject BEGIN
+			SET ~%subject%~ = 0
+		END
+		
+		/* 生物文件 */
+		PHP_EACH creature_resist AS offset => subject BEGIN
+			PATCH_IF offset >0 BEGIN
+				READ_BYTE offset value
+				SET ~%subject%~ += value
+			END
+		END
+	
+		/* 效果中的抗性 */
+		GET_OFFSET_ARRAY effect CRE_V10_EFFECTS
+		PHP_EACH effect AS int => offset BEGIN
+			SET offset -= 8
+			READ_LONG offset+0x10 opcode0
+			READ_LONG offset+0x1c value
+			PHP_EACH resist_opcodes AS opcode => subject BEGIN
+				PATCH_IF opcode=opcode0 BEGIN
+					SET ~%subject%~ += value
+				END
+			END
+		END
+	
+		/* 物品中的抗性 */
+		GET_OFFSET_ARRAY items CRE_V10_ITEMS
+		PHP_EACH items AS int => offset BEGIN
+			READ_ASCII offset item_name
+			PATCH_IF STRING_LENGTH ~%item_name%~ >0 BEGIN
+				INNER_ACTION BEGIN
+					COPY_EXISTING - ~%item_name%.itm~ override
+						GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+						PHP_EACH effect AS int => offset BEGIN
+							READ_SHORT offset opcode0
+							READ_LONG offset+4 value
+							PHP_EACH resist_opcodes AS opcode => subject BEGIN
+								PATCH_IF opcode=opcode0 BEGIN
+									SET ~%subject%~ += value
+								END
+							END
+						END
+					IF_EXISTS
+				END
+			END
+		END
+		
+		PHP_EACH resist_opcodes AS opcode => subject BEGIN
+			SET cre_resist = ~%%subject%%~ //总抗性
+			/* 抗性类型代号 */		
+			PHP_EACH resist_mark AS mark => subject2 BEGIN
+				PATCH_IF ~%subject%~ STR_EQ ~%subject2%~ BEGIN
+					TEXT_SPRINT type ~%mark%~
+				END
+			END
+			
+			FOR (gear=1;gear<=Resist_total;++gear) BEGIN
+				/* 个位数前面添加0保持一致性 */
+				PATCH_IF gear<10 BEGIN
+					TEXT_SPRINT level ~0%gear%~
+				END ELSE TEXT_SPRINT level ~%gear%~
+				PATCH_IF cre_resist + gear*5 >80 BEGIN
+					LPF ADD_CRE_EFFECT INT_VAR opcode=206 target=1 timing=9 parameter1=~-1~ insert_point=~-1~ STR_VAR resource=~c4!%type%%level%~ END
+				END
+			END			
+		END
+		
+	END // maxhp>20
+BUT_ONLY
+

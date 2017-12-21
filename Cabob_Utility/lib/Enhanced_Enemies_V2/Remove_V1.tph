@@ -1,0 +1,29 @@
+
+SILENT
+
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+	READ_ASCII SCRIPT_OVERRIDE ~temp_script~
+	PATCH_IF ~%temp_script%~ STR_EQ ~c#crefig~ BEGIN
+		WRITE_ASCII SCRIPT_OVERRIDE ~NONE~ #8
+	END
+	PATCH_IF
+		!(~%temp_script%~ STR_EQ ~NONE~)	AND
+		!(STRING_LENGTH ~%temp_script%~=0)
+	BEGIN
+		SET $temp_scripts(~%temp_script%~) =1
+	END
+BUT_ONLY
+
+ACTION_PHP_EACH temp_scripts AS temp_script => int BEGIN
+	COPY_EXISTING ~%temp_script%.bcs~ override
+		R_B_B ~%EES_OLD%/creature_figures.baf~ ~.../c4EEinlined/c4!spcre.baf~ ON_MISMATCH END
+	IF_EXISTS BUT_ONLY
+END
+
+ACTION_FOR_EACH suffix IN 09 41 BEGIN
+	COPY_EXISTING ~potn%suffix%.itm~ override
+		LPF ALTER_EFFECT STR_VAR match_resource=~c_potn%suffix%~ resource=~c4!ptn%suffix%~ END
+	BUT_ONLY
+	COPY_EXISTING ~c_potn%suffix%.spl~ ~override/c4!ptn%suffix%.spl~ 
+	COPY_EXISTING ~potn%suffix%.itm~ ~override/dw#ptn%suffix%.itm~
+END

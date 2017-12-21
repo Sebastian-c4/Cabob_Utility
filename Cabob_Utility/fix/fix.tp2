@@ -3,7 +3,6 @@ AUTHOR ~c4demon@gmail.com~
 
 AUTO_EVAL_STRINGS
 ASK_EVERY_COMPONENT
-// AUTO_TRA ~Cabob_Utility/lib/%s~
 
 ALWAYS
 	CLEAR_MEMORY
@@ -28,15 +27,16 @@ LANGUAGE	~¼òÌåÖÐÎÄ~
 					~Cabob_Utility/tra/schinese/setup.tra~
 
 
-/* /////////////////////////////////////////////////// */
+/* **************************************** */
 BEGIN ~Do Fix~
-DESIGNATED 99
+DESIGNATED 9999
 NO_LOG_RECORD
 	
 ACTION_FOR_EACH ver IN
 	20171121
 	20171127
 	20171209
+	ultimate
 BEGIN
 	ACTION_IF NOT FILE_EXISTS ~data/patch_%ver%.mrk~ BEGIN
 		INCLUDE ~%MOD_FOLDER%/fix/%ver%.tph~

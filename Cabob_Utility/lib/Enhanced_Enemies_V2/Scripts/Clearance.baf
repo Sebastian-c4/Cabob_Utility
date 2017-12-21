@@ -1,0 +1,9 @@
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!CheckStat(Myself,0,c4EE_Attributes)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c4!clear",Myself)
+		Continue()
+END

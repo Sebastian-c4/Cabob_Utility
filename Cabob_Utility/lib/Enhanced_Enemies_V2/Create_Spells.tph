@@ -1,0 +1,108 @@
+
+SILENT
+/* **************************************** */
+/* 创建法术文件 */
+/* **************************************** */
+
+/* 清除非敌对的加值 */
+COPY_EXISTING spcl131.spl ~override/c4!clear.spl~
+	LPF ALTER_EFFECT INT_VAR opcode=221 timing=1 parameter1=0 parameter2=c4EnhancedEnemies END
+
+/* 基础状态：c4!attri */
+COPY_EXISTING spcl131.spl ~override/c4!attri.spl~
+	/* 次要类型 */
+	WRITE_BYTE 0x27 c4EnhancedEnemies
+	/* Stat */
+	LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=AttributesStat special=engine_special_type END
+	/* 防护本法术 */
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+	/* AC */
+	PATCH_FOR_EACH parameter2 IN 1 2 4 8 BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=0 parameter1=0 parameter2 STR_VAR resource=~~ END
+	END
+	/* 命中 */
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=278 parameter1=0 parameter2=0 END
+	/* 最小值 */
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=250 parameter1=0 parameter2=0 END
+	/* 魔法抗力 */
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=166 parameter1=0 parameter2=0 END
+	/* 伤害百分比强化 */
+	FOR (parameter2=387;parameter2<400;++parameter2) BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type match_parameter2=AttributesStat parameter1=0 parameter2 END
+	END
+		
+/* 额外豁免奖励：c4!exsav */
+COPY_EXISTING spcl131.spl ~override/c4!exsav.spl~
+	/* 次要类型 */
+	WRITE_BYTE 0x27 c4EnhancedEnemies
+	/* Stat */
+	LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=ExSavesStat special=engine_special_type END
+	/* 防护本法术 */
+	LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+	/* 豁免 */
+	PHP_EACH saves_opcodes AS _ => opcode BEGIN
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode parameter1=0 parameter2=0 END
+	END
+		
+/* 成长型增强从0开始，仅作为标记，使所有判断仅在战斗开始时进行 */
+
+/* 生命成长 50万1档 c4!hp%01-24% */
+OUTER_FOR (i=0;i<=MaxHP_total;++i) BEGIN
+
+	/* 个位数前面添加0保持一致性 */
+	ACTION_IF i<10 BEGIN
+		OUTER_TEXT_SPRINT x1 ~0%i%~
+	END ELSE OUTER_TEXT_SPRINT x1 ~%i%~
+	
+	COPY_EXISTING spcl131.spl ~override/c4!hp%x1%.spl~
+		/* 次要类型 */
+		WRITE_BYTE 0x27 c4EnhancedEnemies
+		/* Stat */
+		LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=MaxHPStat special=engine_special_type END
+		/* 防护本法术 */
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+		/* 最大生命 */
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=18 parameter1=0 parameter2=5 END
+		/* 屏蔽英雄药水和威力药水对最大生命的修改，防止错误修正 */
+		LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c4potn09 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=206 parameter1=0 parameter2=0 STR_VAR resource=c4potn41 END
+		/* 确保仅修正一次，防护本系列其他法术 */
+		FOR (j=0;j<=MaxHP_total;++j) BEGIN
+			PATCH_IF j != i BEGIN
+				PATCH_IF j<10 BEGIN
+					TEXT_SPRINT x2 ~0%j%~
+				END ELSE TEXT_SPRINT x2 ~%j%~ 
+				LPF CLONE_EFFECT INT_VAR match_opcode=206 parameter1=0 parameter2=0 STR_VAR match_resource=~%DEST_RES%~ resource=~c4!hp%x2%~ END
+			END
+		END
+END
+		
+/* 成长型豁免 75万1档 c4!sav%01-16% */
+OUTER_FOR (i=0;i<=Saves_total;++i) BEGIN
+
+	/* 个位数前面添加0保持一致性 */
+	ACTION_IF i<10 BEGIN
+		OUTER_TEXT_SPRINT x1 ~0%i%~
+	END ELSE OUTER_TEXT_SPRINT x1 ~%i%~
+	
+	COPY_EXISTING spcl131.spl ~override/c4!sav%x1%.spl~
+		/* 次要类型 */
+		WRITE_BYTE 0x27 c4EnhancedEnemies
+		/* Stat */
+		LPF ALTER_EFFECT INT_VAR opcode=engine_mark_type timing=0 duration=2400 parameter1=engine_value_type parameter2=SavesStat special=engine_special_type END
+		/* 防护本法术 */
+		LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=206 parameter1=0 parameter2=0 STR_VAR resource=~%DEST_RES%~ insert=last END
+		/* 豁免 */
+		PHP_EACH saves_opcodes AS _ => opcode BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode parameter1=0 parameter2=0 END
+		END
+		/* 确保仅修正一次，防护本系列其他法术 */
+		FOR (j=0;j<=Saves_total;++j) BEGIN
+			PATCH_IF j != i BEGIN
+				PATCH_IF j<10 BEGIN
+					TEXT_SPRINT x2 ~0%j%~
+				END ELSE TEXT_SPRINT x2 ~%j%~ 
+				LPF CLONE_EFFECT INT_VAR match_opcode=206 parameter1=0 parameter2=0 STR_VAR match_resource=~%DEST_RES%~ resource=~c4!sav%x2%~ END
+			END
+		END
+END

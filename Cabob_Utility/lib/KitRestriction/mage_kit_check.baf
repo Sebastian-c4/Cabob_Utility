@@ -1,0 +1,22 @@
+
+IF
+	!NumInPartyLT(%n%)
+	Class(Player%n%,MAGE_ALL)
+	CheckStat(Player%n%,0,c4#CabobMageCheck)
+	Global("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKitPlayer%n%","Global",1)
+		Continue()
+END
+
+IF
+	!NumInPartyLT(%n%)
+	Class(Player%n%,MAGE_ALL)
+	!CheckStat(Player%n%,0,c4#CabobMageCheck)
+	Global("c4#CabobFindIlligalKitPlayer%n%","Global",1)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+		Continue()
+END

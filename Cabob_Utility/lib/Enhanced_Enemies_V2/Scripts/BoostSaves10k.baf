@@ -1,0 +1,14 @@
+
+IF
+	CheckStat(Myself,0,c4EE_ExSaves)
+	Allegiance(Myself,ENEMY)
+	CheckStatGT(Myself,9999,XPVALUE)
+	OR(2)
+		Global("EndOfBG1","Global",2)
+		!Global("c4EnhancedEnemiesWorkInBG1","Global",0)
+	See(NearestEnemyOf())
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c4!exsav",Myself)
+		Continue()
+END

@@ -1,0 +1,30 @@
+IF
+	Global("c4#CabobFindIlligalKit","Global",0)
+	!GlobalTimerNotExpired("c4#CabobKitsCheck","Global")
+	OR(6)
+		GlobalGT("c4#CabobFindIlligalKitPlayer1","Global",0)
+		GlobalGT("c4#CabobFindIlligalKitPlayer2","Global",0)
+		GlobalGT("c4#CabobFindIlligalKitPlayer3","Global",0)
+		GlobalGT("c4#CabobFindIlligalKitPlayer4","Global",0)
+		GlobalGT("c4#CabobFindIlligalKitPlayer5","Global",0)
+		GlobalGT("c4#CabobFindIlligalKitPlayer6","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4#CabobKitsCheck","Global",6)
+		SetGlobal("c4#CabobFindIlligalKit","Global",1)
+		Continue()
+END
+
+IF
+	Global("c4#CabobFindIlligalKit","Global",1)
+	Global("c4#CabobFindIlligalKitPlayer1","Global",0)
+	Global("c4#CabobFindIlligalKitPlayer2","Global",0)
+	Global("c4#CabobFindIlligalKitPlayer3","Global",0)
+	Global("c4#CabobFindIlligalKitPlayer4","Global",0)
+	Global("c4#CabobFindIlligalKitPlayer5","Global",0)
+	Global("c4#CabobFindIlligalKitPlayer6","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKit","Global",0)
+		Continue()
+END

@@ -1,0 +1,14 @@
+
+IF
+	CheckStat(Myself,0,c4EE_MaxHP)
+	Allegiance(Myself,ENEMY)
+	OR(2)
+		Global("EndOfBG1","Global",2)
+		!Global("c4EnhancedEnemiesWorkInBG1","Global",0)
+	See(NearestEnemyOf())
+	Global("c4EnhancedEnemiesXPGearMaxHP","Global",%gear%)
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c4!hp%level%",Myself)
+		Continue()
+END

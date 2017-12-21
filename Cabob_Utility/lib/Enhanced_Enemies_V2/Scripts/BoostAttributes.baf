@@ -1,0 +1,13 @@
+
+IF
+	CheckStat(Myself,0,c4EE_Attributes)
+	Allegiance(Myself,ENEMY)
+	OR(2)
+		Global("EndOfBG1","Global",2)
+		!Global("c4EnhancedEnemiesWorkInBG1","Global",0)
+	See(NearestEnemyOf())
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("c4!attri",Myself)
+		Continue()
+END

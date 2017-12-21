@@ -1,0 +1,136 @@
+
+SILENT
+/* **************************************** */
+/* 赋值 */
+/* **************************************** */
+
+COPY - ~%EES%/Enhanced_Enemies.log~ override
+	READ_2DA_ENTRIES_NOW rows 3
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 0 type
+		READ_2DA_ENTRY_FORMER rows i 1 mark
+		READ_2DA_ENTRY_FORMER rows i 2 value
+		PATCH_IF ~%mark%~ STR_EQ ~=~ BEGIN
+			SET ~%type%~ = ~%value%~
+		END
+	END
+
+COPY - ~%EES%/Enhanced_Enemies.txt~ override
+	READ_2DA_ENTRIES_NOW rows 3
+	FOR (i=0;i<rows;++i) BEGIN
+		READ_2DA_ENTRY_FORMER rows i 0 type
+		READ_2DA_ENTRY_FORMER rows i 1 mark
+		READ_2DA_ENTRY_FORMER rows i 2 value
+		PATCH_IF ~%mark%~ STR_EQ ~=~ BEGIN
+			SET $settings(~%type%~) =value
+		END
+	END
+
+/* BG1生效、抗性成长设定 */
+COPY_EXISTING_REGEXP GLOB ~baldur[25]*\.bcs~ override
+	DECOMPILE_AND_PATCH BEGIN
+		PHP_EACH settings AS type => value BEGIN
+			PATCH_IF ~%type%~ STR_EQ ~WorkInBG1~ BEGIN
+				REPLACE_TEXTUALLY 
+					~Global("c4EnhancedEnemiesWorkInBG1","Global",[0-9]+)~
+					~Global("c4EnhancedEnemiesWorkInBG1","Global",%value%)~
+			END
+			PATCH_IF ~%type%~ STR_EQ ~ResistBoost~ BEGIN
+				PATCH_IF FILE_EXISTS_IN_GAME ~c4!res00.spl~ BEGIN
+					REPLACE_TEXTUALLY 
+						~Global("c4EnhancedEnemiesBoostResist","Global",[0-9]+)~
+						~Global("c4EnhancedEnemiesBoostResist","Global",%value%)~
+				END ELSE BEGIN
+					REPLACE_TEXTUALLY 
+						~Global("c4EnhancedEnemiesBoostResist","Global",[0-9]+)~
+						~Global("c4EnhancedEnemiesBoostResist","Global",0)~
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+/* 全局属性 */
+COPY_EXISTING ~c4!attri.spl~ override
+	PHP_EACH settings AS type => value BEGIN
+		PHP_EACH opcodes1 AS match_opcode => type2 BEGIN
+			PATCH_IF ~%type%~ STR_EQ ~%type2%~ BEGIN
+				PATCH_IF value<0 BEGIN SET value=0 END
+				LPF ALTER_EFFECT INT_VAR silent=1 match_opcode parameter1=value END
+			END
+		END
+		PATCH_IF ~%type%~ STR_EQ ~Damage~ BEGIN
+			PATCH_IF value<0 BEGIN SET value=0 END
+			FOR (i=387;i<400;++i) BEGIN
+				LPF ALTER_EFFECT INT_VAR match_opcode=318 match_parameter2=i parameter1=value END
+			END
+		END
+	END
+IF_EXISTS BUT_ONLY
+
+/* 额外豁免奖励 */
+COPY_EXISTING ~c4!exsav.spl~ override
+	PHP_EACH settings AS type => value BEGIN
+		PATCH_IF ~%type%~ STR_EQ ~ExSaves~ BEGIN
+			PATCH_IF value<0 BEGIN SET value=0 END
+			PHP_EACH saves_opcodes AS _ => match_opcode BEGIN
+				LPF ALTER_EFFECT INT_VAR match_opcode parameter1=value END
+			END
+		END
+	END
+IF_EXISTS BUT_ONLY
+
+/* 生命最大值 */
+ACTION_PHP_EACH settings AS type => value BEGIN
+	ACTION_IF ~%type%~ STR_EQ ~MaxHP~ BEGIN
+		ACTION_IF value<10 BEGIN OUTER_SET value=10 END
+		OUTER_FOR (i=0;i<=MaxHP_total;++i) BEGIN
+			ACTION_IF i<10 BEGIN
+				OUTER_TEXT_SPRINT x1 ~0%i%~
+			END ELSE OUTER_TEXT_SPRINT x1 ~%i%~
+			COPY_EXISTING ~c4!hp%x1%.spl~ override
+				SET hppercent=100+i*value
+				LPF DELETE_EFFECT INT_VAR silent=1 match_opcode=17 END
+				LPF ALTER_EFFECT INT_VAR match_opcode=18 parameter1=hppercent parameter2=5 END 
+				LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=17 parameter2=2 STR_VAR insert=below END 
+			IF_EXISTS BUT_ONLY
+		END
+	END
+END
+
+/* 豁免奖励 */
+ACTION_PHP_EACH settings AS type => value BEGIN
+	ACTION_IF ~%type%~ STR_EQ ~Saves~ BEGIN
+		ACTION_IF value<0 BEGIN OUTER_SET value=0 END
+		OUTER_FOR (i=0;i<=Saves_total;++i) BEGIN
+			ACTION_IF i<10 BEGIN
+				OUTER_TEXT_SPRINT x1 ~0%i%~
+			END ELSE OUTER_TEXT_SPRINT x1 ~%i%~
+			COPY_EXISTING ~c4!sav%x1%.spl~ override
+				SET save=i*value
+				PHP_EACH saves_opcodes AS _ => match_opcode BEGIN
+					LPF ALTER_EFFECT INT_VAR match_opcode parameter1=save END
+				END
+			IF_EXISTS BUT_ONLY
+		END
+	END
+END
+
+/* 抗性增强 */
+ACTION_PHP_EACH resist_opcodes AS match_opcode => subject BEGIN
+	/* 类型代号 */		
+	ACTION_PHP_EACH resist_mark AS mark => subject2 BEGIN
+		ACTION_IF ~%subject%~ STR_EQ ~%subject2%~ BEGIN
+			OUTER_TEXT_SPRINT type ~%mark%~
+			OUTER_FOR (i=0;i<=Resist_total;++i) BEGIN
+				ACTION_IF i<10 BEGIN
+					OUTER_TEXT_SPRINT x1 ~0%i%~
+				END ELSE OUTER_TEXT_SPRINT x1 ~%i%~				
+				COPY_EXISTING ~c4!%type%%x1%.spl~ override
+					SET resist = i*5
+					LPF ALTER_EFFECT INT_VAR match_opcode parameter1=resist END
+				IF_EXISTS BUT_ONLY
+			END
+		END
+	END
+END

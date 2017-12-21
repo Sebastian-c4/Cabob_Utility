@@ -1,0 +1,91 @@
+
+
+SILENT
+
+/* 全局脚本中判断对应档位，BG1生效、抗性成长设定 */
+DEFINE_PATCH_FUNCTION ~EXTEND_BALDUR~ INT_VAR base=0 max=0 STR_VAR subject=~~ RET total BEGIN
+	SET base *= 10000
+	SET max *= 10000
+	SET total = max / base
+	FOR (gear=0; gear<=total; ++gear) BEGIN
+		SET low=base*gear -1
+		SET high=low+base+1
+		PATCH_IF gear=total BEGIN high=99999999 END
+		APPEND_FILE_EVALUATE ~%EES_SCRIPTS%/expgear.baf~
+	END
+END
+		
+COPY ~.../inlined/blank.baf~ ~%EES_SCRIPTS%/Extend_Baldur.baf~
+	/* BG1生效、抗性成长设定 */
+	APPEND_FILE ~%EES_SCRIPTS%/Switches.baf~
+	/* hp 50万一档, 1200万封顶 */
+	LPF EXTEND_BALDUR INT_VAR base=50 max=1200 STR_VAR subject=MaxHP RET ~MaxHP_total~ = total END
+	/* 豁免 75万一档, 1200万封顶 */
+	LPF EXTEND_BALDUR INT_VAR base=75 max=1200 STR_VAR subject=Saves RET ~Saves_total~ = total END
+	/* 抗性 50万一档, 800万封顶 */
+	LPF EXTEND_BALDUR INT_VAR base=50 max=800 STR_VAR subject=Resist RET ~Resist_total~ = total END
+	
+COPY ~.../c4EEinlined/c4!spcre.baf~ ~%EES%/Enhanced_Enemies.log~
+APPEND_OUTER ~%EES%/Enhanced_Enemies.log~ ~MaxHP_total	= %MaxHP_total%		【安装保存项，切勿修改！】~ KEEP_CRLF
+APPEND_OUTER ~%EES%/Enhanced_Enemies.log~ ~Saves_total	= %Saves_total%		【安装保存项，切勿修改！】~ KEEP_CRLF
+APPEND_OUTER ~%EES%/Enhanced_Enemies.log~ ~Resist_total	= %Resist_total%	【安装保存项，切勿修改！】~ KEEP_CRLF
+	
+EXTEND_BOTTOM_REGEXP ~baldur[25]*\.bcs~ ~%EES_SCRIPTS%/Extend_Baldur.baf~
+
+/* 生物脚本 */
+COPY ~%EES_SCRIPTS%/Clearance.baf~ ~%EES_SCRIPTS%/Enhanced_Enemies.baf~
+	APPEND_FILE_EVALUATE ~%EES_SCRIPTS%/BoostAttributes.baf~
+	APPEND_FILE_EVALUATE ~%EES_SCRIPTS%/BoostSaves10k.baf~
+	
+	/* MaxHP & Saves */
+	PATCH_FOR_EACH subject IN
+		~MaxHP~
+		~Saves~
+		~Resist~
+	BEGIN
+		FOR (gear=0;gear<=~%subject%_total~;++gear) BEGIN			
+			/* 个位数前面添加0保持一致性 */			
+			PATCH_IF gear<10 BEGIN
+				TEXT_SPRINT level ~0%gear%~
+			END ELSE TEXT_SPRINT level ~%gear%~			
+			APPEND_FILE_EVALUATE ~%EES_SCRIPTS%/Boost%subject%.baf~
+		END
+	END
+	
+/* **************************************** */
+/* 插入生物脚本 */
+COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
+	READ_BYTE 0x270 ea
+	PATCH_IF 
+		ea=28 OR //goodbutred
+		ea=200 //evilcutoff
+	BEGIN
+		WRITE_BYTE 0x270 255 //修正错误的EA to ENEMY
+	END
+	
+	/* 存放脚本队列 */
+	READ_SHORT 0x26 maxhp
+	PATCH_IF maxhp>20 BEGIN //血量在20hp以上
+		READ_ASCII SCRIPT_OVERRIDE script_override
+		PATCH_IF
+				(~%script_override%~ STR_EQ ~NONE~)	OR
+				(STRING_LENGTH ~%script_override%~=0)
+		THEN BEGIN
+			WRITE_ASCII SCRIPT_OVERRIDE ~C4!SPCRE~ #8
+		END ELSE SET $target_scripts(~%script_override%~)=1
+	END
+BUT_ONLY
+
+COMPILE ~.../c4EEinlined/c4!spcre.baf~
+EXTEND_TOP ~c4!spcre.bcs~ ~%EES_SCRIPTS%/Enhanced_Enemies.baf~ EVAL
+	
+ACTION_PHP_EACH target_scripts AS script => int BEGIN
+	COPY_EXISTING ~%script%.bcs~ override
+		R_B_B ~override/c4!spcre.bcs~ ~override/c4!spcre.bcs~
+		ON_MISMATCH
+			INNER_ACTION BEGIN
+				EXTEND_TOP ~%script%.bcs~ ~override/c4!spcre.bcs~
+			END
+		END
+	IF_EXISTS BUT_ONLY
+END

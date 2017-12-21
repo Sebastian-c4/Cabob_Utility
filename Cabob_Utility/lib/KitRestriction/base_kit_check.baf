@@ -1,0 +1,28 @@
+
+IF
+	NumInPartyLT(%n%)
+	!Global("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+		Continue()
+END
+
+IF
+	!NumInPartyLT(%n%)
+	Global("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKitPlayer%n%","Global",1)
+		Continue()
+END
+
+IF
+	!NumInPartyLT(%n%)
+	OR(%count%)
+	Global("c4#CabobFindIlligalKitPlayer%n%","Global",1)
+THEN
+	RESPONSE #100
+		SetGlobal("c4#CabobFindIlligalKitPlayer%n%","Global",0)
+		Continue()
+END
