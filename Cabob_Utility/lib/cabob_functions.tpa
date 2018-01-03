@@ -53,9 +53,9 @@ BEGIN
 		
 		PATCH_PRINT ~%value%~
 		
-	END //end of (STRING_LENGTH ~%string%~)>0
+	END /* end of (STRING_LENGTH ~%string%~)>0 */
 	
-END // end of define function
+END /* end of define function */
 
 DEFINE_ACTION_FUNCTION STRING_TO_INT
 STR_VAR
@@ -234,72 +234,72 @@ DEFINE_ACTION_FUNCTION file_replace_string INT_VAR offset=~-1~ old=~-1~ new=~-1~
 		
 END
 	
-DEFINE_PATCH_FUNCTION ~REMOVE_CLASS_LINE_FROM_USABILITIES~ //cdtweaks
+DEFINE_PATCH_FUNCTION ~REMOVE_CLASS_LINE_FROM_USABILITIES~ /* cdtweaks */
   INT_VAR
-    offset = 0 // offset to write description to
+    offset = 0 /* offset to write description to */
   STR_VAR
-    desc = ~~ // original description
-    unusable_regexp = ~~ // regexp that matches the Unusable By/Not Usable By line
-    unusable_replacement = ~~ // replacement for the Unusable By line
-    class_regexp = ~~ // regexp that matches the Mage line in the usability section
-    class_prefix = ~~ // in the usability section, this precedes all class listings (ex: in english, this is one space)
+    desc = ~~ /* original description */
+    unusable_regexp = ~~ /* regexp that matches the Unusable By/Not Usable By line */
+    unusable_replacement = ~~ /* replacement for the Unusable By line */
+    class_regexp = ~~ /* regexp that matches the Mage line in the usability section */
+    class_prefix = ~~ /* in the usability section, this precedes all class listings (ex: in english, this is one space) */
 BEGIN
   INNER_PATCH_SAVE desc ~%desc%~ BEGIN
     REPLACE_TEXTUALLY ~%unusable_regexp%~ ~%unusable_replacement%~
   END
   PATCH_IF ((~%desc%~ STRING_CONTAINS_REGEXP ~^%unusable_replacement%~) == 0) BEGIN
-    // extract usability info
+    /* extract usability info */
     INNER_PATCH_SAVE usab_block ~%desc%~ BEGIN
       REPLACE_TEXTUALLY ~\(.*[%LNL%%MNL%%WNL%]\)*%unusable_replacement%~ ~~
     END
-    // update info
+    /* update info */
     INNER_PATCH_SAVE usab_block_new ~%usab_block%~ BEGIN
-      REPLACE_TEXTUALLY ~[%LNL%%MNL%%WNL%][- %TAB%]*$~ ~~ // remove any empty lines
-      REPLACE_TEXTUALLY ~^[- %TAB%]*~ ~%class_prefix%~ // make sure entries are indented by one space
-      REPLACE_TEXTUALLY ~%class_regexp%~ ~~ // remove mage line
+      REPLACE_TEXTUALLY ~[%LNL%%MNL%%WNL%][- %TAB%]*$~ ~~ /* remove any empty lines */
+      REPLACE_TEXTUALLY ~^[- %TAB%]*~ ~%class_prefix%~ /* make sure entries are indented by one space */
+      REPLACE_TEXTUALLY ~%class_regexp%~ ~~ /* remove mage line */
     END
-    // replace old usability info with new
+    /* replace old usability info with new */
     INNER_PATCH_SAVE desc ~%desc%~ BEGIN
       REPLACE_TEXTUALLY EXACT_MATCH ~%usab_block%~ ~%usab_block_new%~
     END
     
-    // check if mage was the only thing that couldn't use
+    /* check if mage was the only thing that couldn't use */
     INNER_PATCH_SAVE compare ~%desc%~ BEGIN 
       REPLACE_TEXTUALLY ~^%unusable_replacement%.*[%LNL%%MNL%%WNL%]%class_prefix%[^- %TAB%]~ ~~
     END
-    // if it was...
+    /* if it was... */
     PATCH_IF (~%desc%~ STRING_EQUAL ~%compare%~) BEGIN
       INNER_PATCH_SAVE desc ~%desc%~ BEGIN
-        // remove 'not usable by' line, so it won't be sitting all by its lonesome now
+        /* remove 'not usable by' line, so it won't be sitting all by its lonesome now */
         REPLACE_TEXTUALLY ~[%LNL%%MNL%%WNL%]%unusable_replacement%.*~ ~~
       END
     END
 
-    // write changes
-    // SAY_EVALUATED ~%offset%~ ~%desc%~
-		// PATCH_PRINT ~%desc%~
+    /* write changes */
+    /* SAY_EVALUATED ~%offset%~ ~%desc%~ */
+		/* PATCH_PRINT ~%desc%~ */
 		INNER_ACTION BEGIN
 			STRING_SET_EVALUATE ~%desc_strref%~ ~%desc%~
 		END
   END
 END
 
-//设置并记录生物的override脚本
-// ACTION_IF !FILE_EXISTS ~override/script_override.ids~ BEGIN
-	// COPY ~.../inlined/blank~ ~override/script_override.ids~
+/* 设置并记录生物的override脚本 */
+/* ACTION_IF !FILE_EXISTS ~override/script_override.ids~ BEGIN */
+	/* COPY ~.../inlined/blank~ ~override/script_override.ids~ */
 	
-	// COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override
-		// SET $script(c#crefig)=1
-		// READ_ASCII 0x248 script_override
-		// PATCH_IF 
-					// (STRING_LENGTH ~%script_override%~=0)
-			// OR	(~%script_override%~ STR_EQ ~NONE~)
-		// THEN BEGIN			
-			// WRITE_ASCII 0x248 ~c#crefig~
-		// END ELSE SET $script(~%script_override%~)=1
-	// BUT_ONLY
+	/* COPY_EXISTING_REGEXP GLOB ~.*\.cre~ override */
+		/* SET $script(c#crefig)=1 */
+		/* READ_ASCII 0x248 script_override */
+		/* PATCH_IF  */
+					/* (STRING_LENGTH ~%script_override%~=0) */
+			/* OR	(~%script_override%~ STR_EQ ~NONE~) */
+		/* THEN BEGIN			 */
+			/* WRITE_ASCII 0x248 ~c#crefig~ */
+		/* END ELSE SET $script(~%script_override%~)=1 */
+	/* BUT_ONLY */
 	
-	// ACTION_PHP_EACH script AS file => int BEGIN
-		// APPEND script_override.ids ~%file% %int%~ UNLESS ~%file%~
-	// END
-// END
+	/* ACTION_PHP_EACH script AS file => int BEGIN */
+		/* APPEND script_override.ids ~%file% %int%~ UNLESS ~%file%~ */
+	/* END */
+/* END */

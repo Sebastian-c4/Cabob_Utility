@@ -16,7 +16,7 @@ if exist 1.x (
 	echo.	
 	echo.	修正补丁安装完成！现在你可以根据weidu.log.txt中的内容重新安装之前的mod。
 	echo.	
-	echo.	再次提醒注意：所有在本版基础另行安装的宗派mod均无法在游戏中正常使用！
+	echo.	再次提醒注意：所有在本版基础上另行安装的宗派mod均无法在游戏中正常使用！
 	echo.	
 	del 1.x
 )

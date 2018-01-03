@@ -1,0 +1,12 @@
+Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\BG2Main.exe]
+"Install"="E:\\BGII - SoA\\"
+"Path"="E:\\BGII - SoA\\"
+@="E:\\BGII - SoA\\BG2Main.exe"
+"BG2GUID"="{8dae4336-2b71-11d4-9a6c-006067325e47}"
+"BG25_INSTALL"="true"
+"BG25GUID"="{B8C3B479-1716-11D5-968A-0050BA84F5F7}"
+"BG25Tag"="Baldur's Gate(TM) II - BWP_Cabob"
+"BG25Version"=dworE:00006782
+"BG2Location"="E:\\BGII - SoA\\"
+"BG25Language"="English"

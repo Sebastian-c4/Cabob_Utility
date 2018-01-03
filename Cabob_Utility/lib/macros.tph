@@ -25,7 +25,7 @@ END ELSE BEGIN
 END
 
 
-////////////////////////////////////////////////////
+/* **************************************** */
 DEFINE_ACTION_MACRO player_scripts BEGIN	
 	COPY ~.../inlined/blank.baf~ ~override/player_script_override.ids~
 	APPEND player_script_override.ids ~0 CHARNAME~ UNLESS ~CHARNAME~
@@ -74,8 +74,8 @@ END
 
 
 
-////////////////////////////////////////////////////
-//cre效果
+/* **************************************** */
+/* cre效果 */
 DEFINE_PATCH_MACRO cre_effects BEGIN
 	READ_LONG 0x2c8 gen_effect_count
 	PATCH_IF gen_effect_count>0 THEN BEGIN
@@ -123,7 +123,7 @@ DEFINE_PATCH_MACRO cre_effects BEGIN
 	END
 END
 
-//itm装备效果
+/* itm装备效果 */
 DEFINE_PATCH_MACRO itm_gen_effects BEGIN 
 	READ_SHORT 0x70 gen_effect_count
 	PATCH_IF gen_effect_count>0 THEN BEGIN
@@ -159,7 +159,7 @@ DEFINE_PATCH_MACRO itm_gen_effects BEGIN
 	END
 END
 
-//spl初始施法效果
+/* spl初始施法效果 */
 DEFINE_PATCH_MACRO spl_gen_effects BEGIN 
 	READ_SHORT 0x70 gen_effect_count
 	PATCH_IF gen_effect_count>0 THEN BEGIN
@@ -195,7 +195,7 @@ DEFINE_PATCH_MACRO spl_gen_effects BEGIN
 	END
 END
 
-//itm头部技能效果	
+/* itm头部技能效果	 */
 DEFINE_PATCH_MACRO itm_header_effects BEGIN
 	READ_SHORT 0x68 header_count
 	PATCH_IF header_count>0 THEN BEGIN
@@ -237,7 +237,7 @@ DEFINE_PATCH_MACRO itm_header_effects BEGIN
 	END
 END
 
-//spl头部技能效果
+/* spl头部技能效果 */
 DEFINE_PATCH_MACRO spl_header_effects BEGIN
 	READ_SHORT 0x68 header_count
 	PATCH_IF header_count>0 THEN BEGIN
@@ -279,7 +279,7 @@ DEFINE_PATCH_MACRO spl_header_effects BEGIN
 	END
 END
 
-//读取已占用#318或#328条目
+/* 读取已占用#318或#328条目 */
 DEFINE_ACTION_MACRO check_existance BEGIN
 	ACTION_IF !FILE_EXISTS_IN_GAME ~c4_stat_temp.ids~ THEN BEGIN
 		COPY ~.../inlined/blank.baf~ ~override/c4_stat_temp.ids~
@@ -289,12 +289,12 @@ DEFINE_ACTION_MACRO check_existance BEGIN
 		FOR (i=0;i<rows;i+=1) BEGIN
 			READ_2DA_ENTRY_FORMER rows i 0 value0
 			READ_2DA_ENTRY_FORMER rows i 1 identifier0
-			// PATCH_IF value0>255 THEN BEGIN
+			/* PATCH_IF value0>255 THEN BEGIN */
 				INNER_ACTION BEGIN
 					APPEND c4_stat_temp.ids ~%value0% %identifier0%~ UNLESS ~%identifier0%~
-					// OUTER_SPRINT $stat_exists(~%value0%~) ~%identifier0%~
+					/* OUTER_SPRINT $stat_exists(~%value0%~) ~%identifier0%~ */
 				END
-			// END
+			/* END */
 		END
 	ACTION_IF !VARIABLE_IS_SET make2da THEN BEGIN
 		OUTER_SET make2da=0
@@ -325,7 +325,7 @@ DEFINE_ACTION_MACRO check_existance BEGIN
 		END
 		APPEND c4_stat_temp.ids ~%value1% %identifier1%~ UNLESS ~%identifier1%~
 		APPEND ~%engine_ids_file%.ids~ ~%value1% %identifier1%~ UNLESS ~%identifier1%~
-		// OUTER_SPRINT $stat_exists(~%value1%~) ~%identifier1%~
+		/* OUTER_SPRINT $stat_exists(~%value1%~) ~%identifier1%~ */
 	END
 END
 	

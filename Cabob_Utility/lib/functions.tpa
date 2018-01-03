@@ -1,28 +1,27 @@
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
 
-// partially borrowed from: 
-// https://github.com/Gibberlings3/ItemRevisions/blob/master/item_rev/lib/macros.tpa
+/* **************************************** */
+
+/* partially borrowed from:  */
+/* https://github.com/Gibberlings3/ItemRevisions/blob/master/item_rev/lib/macros.tpa */
 
 DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
 
 PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.spl~) BEGIN
   hs = 0x28
-  WRITE_LONG 0xc ~-1~ //Identified name
-  WRITE_LONG 0x54 ~-1~ //Identified description
+  WRITE_LONG 0xc ~-1~ /* Identified name */
+  WRITE_LONG 0x54 ~-1~ /* Identified description */
   PATCH_FOR_EACH tz IN 0x44 0x48 0x58 0x5c BEGIN
     WRITE_LONG tz 0
   END
 END ELSE PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.itm~) BEGIN
   hs = 0x38
 END
-READ_LONG 0x64 hf //Extended header offset
-READ_SHORT 0x68 hc //Extended header count
-READ_LONG 0x6a fb //Feature block table offset
-READ_SHORT 0x70 fc //Feature block count
-PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN // Ardanis: fixed "hc > 1" to "hc > 0"
+READ_LONG 0x64 hf /* Extended header offset */
+READ_SHORT 0x68 hc /* Extended header count */
+READ_LONG 0x6a fb /* Feature block table offset */
+READ_SHORT 0x70 fc /* Feature block count */
+PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN /* Ardanis: fixed "hc > 1" to "hc > 0" */
   READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
   PATCH_IF (~%eh%~ STRING_EQUAL ~fail~) BEGIN
     WHILE ((~%eh%~ STRING_EQUAL ~fail~) AND (hc > 0)) BEGIN
@@ -53,14 +52,13 @@ PATCH_IF (SOURCE_SIZE > (0x72 + (hs * hc) + (0x30 * fc))) BEGIN
   DELETE_BYTES (0x72 + (hs * hc) + (0x30 * fc)) (SOURCE_SIZE - (0x72 + (hs * hc) + (0x30 * fc)))
 END
 
-// added by Ardanis
+/* added by Ardanis */
 WRITE_SHORT 0x6e 0
 
-END // end of function
+END /* end of function */
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 
 DEFINE_ACTION_FUNCTION ~CREATE_SPELL~
   INT_VAR
@@ -90,9 +88,8 @@ COPY ~...inlined/ag#dummy.spl~ ~override/%spell%.spl~
   WRITE_LONG 0x6a 0x72
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 
 DEFINE_PATCH_FUNCTION ~ADD_SPELL_HEADER~
   INT_VAR
@@ -137,7 +134,7 @@ BEGIN
     WRITE_SHORT 0x68 hc
     WRITE_LONG 0x6a eo
 
-    READ_SHORT 0x70 ei // technically, it is a counter
+    READ_SHORT 0x70 ei /* technically, it is a counter */
     FOR (i=ho;i<ho+hc*hs;i+=hs) BEGIN
       READ_SHORT i+0x1e ec
       WRITE_SHORT i+0x20 ei
@@ -164,9 +161,8 @@ BEGIN
   END
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_ACTION_FUNCTION CREATE_EFFECT
 	INT_VAR
@@ -218,9 +214,8 @@ BEGIN
 		WRITE_ASCIIE 0xa8 ~%variable%~
 END		
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_ACTION_MACRO read_ids BEGIN
 	ACTION_IF !FILE_EXISTS_IN_GAME ~c4_stat_temp.ids~ THEN BEGIN
@@ -246,7 +241,7 @@ DEFINE_ACTION_FUNCTION find_stat_output INT_VAR stats_input=500 STR_VAR identifi
 	ACTION_PHP_EACH stat_exists AS value => string BEGIN
 		ACTION_IF ~%identifier_input%~ STR_EQ ~%string%~ THEN BEGIN
 			OUTER_SET stat_value_output = value
-			// PRINT ~%identifier_input% exists, value = %value%~
+			/* PRINT ~%identifier_input% exists, value = %value%~ */
 			OUTER_SET exist=1
 		END
 	END
@@ -297,9 +292,8 @@ DEFINE_PATCH_FUNCTION find_stat INT_VAR stats_now=stats_offset STR_VAR identifie
 	
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_PATCH_FUNCTION ADD_UNIQUE_MARK
 	INT_VAR 
@@ -358,9 +352,8 @@ BEGIN
 	END
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_ACTION_FUNCTION C4_HANDLE_CHARSETS STR_VAR lang_path=~tra~ BEGIN	
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY character_set BEGIN
@@ -415,16 +408,15 @@ DEFINE_ACTION_FUNCTION C4_HANDLE_CHARSETS STR_VAR lang_path=~tra~ BEGIN
 	END	
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_PATCH_FUNCTION CLONE_SPELL_HEADER
 	INT_VAR
 		source_required_level = 1
 		required_level = 2
 BEGIN
-	// read and check
+	/* read and check */
 	READ_BYTE		5 										version
   READ_LONG  	0x64									header_offset
   READ_SHORT 	0x68									header_count
@@ -448,12 +440,12 @@ BEGIN
 		PATCH_FAIL ~WRONG input or NOT a valid file !!~
 	END
 	
-	PATCH_IF valid BEGIN // if passed check
-		insert = 0 // check if source header exists and define the insert point at the same time
+	PATCH_IF valid BEGIN /* if passed check */
+		insert = 0 /* check if source header exists and define the insert point at the same time */
 		
 		FOR (hd=0;hd<header_count;++hd) BEGIN
 		
-			// read entire source header
+			/* read entire source header */
 			READ_SHORT header_offset + hd*0x28 + 0x10 rlevel
 			PATCH_IF rlevel=source_required_level BEGIN
 				insert = hd + 1
@@ -461,12 +453,12 @@ BEGIN
 				READ_SHORT header_offset + hd*0x28 + 0x20 	source_header_feature_offset
 				READ_SHORT header_offset + hd*0x28 + 0x1e 	source_header_feature_count
 				
-				// read entire feature block of this header
+				/* read entire feature block of this header */
 				source_header_feature_size = (source_header_feature_count * 0x30)
 				READ_ASCII (feature_offset + source_header_feature_offset * 0x30) source_header_feature (source_header_feature_size)
 			END
 			
-			// if a header with required level equals to the input required_level, skip this patch and display a warning			
+			/* if a header with required level equals to the input required_level, skip this patch and display a warning			 */
 			PATCH_IF insert > 0 BEGIN
 				next = insert
 				WHILE next < header_count + 1 BEGIN
@@ -488,10 +480,10 @@ BEGIN
 			
 		END
 		
-		// insert bytes
+		/* insert bytes */
 		PATCH_IF insert >0 BEGIN
 			
-			// update global value
+			/* update global value */
 			header_count += 1
 			feature_offset += 0x28
 			WRITE_SHORT	0x68	header_count
@@ -503,7 +495,7 @@ BEGIN
 			INSERT_BYTES (feature_offset + source_header_feature_offset * 0x30 + source_header_feature_count * 0x30) source_header_feature_size
 			WRITE_ASCIIE (feature_offset + source_header_feature_offset * 0x30 + source_header_feature_size) ~%source_header_feature%~
 			
-			// update feature_offset in each header
+			/* update feature_offset in each header */
 			offset = cfeature_count
 			FOR (hd=0;hd<header_count;++hd) BEGIN
 				WRITE_SHORT header_offset + hd*0x28 + 0x20		offset
@@ -511,15 +503,14 @@ BEGIN
 				offset += count
 			END
 			
-		END // end of insert bytes
+		END /* end of insert bytes */
 		
-	END // end of valid check
+	END /* end of valid check */
 	
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 
 DEFINE_PATCH_FUNCTION CREATE_HEADERS_AS_LEVEL 
@@ -544,9 +535,8 @@ BEGIN
 
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 
 DEFINE_PATCH_FUNCTION ALTER_HEADER_EFFECTS_AS_LEVEL 
@@ -586,12 +576,12 @@ DEFINE_PATCH_FUNCTION ALTER_HEADER_EFFECTS_AS_LEVEL
 		suffix_list 		= ~~
 BEGIN
 		
-	// check if is a spl file
+	/* check if is a spl file */
 	PATCH_IF ~%SOURCE_EXT%~ STR_EQ ~SPL~ = 0 BEGIN
 		PATCH_FAIL ~Only .spl supported~
 	END
 		
-	// set first
+	/* set first */
 	m = 0
 	resource_length = STRING_LENGTH ~%resource%~
 	suffix_length = STRING_LENGTH ~%suffix_list%~
@@ -599,7 +589,7 @@ BEGIN
 		PATCH_WARN ~Suffix can be set only if "resource" includes more than 1 character !! No new resource would be set !!~
 	END
 		
-	// read effects
+	/* read effects */
 	GET_OFFSET_ARRAY header  SPL_V10_HEADERS
 	PHP_EACH header AS int => index BEGIN
 		GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
@@ -621,7 +611,7 @@ BEGIN
 			READ_LONG 	offset+0x28 special_
 			READ_ASCII 	offset+0x14 resource_
 			
-			// check match
+			/* check match */
 			PATCH_IF  
 						(opcode_				= match_opcode							|| match_opcode 				= 999999)
 				&&  (target_				= match_target							|| match_target 				= 999999)
@@ -641,7 +631,7 @@ BEGIN
 				&& 	((~%resource_%~ STR_EQ ~%match_resource%~) 	|| (~%match_resource%~ STR_EQ ~~))
 			BEGIN
 			
-				// set new value
+				/* set new value */
         PATCH_IF multi_parameter1 != 0 THEN BEGIN
 					PATCH_IF parameter1 != 999999 BEGIN
 						WRITE_LONG offset+4 parameter1	+ m*multi_parameter1
@@ -714,60 +704,59 @@ BEGIN
 				
 				WRITE_ASCIIE offset+0x14 ~%new_resource%~
 				
-			END // end of check 
-		END // end of GET_OFFSET_ARRAY2
+			END /* end of check  */
+		END /* end of GET_OFFSET_ARRAY2 */
 		
-		m += 1 // increment multiplier
-	END //end of GET_OFFSET_ARRAY
+		m += 1 /* increment multiplier */
+	END /* end of GET_OFFSET_ARRAY */
 	
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 
 DEFINE_PATCH_FUNCTION ADD_ITEM_HEADER 
 	INT_VAR				
-		//无标注的默认0
-		new_header_type 			=	3 //新建的头部类型, 默认3-魔法
-		identify 							=	0 // 是否需要辨识后才能使用
-		location 							= 3 // 技能位置, 3-装备
-		target 								= 1 // 目标,默认1-生物
-		range 								= 40 // 射程,默认40
-		launcher 							= 0 // 投射类型
-		speed 								= 0 // 速度
-		//以下几个仅类型1-武器有效
-		thac0_bonus 					= 0 // THAC0奖励
-		dicesize 							= 0 // 伤害骰面
-		dicenumber 						= 0 // 伤害骰数
-		damage_bonus 					= 0 // 伤害奖励
-		damage_type 					= 0 // 伤害类型
-		animation_overhand		= 0 // 动画几率-劈砍
-		animation_backhand		= 0 // 动画几率-挥砍
-		animation_thrust			= 0 // 动画几率-穿刺
-		//////
-		primary_type 					= 0 // 基础学派
-		secondary_type 				= 0 // 次要学派
-		charges 							= 0 // 充能数
-		drained 							= 0 // 充能类型
-		projectile 						= 0 // 投射动画
-		arrow 								= 0 // 弹药类型-箭
-		bolt 									= 0 // 弹药类型-矢
-		bullet 								= 0 // 弹药类型-弹丸
-		flag_strength 				= 0// 使用力量奖励
-		flag_break 						= 0 // 易碎
-		flag_hostile 					= 0 // 敌对
-		flag_recharge 				= 0 // 是否可充能
-		flag_bypass 					= 0 // 无视盾, 仅IWD2
-		flag_keenedge 				= 0 // 锋锐, 仅IWD2
-		flag_backstab 				= 0 // 可背刺, 仅EE, 或安装了ToBEx并开启
-		flag_noinvisible			= 0 // 无法瞄准隐形生物, 仅EE, 或安装了ToBEx并开启
+		/* 无标注的默认0 */
+		new_header_type 			=	3 /* 新建的头部类型, 默认3-魔法 */
+		identify 							=	0 /* 是否需要辨识后才能使用 */
+		location 							= 3 /* 技能位置, 3-装备 */
+		target 								= 1 /* 目标,默认1-生物 */
+		range 								= 40 /* 射程,默认40 */
+		launcher 							= 0 /* 投射类型 */
+		speed 								= 0 /* 速度 */
+		/* 以下几个仅类型1-武器有效 */
+		thac0_bonus 					= 0 /* THAC0奖励 */
+		dicesize 							= 0 /* 伤害骰面 */
+		dicenumber 						= 0 /* 伤害骰数 */
+		damage_bonus 					= 0 /* 伤害奖励 */
+		damage_type 					= 0 /* 伤害类型 */
+		animation_overhand		= 0 /* 动画几率-劈砍 */
+		animation_backhand		= 0 /* 动画几率-挥砍 */
+		animation_thrust			= 0 /* 动画几率-穿刺 */
+		/* **************************************** */
+		primary_type 					= 0 /* 基础学派 */
+		secondary_type 				= 0 /* 次要学派 */
+		charges 							= 0 /* 充能数 */
+		drained 							= 0 /* 充能类型 */
+		projectile 						= 0 /* 投射动画 */
+		arrow 								= 0 /* 弹药类型-箭 */
+		bolt 									= 0 /* 弹药类型-矢 */
+		bullet 								= 0 /* 弹药类型-弹丸 */
+		flag_strength 				= 0/* 使用力量奖励 */
+		flag_break 						= 0 /* 易碎 */
+		flag_hostile 					= 0 /* 敌对 */
+		flag_recharge 				= 0 /* 是否可充能 */
+		flag_bypass 					= 0 /* 无视盾, 仅IWD2 */
+		flag_keenedge 				= 0 /* 锋锐, 仅IWD2 */
+		flag_backstab 				= 0 /* 可背刺, 仅EE, 或安装了ToBEx并开启 */
+		flag_noinvisible			= 0 /* 无法瞄准隐形生物, 仅EE, 或安装了ToBEx并开启 */
 	STR_VAR 
-		icon 									= ~~ // 使用图标
-		name 									= ~~ // 提示文字, 可用@+数字读取tra文件, 或直接输入文字.
+		icon 									= ~~ /* 使用图标 */
+		name 									= ~~ /* 提示文字, 可用@+数字读取tra文件, 或直接输入文字. */
 	RET
-		new_header 								 //新建的头部位置, 供ADD_ITEM_EFFECT调用
+		new_header 								 /* 新建的头部位置, 供ADD_ITEM_EFFECT调用 */
 BEGIN
 		PATCH_IF STRING_LENGTH ~%DEST_EXT%~ >0 BEGIN
 			SPRINT item_name ~%DEST_RES%~
@@ -859,9 +848,8 @@ BEGIN
 		END
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_ACTION_FUNCTION create_observer STR_VAR name=~~ specific=~~ BEGIN
 <<<<<<<< .../inlined/create_observer_baldur1.baf
@@ -904,9 +892,8 @@ END
 	END
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_ACTION_FUNCTION create_one_observer STR_VAR name=~~ specific=~~ BEGIN
 <<<<<<<< .../inlined/create_one_observer_baldur1.baf
@@ -947,9 +934,8 @@ END
 	END
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////		
+
+/* **************************************** */
 
 DEFINE_ACTION_FUNCTION deactivate_observer STR_VAR name=~~ BEGIN
 <<<<<<<< .../inlined/clear_ob.baf
@@ -976,9 +962,8 @@ END
 	DELETE ~override/clear_ob.bcs~
 END
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+
+/* **************************************** */
 		
 DEFINE_PATCH_FUNCTION item_flag RET valid moveable magical two_hand BEGIN
 	valid=0

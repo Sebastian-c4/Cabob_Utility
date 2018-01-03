@@ -1,0 +1,609 @@
+// Log of Currently Installed WeiDU Mods
+// The top of the file is the 'oldest' mod
+// ~TP2_File~ #language_number #component_number // [Subcomponent Name -> ] Component Name [ : Version]
+~SETUP-WEIDU.TP2~ #0 #0 // 24200
+~SETUP-BWS.TP2~ #0 #0 // Expert Click-Properties Selected
+~SETUP-BWS.TP2~ #0 #1 // Expert Component In Selection: tobex(119)
+~SETUP-BWS.TP2~ #0 #2 // Expert Mod In Selection: arestorationp
+~SETUP-BWS.TP2~ #0 #3 // Expert Component In Selection: RevisedBattles(7)
+~SETUP-BWS.TP2~ #0 #4 // Expert Component In Selection: Tactics(0)
+~SETUP-BWS.TP2~ #0 #5 // Expert Component In Selection: Tactics(3)
+~SETUP-BWS.TP2~ #0 #6 // Expert Component In Selection: Tactics(5)
+~SETUP-BWS.TP2~ #0 #7 // Expert Component In Selection: Tactics(6)
+~SETUP-BWS.TP2~ #0 #8 // Expert Component In Selection: Tactics(7)
+~SETUP-BWS.TP2~ #0 #9 // Expert Component In Selection: Tactics(11)
+~SETUP-BWS.TP2~ #0 #10 // Expert Component In Selection: Tactics(13)
+~SETUP-BWS.TP2~ #0 #11 // Expert Component In Selection: Tactics(14)
+~SETUP-BWS.TP2~ #0 #12 // Expert Component In Selection: Tactics(15)
+~SETUP-BWS.TP2~ #0 #13 // Expert Component In Selection: Tactics(30)
+~SETUP-BWS.TP2~ #0 #14 // Expert Component In Selection: Tactics(35)
+~SETUP-BWS.TP2~ #0 #15 // Expert Component In Selection: Tactics(36)
+~SETUP-BWS.TP2~ #0 #16 // Expert Component In Selection: refinements(+)
+~SETUP-BWS.TP2~ #0 #17 // Expert Component In Selection: refinements(10)
+~SETUP-BWS.TP2~ #0 #18 // Expert Component In Selection: 1pp_hq_music_BGT(+)
+~SETUP-BWS.TP2~ #0 #19 // Expert Component In Selection: 1pp_hq_music_BGT(0)
+~SETUP-BWS.TP2~ #0 #20 // Expert Component In Selection: 1pp_hq_music_ToSC(0)
+~SETUP-BWS.TP2~ #0 #21 // Expert Component In Selection: 1pp_hq_music_II(0)
+~SETUP-BWS.TP2~ #0 #22 // 20161130 - Updated by agb1 (installation started 2017/08/01 周二)
+~SETUP-BWINSTALLPACK.TP2~ #0 #0 // BiG World Installpack v16.7z
+~TOBEX/TOBEX.TP2~ #5 #100 // TobEx - 核心组件: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #101 // 开启受伤时法术集中检定 [WIP]: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #102 // 受伤时从睡眠中醒来: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #104 // 取消石肤术的颜色 [C]: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #105 // 零伤害无法打断法术: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #106 // 镜像单位使用投射者的等级 [C]: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #107 // 允许所有种族转职: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #108 // 允许战斗中更换护甲: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #109 // 取消额外的经验: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #111 // 魅惑后可进行对话: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #112 // 限制一级人物的熟练度: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #113 // 扒窃成功后保持潜行 [C]: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #114 // 被打断后显示休息所用时间: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #115 // 对话欢迎字幕: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #116 // 开启战斗动画的攻击声音: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #117 // 全部职业拥有四个武器栏: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #118 // 标准人物语音的字幕: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #119 // 移除全部种族-职业限制: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #120 // 解离后丢弃全部道具: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #121 // 冰冻后丢弃全部道具: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #122 // 石化后丢弃全部道具: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #123 // 自动暂停可在所有界面下启动: Beta 0026
+~TOBEX/TOBEX.TP2~ #5 #124 // 使所有攻击动画与实际攻击相符合: Beta 0026
+~JIMFIX/SETUP-JIMFIX.TP2~ #0 #1 // Enable Spell Immunity in Sequencers/Triggers: v2.1
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #0 // BG2 Fixpack - 核心补丁包(这一定要安装，之后就随意安不安装了): v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #3 // 测试的核心补丁(请参阅readme说明): v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #100 // 可选项目 - 让凯东与玛莉亚和解,队伍会获得XP: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #101 // 可选项目 - 改善法术动画: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #102 // 可选项目 - 克伦威尔的锻造实际上需要一天: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #103 // 可选项目 - 混合(投掷&肉搏)使用匕首补丁: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #104 // 可选项目 - Ghreyfain的圣徽补丁: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #106 // 可选项目 - 当攻击半身人,矮人和地精时,将给巨人P&P的不利修正: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #107 // 可选项目 - 取消弓箭手和潜行者的转职限制: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #108 // 可选项目 - 取消在愤怒的地狱试练里邪恶路线的两次属性奖励: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #109 // 可选项目 - 修改被招换恶魔的AI: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #110 // 可选项目 - 额外的脚本补丁: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #112 // 可选项目 - 法师杀手在远程攻击的时候可以使用封魔术: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #113 // 可选项目 - 额外的阵营补丁: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #114 // 可选项目 - 更改自由行动术防护预防震慑: v10 (BWP Fixed to v11 Alpha 1)
+~BG2FIXPACK/SETUP-BG2FIXPACK.TP2~ #9 #116 // 可选项目 - 移除诗人和游侠初始盗贼技能奖励: v10 (BWP Fixed to v11 Alpha 1)
+~SETUP-BGT.TP2~ #9 #0 // 博德之门三部曲 - 核心: 1.18 (28 Apr 13)
+~SETUP-BGTMUSIC.TP2~ #8 #2 // 博德之门三部曲 - 配乐 -> 完整的博德之门/安姆阴影/巴尔王座配乐(警告：这将会修改BGMain.exe)
+~BGGRAPHICS/SETUP-BGGRAPHICS.TP2~ #0 #0 // BGT Extended Night and Baldur's Gate Map Fixes: v1.8 BWP Fix
+~TXTMUSIC/TXTMUSIC.TP2~ #0 #0 // Restored Textscreen Music for BG1TuTu, EasyTutu, and BGT-WeiDU: 9 (22 Mar 13)
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #0 // 颠峰之战（汉化：good0593，c4_angel）: v1.51 BETA BWP 20170519
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #1 // 更强的阿巴济戈: v1.51 BETA BWP 20170519
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #2 // 更强的狄摩高根: v1.51 BETA BWP 20170519
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #3 // 更强的葛罗姆尼尔: v1.51 BETA BWP 20170519
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #4 // 更强的伊菈赛菈: v1.51 BETA BWP 20170519
+~ASCENSION/SETUP-ASCENSION.TP2~ #4 #5 // 更强的雅加苏拉: v1.51 BETA BWP 20170519
+~SETUP-VAULT.TP2~ #0 #0 // 地窟 （汉化：archenemy）: v7.2 BWP Fix
+~SETUP-VAULT.TP2~ #0 #1 // 物品可以升级: v7.2 BWP Fix
+~SETUP-TGC1E.TP2~ #0 #0 // 暗灰帮三部曲第一部：烛光 -> 标准版本 (汉化：tufuq): v1.9 BWP Fix
+~SIRINESCALL/SETUP-SIRINESCALL.TP2~ #0 #0 // 海妖女的呼唤 (汉化：barkingdog): v14
+~THALAN/THALAN.TP2~ #0 #0 // 泰兰提尔物品升级 （汉化：barkingdog，zj1985）: v4.2.1
+~SETUP-LOSTITEMS.TP2~ #0 #0 // Lost Items: vR2 BWP Fix
+~SETUP-LOSTITEMS.TP2~ #0 #1 // Xan has Sorcerer class: vR2 BWP Fix
+~SETUP-LOSTITEMS.TP2~ #0 #2 // Monk +3 AC and +1 THAC0 Bonus: vR2 BWP Fix
+~BG1NPC/BG1NPC.TP2~ #0 #0 // 博德之门1 NPC扩展工程：必要组件 (汉化：archenemy；撒恩部分校对&润色：xcrossfl；v22.8更新：c4_angel): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #1 // 博德之门1 NPC扩展工程：交谈、任务及插话: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #9 // 博德之门1 NPC扩展工程：阿詹提斯罗曼史核心内容 (青少年内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #10 // 博德之门1 NPC扩展工程：布朗温罗曼史核心内容 (青少年内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #11 // 博德之门1 NPC扩展工程：科朗罗曼史核心内容 (成人内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #12 // 博德之门1 NPC扩展工程：戴娜黑罗曼史核心内容 (青少年内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #13 // 博德之门1 NPC扩展工程：莎儿-蒂尔关系核心内容 (成人内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #14 // 博德之门1 NPC扩展工程：撒恩罗曼史核心内容 (青少年内容): v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #2 // 博德之门1 NPC扩展工程：艾德温使用其 BG2 的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #3 // 博德之门1 NPC扩展工程：爱蒙使用其 BG2 的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #4 // 博德之门1 NPC扩展工程：贾希拉使用其 BG2 的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #5 // 博德之门1 NPC扩展工程：明斯克使用其 BG2 的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #6 // 博德之门1 NPC扩展工程：维康妮亚使用其 BG2 的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #7 // 博德之门1 NPC扩展工程：齐冯使用“齐冯和黛芮安娜 (Kivan and Deheriana Companions)”中的肖像: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #15 // 博德之门1 NPC扩展工程：女性罗曼史挑战，阿詹提斯 vs 撒恩 vs 科朗: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #18 // 博德之门1 NPC扩展工程：阿罗拉起始位置 -> 阿罗拉起始于溪谷镇: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #25 // 杰森·康普顿的对话加速脚本: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #28 // 博德之门1 NPC扩展工程：吟游诗人声望调整: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #31 // 博德之门1 NPC扩展工程：沙洛佛克日记调整 -> SixofSpades 的扩展版沙洛佛克日记: v22.8
+~BG1NPC/BG1NPC.TP2~ #0 #200 // 博德之门1 NPC扩展工程：玩家发起的对话: v22.8
+~BG1NPCMUSIC/SETUP-BG1NPCMUSIC.TP2~ #0 #0 // The BG1 NPC Project Music Pack -> Install All Audio: v6
+~BG1UB/SETUP-BG1UB.TP2~ #0 #0 // 恢复冰岛第二层 (汉化：Archenemy，c4_angel): v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #1 // 神秘的小瓶: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #2 // 额外出场的伊尔明斯特: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #3 // 安其罗注意到莎儿-蒂尔: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #8 // 莎法娜的调情: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #9 // 适当的艾柏特和来福的奖励: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #10 // 安塔·银盾出现在自己的家: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #11 // 史卡和沙散塔的女儿: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #12 // 牧师奎宁格: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #13 // 陈希洛和食人魔法师: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #14 // 艾迪，商业联盟的申请者: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #15 // 焰拳佣兵的支援: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #16 // 生物纠正: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #17 // 生物恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #18 // 生物名称恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #19 // 少量对话恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #20 // 声音恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #21 // 商店、酒馆和旅店的修正和恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #22 // 物品修正和恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #23 // 地区修正和恢复: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #24 // 固定的尸体: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #28 // 布理森与绿宝石: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #29 // 港务长房间内的伊尔坦大公爵: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #30 // 尼姆·富尔温遭遇战: v14.1
+~BG1UB/SETUP-BG1UB.TP2~ #0 #31 // 精灵之歌酒馆动画修正: v14.1
+~SETUP-BGSPAWN.TP2~ #6 #0 // BGSpawn系统基于等级和队伍成员 （注意：需要博德之门三部曲）: 1.12 BWP Fix
+~SETUP-BGSPAWN.TP2~ #6 #1 // 选择重生间隔时间: 1.12 BWP Fix
+~SETUP-BGSPAWN.TP2~ #6 #2 // 吸血狼领主（灵感来于DavidW Wolf of Ulcaster） 注意：这将改动游戏中的一些吸血狼。使用BGSpawn系统: 1.12 BWP Fix
+~SETUP-BGSPAWN.TP2~ #6 #3 // BGSpawn在两个地区间展开随机遭遇战 （注意：需要博德之门三部曲）: 1.12 BWP Fix
+~KTWEAKS/SETUP-KTWEAKS.TP2~ #0 #1 // 添加BG1缺失的普通和魔法武器（汉化：c4_angel）: v1.06
+~KTWEAKS/SETUP-KTWEAKS.TP2~ #0 #2 // 添加BG1缺失的稀有武器: v1.06
+~KTWEAKS/SETUP-KTWEAKS.TP2~ #0 #3 // 随机放置BG1稀有武器: v1.06
+~KTWEAKS/SETUP-KTWEAKS.TP2~ #0 #301 // 剧情修正: v1.06
+~KTWEAKS/SETUP-KTWEAKS.TP2~ #0 #201 // (BETA)允许舞剑士精通（2星）带刃的武器: v1.06
+~SETUP-BGTTWEAK.TP2~ #8 #100 // 亚多士提醒领取史姬的赎金 (汉化：RocLord，good0593，barkingdog，distance20，校对&润色：Piedelo): 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #400 // 新增瑟玛吉的斗篷和升级过的克佛洛沙的守护之戒: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #902 // 在海盗洞穴设置随机陷阱 -> 随机于游戏时间: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1502 // 改变物品破碎的可能性 -> 让盔甲和盾牌有可能破碎: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2002 // 主角传记修改 -> 在传送到安姆阴影之后设置 BG2 的传记: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2100 // 泰龙的特殊武器: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2300 // 消除魅惑后的敌对反应: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2500 // 只能由巨龙桥口西方通往乌葛斯胡渣: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2600 // 防止邻近地区可以通往杜拉格之塔: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2700 // 将混乱之剑+2加入到沙洛佛克的掉落物中: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #2800 // 进入 BG2 时声望值重置: 11 (5 Feb 12) BWP Fix
+~C#SB_SILBER/SETUP-C#SB_SILBER.TP2~ #0 #0 // 艾达隆之血 (汉化：tufuq): 14
+~TOTDG/SETUP-TOTDG.TP2~ #0 #0 // 缤纷无限系列：深渊花园（模组修正：c4_angel，汉化：spark_gs_gs）
+~TOTDG/SETUP-TOTDG.TP2~ #0 #1 // 队友反应 （艾黎，维康尼亚，贾希拉，阿诺门，海尔达利，凯东）
+~WHITEQUEEN/WHITEQUEEN.TP2~ #0 #0 // 缤纷无限系列：白女王（模组修正：c4_angel，汉化：spark_gs_gs） -> 是的，但不更新现有存档。: 6.2
+~FR_ROV/SETUP-FR_ROV.TP2~ #0 #0 // 自由国度（汉化：barkingdog，v8更新：c4_angel。Debug：c4_angel）: v8 BWP fix
+~SETUP-VALHORN.TP2~ #0 #0 // Improved Horns of Valhalla v1.2: 1.3
+~SETUP-ROLLES.TP2~ #1 #0 // 洛斯·萨佛的商店 （汉化：lycc111）: v3a BWP Fix
+~RUAD/SETUP-RUAD.TP2~ #0 #0 // 罗德·洛·费萨 (SoA) (汉化：lycc111，archenemy，协力：胧月，heehoo，Manna): v27 BWP Fix
+~RUAD/SETUP-RUAD.TP2~ #0 #1 // 罗德·洛·费萨 (ToB): v27 BWP Fix
+~SETUP-ITEMUPGRADE.TP2~ #0 #0 // 安姆阴影物品升级 （汉化：qj3，good0593，v40：c4_angel） -> 使用列表形式的对话: v40 BWP Fix
+~SETUP-ITEMUPGRADE.TP2~ #0 #1 // 巴尔王座物品升级 -> 使用列表形式的对话: v40 BWP Fix
+~FADE/SETUP-FADE.TP2~ #0 #0 // 菲德 (汉化：星之刃，乱气流，协力：Pakistan1982)
+~SETUP-VALEN.TP2~ #7 #0 // Valen: v45 BWP Fix
+~CHLOE/CHLOE.TP2~ #0 #0 // 克洛伊罗曼史 (汉化：anca_qin): v1.5 BWP Fix
+~TSUJATHA/SETUP-TSUJATHA.TP2~ #0 #0 // 兹伽萨 (汉化：无一物，marijuana，zj1985，校对&润色：无一物，marijuana，v15更新：c4_angel): v15_charsets BWP Fix
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #0 // 区域补全(作者:Almateria. 汉化:c4_angel v8.0.2): v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #2 // 声音补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #3 // 物品补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #4 // 许愿术条目补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #5 // 经验值细节补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #6 // 巫妖德瑞尔: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #7 // 随机遭遇战补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #10 // 物品导入扩展: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #11 // 杀戮者梦境补全: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #12 // 杀戮者变身调整: v8.2.8
+~ARESTORATIONP/SETUP-ARESTORATIONP.TP2~ #6 #13 // 渥金商场动画补全: v8.2.8
+~RES_FIXER/SETUP-RES_FIXER.TP2~ #0 #0 // Resource Fixer: v1
+~TASHIA/SETUP-TASHIA.TP2~ #0 #0 // 塔西娅 NPC 模组 -> 塔西娅（完全整合版本，需要巴尔王座；汉化：anca_qin，KillMercy，marijuana，校对：good0593）: v1.4 BWP Fix 2
+~TASHIA/SETUP-TASHIA.TP2~ #0 #3 // 塔西娅扩充版（需要巴尔王座） -> 博德式对话版本（建议安装）: v1.4 BWP Fix 2
+~SETUP-SOLAUFEIN.TP2~ #0 #0 // 索劳纷罗曼史 （汉化：刃煞）: v104 BWP Fix
+~SETUP-SHEENA.TP2~ #0 #0 // 希娜：半龙人传奇 (汉化：anca_qin): v1.7 BWP Fix
+~SETUP-REVISEDBATTLES.TP2~ #0 #0 // 强化战斗 v6 - Erebusant 修订版 (汉化：barkingdog)
+~SETUP-REVISEDBATTLES.TP2~ #0 #1 // 增强的崔斯特
+~SETUP-REVISEDBATTLES.TP2~ #0 #2 // 增强的曼卡·碎石者
+~SETUP-REVISEDBATTLES.TP2~ #0 #3 // 增强的疯牧师
+~SETUP-REVISEDBATTLES.TP2~ #0 #4 // 增强的杰拉特家族
+~SETUP-REVISEDBATTLES.TP2~ #0 #5 // 增强的罗诺尔爵士
+~SETUP-REVISEDBATTLES.TP2~ #0 #6 // 增强的主脑
+~SETUP-REVISEDBATTLES.TP2~ #0 #7 // 增强的沙洛佛克怒魂
+~SETUP-REVISEDBATTLES.TP2~ #0 #8 // 增强的科瓦尔，布雷格和阿拉玛斯
+~SETUP-REVISEDBATTLES.TP2~ #0 #9 // 增强的费尔克拉格
+~SETUP-REVISEDBATTLES.TP2~ #0 #11 // 强化红龙费尔克拉格 FR_ROV 兼容补丁 -> 增强的费尔克拉格
+~SETUP-REVISEDBATTLES.TP2~ #0 #13 // 增强的火巨人
+~SETUP-REVISEDBATTLES.TP2~ #0 #15 // 增强的崔米镇陵墓
+~SETUP-REVISEDBATTLES.TP2~ #0 #17 // 增强的神殿下水道战斗小队
+~SETUP-REVISEDBATTLES.TP2~ #0 #18 // 增强的凯瑟·贾力
+~SETUP-REVISEDBATTLES.TP2~ #0 #19 // 增强的法拉赫
+~SETUP-REVISEDBATTLES.TP2~ #0 #20 // 增强的黑暗精灵角斗场
+~SETUP-REVISEDBATTLES.TP2~ #0 #21 // 增强的五彩恶魔
+~SETUP-REVISEDBATTLES.TP2~ #0 #23 // 新职业：奥术复仇者
+~SETUP-REVISEDBATTLES.TP2~ #0 #24 // 新职业：刀锋战士
+~SETUP-REVISEDBATTLES.TP2~ #0 #25 // 新职业：恶魔武士
+~SETUP-REVISEDBATTLES.TP2~ #0 #26 // 新职业：私生子
+~SETUP-REVISEDBATTLES.TP2~ #0 #27 // 修改 .CRE 武器特长，能力和效果 (必须安装)
+~UB/SETUP-UB.TP2~ #7 #0 // 被诱拐的小布 (汉化：scar，moon_cloud，校对：good0593，marijuana，moon_cloud，Readme翻译：distance20，v21汉化&校对&润色：longferry，武骧金星，spark_gs_gs，v27alpha汉化&校对&润色：c4_angel): v27alpha
+~UB/SETUP-UB.TP2~ #7 #1 // 恢复苏娜·塞妮与瓦里格的关系: v27alpha
+~UB/SETUP-UB.TP2~ #7 #2 // 卡拉和他许下的愿望: v27alpha
+~UB/SETUP-UB.TP2~ #7 #3 // “猫和老鼠”(芭荻在禁魔监狱中追杀你): v27alpha
+~UB/SETUP-UB.TP2~ #7 #4 // 高杰·希尔达克与扩充的伊利希银任务: v27alpha
+~UB/SETUP-UB.TP2~ #7 #5 // 派娜与灭蛛剑: v27alpha
+~UB/SETUP-UB.TP2~ #7 #6 // 复原弯颈鹤旅店: v27alpha
+~UB/SETUP-UB.TP2~ #7 #7 // 恢复遭遇战: v27alpha
+~UB/SETUP-UB.TP2~ #7 #8 // 阿提密斯·恩崔立出现在芭荻巢穴: v27alpha
+~UB/SETUP-UB.TP2~ #7 #9 // 修正“萨尔的造物”: v27alpha
+~UB/SETUP-UB.TP2~ #7 #10 // 稍微修复地狱的艾瑞尼卡斯之战: v27alpha
+~UB/SETUP-UB.TP2~ #7 #12 // 物品修复: v27alpha
+~UB/SETUP-UB.TP2~ #7 #15 // NPC 头像恢复: v27alpha
+~UB/SETUP-UB.TP2~ #7 #16 // 正确的 BAM 与脚本: v27alpha
+~UB/SETUP-UB.TP2~ #7 #17 // 正确的人物名称和传记: v27alpha
+~UB/SETUP-UB.TP2~ #7 #18 // 少量对话恢复: v27alpha
+~UB/SETUP-UB.TP2~ #7 #19 // 更多巴尔之力: v27alpha
+~UB/SETUP-UB.TP2~ #7 #20 // 扩展 ToB 的物品描述: v27alpha
+~UB/SETUP-UB.TP2~ #7 #21 // ToB 附加修正: v27alpha
+~UB/SETUP-UB.TP2~ #7 #25 // The Murder of Acton Balthis, by Kulyok: v27alpha
+~SETUP-LONGERROAD.TP2~ #0 #0 // 悠久旅途 （汉化：zjw1982413，good0593，校对&润色：zjw1982413，good0593，c4_angel）: v1.5.1 BWP Fix
+~SETUP-LONGERROAD.TP2~ #0 #2 // 恢复艾瑞尼卡斯在安姆阴影中的头像: v1.5.1 BWP Fix
+~SETUP-TACTICS.TP2~ #6 #0 // 强化依力奇 (汉化：good0593)
+~SETUP-TACTICS.TP2~ #6 #1 // 仪式
+~SETUP-TACTICS.TP2~ #6 #3 // 强化鲨化鱼人城
+~SETUP-TACTICS.TP2~ #6 #5 // 强化艾瑞尼卡斯
+~SETUP-TACTICS.TP2~ #6 #6 // 强化神殿区守卫豪宅
+~SETUP-TACTICS.TP2~ #6 #7 // 强化魔符会
+~SETUP-TACTICS.TP2~ #6 #8 // 酸剑圣，“库罗山”
+~SETUP-TACTICS.TP2~ #6 #9 // “红徽章”，基于毒素的遭遇战
+~SETUP-TACTICS.TP2~ #6 #11 // 强化码头区的巫妖
+~SETUP-TACTICS.TP2~ #6 #13 // 强化康葛斯
+~SETUP-TACTICS.TP2~ #6 #14 // 强化码头区的侏儒战士兼幻术师
+~SETUP-TACTICS.TP2~ #6 #15 // 强化墓穴之王
+~SETUP-TACTICS.TP2~ #6 #29 // 强化铜冠旅店
+~SETUP-TACTICS.TP2~ #6 #30 // 强化绿洲
+~SETUP-TACTICS.TP2~ #6 #31 // 强化锐齿林道
+~SETUP-TACTICS.TP2~ #6 #32 // 强化北方森林
+~SETUP-TACTICS.TP2~ #6 #33 // 强化行军山脉
+~SETUP-TACTICS.TP2~ #6 #35 // 强化德鲁伊森林
+~SETUP-TACTICS.TP2~ #6 #36 // 强化火巨人
+~SETUP-TACTICS.TP2~ #6 #37 // 强化巨魔
+~WHEELS/SETUP-WHEELS.TP2~ #0 #0 // 预言之轮（汉化：c4_angel）: v6 BWP Fix
+~SETUP-EDWINROMANCE.TP2~ #6 #0 // 艾德温罗曼史 粉红波动研究会的vesta汉化(汉化支持：marijuana。校对&繁体版制作：good0593。协力：blackbones，星之刃，lijing_hi，Lynn。): v2.0.7
+~SETUP-EDWINROMANCE.TP2~ #6 #3 // 维康妮亚罗曼史 新的结局 by Laufey: v2.0.7
+~ALTERNATIVES/SETUP-ALTERNATIVES.TP2~ #0 #0 // G3: Alternatives（提供两种新的出海路线） 汉化：c4_angel 协助：武骧金星: v12
+~SPELL_REV/SETUP-SPELL_REV.TP2~ #0 #0 // 法术修订v3.1 hotfix3(汉化：distance20，修订&更新：c4_angel): v3.1 (Hotfix 03)
+~SPELL_REV/SETUP-SPELL_REV.TP2~ #0 #10 // 使徒与神界侍者动画更新: v3.1 (Hotfix 03)
+~SPELL_REV/SETUP-SPELL_REV.TP2~ #0 #50 // 从法术选择栏位中移除无法使用的法术: v3.1 (Hotfix 03)
+~TELEPORT/TELEPORT.TP2~ #1 #0 // 定点传送术：安姆阴影（作者：Razfallow，v14汉化：c4_angel）: v14 BWP Fix
+~TELEPORT/TELEPORT.TP2~ #1 #1 // 定点传送术：巴尔王座: v14 BWP Fix
+~NPCKIT/NPCKIT.TP2~ #0 #30 // NPC Kitpack v4：专精法师职业说明改良（汉化：c4_angel）: v4 BWP Fix
+~NPCKIT/NPCKIT.TP2~ #0 #400 // NPC Kitpack v4：通过骑士团试炼的阿诺们可得到海姆牧师宗派: v4 BWP Fix
+~NPCKIT/NPCKIT.TP2~ #0 #410 // NPC Kitpack v4：未能通过骑士团试炼的阿诺们可得到狂战士宗派: v4 BWP Fix
+~NPCKIT/NPCKIT.TP2~ #0 #900 // NPC Kitpack v4：为艾德温添加红袍法师宗派介绍: v4 BWP Fix
+~NPCKIT/NPCKIT.TP2~ #0 #2500 // NPC Kitpack v4：赋予娜莉亚探险者宗派: v4 BWP Fix
+~1PP/1PP.TP2~ #0 #101 // 1ppv4: Core paperdolls: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #103 // 1ppv4: Extended palette entries -> Full install (recommended): v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #105 // 1ppv4: Avatar fixes: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #106 // 1ppv4: Female Dwarves -> Separate Avatars for Female Dwarves - Baldur's Gate II: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #111 // 1ppv4: Thieves Galore -> BGII - Unique Thief Avatars: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #114 // 1ppv4: Softer Spell Effects: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #200 // 1ppv4: Core content patches: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #201 // 1ppv4: Consistent spell and scroll icons: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #203 // 1ppv4: Restored flame sword animations: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #204 // 1ppv4: Colourable Quarterstaves: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #205 // 1ppv4: Legacy Shields: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #206 // 1ppv4: Additional Shield Animations (core): v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #207 // 1ppv4: Wizards' Staves (core): v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #208 // 1ppv4: Additional Helmet Animations (core): v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #210 // 1ppv4: Increased paperdoll object variety (core): v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #400 // 1ppv4: Core updates and item patches: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #401 // 1ppv4: Improved projectile effects: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #300 // 1ppv4: Fixed animations for solars and elementals: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #301 // 1ppv4: Miscellaneous content fixes: v4.1.0 BWP Fix
+~1PP/1PP.TP2~ #0 #202 // 1ppv4: Spell tweaks: v4.1.0 BWP Fix
+~RR/SETUP-RR.TP2~ #0 #0 // 允许盗贼和吟游诗人学习三星双武器风格 (汉化：distance20，barkingdog，moon_cloud，v4.71更新/修正：c4_angel): v4.91
+~RR/SETUP-RR.TP2~ #0 #1 // 盗贼职业修订: v4.91
+~RR/SETUP-RR.TP2~ #0 #2 // 盗贼高阶技能修订: v4.91
+~RR/SETUP-RR.TP2~ #0 #3 // 调整种族对盗贼技能的影响: v4.91
+~RR/SETUP-RR.TP2~ #0 #4 // 吟游诗人职业修订: v4.91
+~RR/SETUP-RR.TP2~ #0 #5 // 吟游诗人高阶技能修订: v4.91
+~RR/SETUP-RR.TP2~ #0 #6 // 修订吟游诗人法术升级列表: v4.91
+~RR/SETUP-RR.TP2~ #0 #7 // 更多的盗贼和吟游诗人专用装备: v4.91
+~RR/SETUP-RR.TP2~ #0 #8 // 允许克伦威尔和塞斯潘纳升级本 MOD 在游戏中添加的物品: v4.91
+~SETUP-ITEM_PACK.TP2~ #0 #0 // Daulmakan的物品包（汉化：c4_angel，xcrossfl）: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #1 // 额外物品: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #2 // 物品调整: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #3 // 自由行动相关物品调整: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #4 // 更多特殊物品图标: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #5 // 熟悉的面孔（乔鲁夫和狄德丽出现在安姆克萨兰）: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #6 // 克伦威尔能铸造更多物品: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #7 // 口袋商店: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #8 // BG1物品包（Tutu/BGT）: v1.8 BWP Fix
+~SETUP-ITEM_PACK.TP2~ #0 #9 // +X% 元素伤害的物品: v1.8 BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1800 // 把更多 NPC 导入到安姆阴影：阿罗拉: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1801 // 把更多 NPC 导入到安姆阴影：布朗温: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1802 // 把更多 NPC 导入到安姆阴影：亚多士: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1803 // 把更多 NPC 导入到安姆阴影：寇根: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1804 // 把更多 NPC 导入到安姆阴影：齐冯: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1805 // 把更多 NPC 导入到安姆阴影：莎儿-蒂尔: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1806 // 把更多 NPC 导入到安姆阴影：史姬: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1807 // 把更多 NPC 导入到安姆阴影：撒恩: 11 (5 Feb 12) BWP Fix
+~SETUP-BGTTWEAK.TP2~ #8 #1808 // 把更多 NPC 导入到安姆阴影：亚斯力克: 11 (5 Feb 12) BWP Fix
+~SETUP-TACTICS.TP2~ #6 #26 // 战士职业的类弓箭手宗派
+~SETUP-TACTICS.TP2~ #6 #27 // 反圣骑士宗派
+~C4CELTICBARD/C4CELTICBARD.TP2~ #0 #300 // 吟游诗人宗派：凯尔特诗人: v3
+~C4JEDISITH/C4JEDISITH.TP2~ #0 #300 // 圣武士宗派：绝地与西斯: 3.0
+~C4MONK/C4MONK.TP2~ #0 #200 // 混元武僧: v2.0
+~C4PRPROJECT/C4PRPROJECT.TP2~ #0 #40001 // 扶贫计划——废柴大开发：大驯兽师 v1
+~C4PRPROJECT/C4PRPROJECT.TP2~ #0 #40002 // 扶贫计划——废柴大开发：高等法师猎人 v1
+~C4PRPROJECT/C4PRPROJECT.TP2~ #0 #40003 // 扶贫计划——废柴大开发：小丑大师 v1
+~Q06PAL/SETUP-Q06PAL.TP2~ #0 #1 // 白银之手圣骑士: v1.3
+~Q06WAR/SETUP-Q06WAR.TP2~ #0 #1 // 战争领主: v1.0
+~VN/SETUP-VN.TP2~ #0 #1 // 盗贼宗派：暗夜猎手: v1.4
+~XD/SETUP-XD.TP2~ #0 #1 // 德鲁伊宗派：自然之心: v1.3
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #40 // 将维康尼亚的皮肤改为深蓝色: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #60 // 武器动画调整: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #70 // 冰风谷施法动画（Andyr）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #100 // 平民的衣服变为土褐色: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #130 // 对话时自动暂停游戏: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #140 // 修正布布的叫声: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #182 // 独特的容器 -> 独特的图标与名称: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #191 // 使用人物配色取代物品配色 -> 作用于非魔法盾牌和头盔: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #200 // 移除物品的朦胧特效，例如--位移斗篷: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1010 // 更多的插话: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1020 // 更改NPC受伤对话的触发条件: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1036 // 在完成强盗营地任务前打开斗篷森林地区 -> 除了铁矿外斗篷森林的全部地区: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1090 // 珍奇的物品: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1120 // 商店出售更大捆的物品: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1150 // 变形者平衡: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1160 // 多个据点（Baldurdash） -> 无限制（Baldurdash）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #1230 // 允许塞斯潘纳升级克伦威尔的配方: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2040 // 通用棍棒（任何人可用）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2090 // 更改经验上限 -> 去掉经验上限: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2210 // 改变大宗师加成 -> 真五星熟练度（Baldurdash）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2240 // 未削弱的零级命中率设置: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2261 // 改变法师法术升级表 -> P&P设置: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2281 // 改变牧师法术升级表 -> P&P设置: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2410 // 德鲁伊使用3版阵营限制: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2999 // 等级1时获得HP最大值: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3000 // 升级时获得更多的HP -> 最大值: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3010 // NPC的HP最大化（the bigg） -> 游戏中所有生物均有效: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3030 // 简单的法术学习 -> 100%学会法术: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3040 // 次元袋的容量无限: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3060 // 让“你必须在进入这里前集合你的队伍”这句话住口（Weimer）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3080 // 提高弹药堆叠数量 -> 弹药无限堆叠: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3090 // 提高宝石和珠宝堆叠数量 -> 宝石和珠宝无限堆叠: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3100 // 提高药剂堆叠数量 -> 药剂无限堆叠: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3110 // 提高卷轴堆叠数量 -> 卷轴无限堆叠: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3121 // 快乐补丁（队伍中的NPC不会打架或抱怨声望） -> NPC会对声望不满，但不会离开队伍（Salk）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3123 // NPC不会打架: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3124 // 在一开始停止海尔达利与艾黎的恋情: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3125 // 中立阵营的人物在声望中等时会有高兴的议论: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3170 // 在幽暗地域中不会变成黑暗精灵的形象: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3200 // 可贩卖的物品（Icelus）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3205 // 商店购买所有类型的物品: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #3230 // 泰龙可以制造额外的掘地虫铠甲（Icendoan/grogerson）: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4000 // 调整可加入邪恶NPC的反应掷骰: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4010 // 改进的队友召唤: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4031 // 属性一致的艾德温 -> 使用BG2属性: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4041 // 属性一致的贾希拉 -> 使用BG2属性: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4061 // 属性一致的明斯克 -> 使用BG2属性: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4071 // 属性一致的维康妮亚 -> 使用BG2属性: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4100 // 寇根变为中立邪恶阵营: v1
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #4110 // 凯根的体质变为19: v1
+~REFINEMENTS/SETUP-REFINEMENTS.TP2~ #0 #10 // 高阶能力修订（汉化：redrumcha，c4_angel） -> 为所有职业安装修订版的高阶能力: beta 4.16
+~REFINEMENTS/SETUP-REFINEMENTS.TP2~ #0 #20 // "游荡剑客爱蒙" -> "游荡剑客爱蒙", 完整版 (推荐): beta 4.16
+~REFINEMENTS/SETUP-REFINEMENTS.TP2~ #0 #40 // 通用的低级法袍: beta 4.16
+~SPELL_REV/SETUP-SPELL_REV.TP2~ #0 #60 // 更新可加入队友的法术书: v3.1 (Hotfix 03)
+~CDTWEAKS/SETUP-CDTWEAKS.TP2~ #9 #2312 // 增加高级角色施展法术的豁免惩罚 -> 奥术和神术: v1
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #1000 // 预置核心组件 (必须安装；汉化：barkingdog，魔术师，redrumcha，El Forastero，Macholy, c4_angel): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #1901 // 使 BGT 的法术获取过程更合理 (敌人也受影响) -> 引入 BG2 的法术卷轴到 BG1: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #2110 // 削弱审判者解除魔法的能力 -> 审判者的解除魔法的成功率将以自身等级的 1.5 倍计算 (不再是两倍): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #2160 // 给游戏里某些罕见的魔法卷轴数量加一: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #3040 // 减少商店中玩家能够购买到的破魔箭的数量 -> 从商店中移除破魔箭: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #3060 // 去除大法师之杖的隐形功能: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #3070 // 将维勒之盔移至 ToB: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #3080 // 将镜射斗篷移至 ToB: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4000 // 移动更迅速的熊: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4020 // 让野外的狼和狗的行为更逼真: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4040 // 队友不易成为无法复活状态: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4051 // 降低声望值的提升速度 -> 声望提升速度是原版的一半: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4110 // 允许成对的队友分开 (例如贾希拉和卡立德，戴娜黑和明斯克，萨尔和蒙塔罗等): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4120 // 离队的队友去旅馆等你 (不是站在原地): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4130 // 转移 NPC 到更加便捷的地点 (如亚多士，奎里，莎儿-蒂尔，提亚斯和维康妮亚): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4164 // 提高阿斯卡特拉施法许可证的价格 -> 许可证花费50000枚金币: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4171 // 增加盖兰·贝尔的要价 -> 盖兰要价60000金币: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4180 // 可以更早获得自由术卷轴: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4200 // 重新获得在地狱中丢失的物品: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #4217 // 移除特定区域中不应存在的弹药 -> 移除随机容器中+2等级以下弹药: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5010 // 把小布移动到明斯克的背包中: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5020 // 移除位移斗篷的朦胧效果: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5030 // 移除镜射斗篷的动画效果 (但其它法术和效果仍能使用这个动画): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5050 // 掘地虫壳，冬狼毛皮和翼龙的头可堆叠: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5060 // 确保莎儿-蒂尔在挑战中不会死亡: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #5900 // AI 核心组件 (所有的 AI 强化和战术挑战组件需要): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6000 // 更聪明的普通 AI: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6010 // 更好的呼救系统: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6024 // 允许敌方施法者使用高阶技能 -> 允许所有巴尔的王座和安姆的阴影中等级达到施展高阶技能要求的施法者释放高阶技能 (游戏将变得“异常”困难): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6034 // 更聪明的法师 -> 只有在游戏难度设为“困难”和“疯狂”时敌方法师才会在战斗开始时瞬间为自己加上持续时间短的增益法术: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6044 // 更聪明的牧师 -> 只有在游戏难度设为“困难”和“疯狂”时敌方牧师才会在战斗开始时瞬间为自己加上持续时间短的增益法术: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6102 // 给 NPC 配备药剂 -> 被杀死的敌人掉落一半的药剂: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6200 // 强化蜘蛛: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6300 // 更聪明的海妖女和树妖女: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6310 // 轻度强化食腐虫: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6320 // 更聪明的石化蜥蜴: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6500 // 强化魔像: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6510 // 强化恶魔 -> 魔鬼的生命值增加50%以匹配它们的地位: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6520 // 更聪明的巨灵 -> 巨灵的生命值增加50%以匹配它们的地位: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6530 // 更聪明的天使 -> 天使的生命值增加50%以匹配它们的地位: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6540 // 更聪明的龙 -> 龙的生命值为原来的三倍，以匹配它们的地位: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6553 // 更聪明的眼魔 -> 眼魔射线无法烧穿(绕过)防御法术；眼魔的反魔法射线能解除玩家的法术防护并且能妨碍玩家施法，也能抵挡来自玩家的法术，但是不能抵挡直接造成伤害的法术 (和原版相同): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6561 // 更聪明的灵吸怪 -> 增强灵吸怪的伤害抗力；灵吸怪可以看破隐形 (与战术 Mod 相同): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6570 // 更聪明的吉斯洋基人: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6580 // 强化吸血鬼: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6590 // 更聪明的梅丽珊: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6800 // 更聪明的伊菈赛菈: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6810 // 更聪明的葛罗姆尼尔: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6820 // 更聪明的雅加苏拉: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6830 // 更聪明的阿巴济戈: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6840 // 赋予巅峰之战中艾瑞尼卡斯和仙黛 SCS II 的脚本和能力: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #6850 // 赋予巅峰之战恶魔 SCS II 的脚本和能力: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7000 // 强化变形怪: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7010 // 强化黑爪兵团和铁王座守卫: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7020 // 改变刺杀小队出现的时机: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7030 // 强化狗头人 (出自“黑暗剑湾”): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7040 // 改变赏金猎人出现的位置: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7050 // 提高巫尔卡司特的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7060 // 提高狼人岛的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7070 // 提高杜拉格之塔的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7080 // 提高恶魔仪式遭遇战的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7090 // 强化斗篷森林德鲁伊: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7100 // 强化巴西勒斯: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7110 // 强化德拉萨斯小队: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7130 // 强化红袍法师: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7140 // 强化古代城市小队: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7200 // 强化第二章结尾处战斗: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7210 // 强化第三章结尾处战斗: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7220 // 强化第四章结尾处战斗: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7230 // 强化第五章结尾处战斗: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7250 // 强化博德之门 I 最终战: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #7900 // 提高小型遭遇战的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8010 // 强化暗影之王: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8020 // 修订半神巫妖之战: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8043 // 强化随机遭遇战的生物 -> 最高难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8050 // 提高随机遭遇战的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8061 // 提高德阿尼斯堡的难度 (战术 Remix) -> 强化魂巨魔 (与战术 Mod 相同): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8070 // 强化盲目之眼: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8081 // 强化芭荻 (战术 Remix) -> 战术强化芭荻，使用 SCS II 的脚本: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8090 // 在禁魔监狱中移除队伍的装备: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8100 // 提高禁魔监狱中艾瑞尼卡斯之战的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8120 // 提高眼魔巢穴的难度 (改编自 Quest Pack): v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8140 // 轻微强化黑暗精灵 -> 升级乌斯特·拿萨城防御: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8150 // 轻微强化观察者堡垒: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8160 // 提高火巨人神殿的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8170 // 提高仙黛的巢穴的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8180 // 提高阿巴济戈的巢穴的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #8190 // 提高小型遭遇战的难度: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #0 #3050 // 从游戏中移除博德安之盾: v30 BWP fix + K4thos' EET compatibility + kreso's Spell Revisions compatibility
+~JIMFIX/SETUP-JIMFIX.TP2~ #0 #3 // Fix Smarter Abazigal: v2.1
+~JIMFIX/SETUP-JIMFIX.TP2~ #0 #4 // Fix Smarter Irenicus at the Throne: v2.1
+~JIMFIX/SETUP-JIMFIX.TP2~ #0 #5 // Remove entourage from Ascension Fallen Solars: v2.1
+~RR/SETUP-RR.TP2~ #0 #10 // 偷窃的有关调整 -> 不修改盗贼技能药水，但防止其效果叠加: v4.91
+~RR/SETUP-RR.TP2~ #0 #11 // 希瑞克选民遭遇战: v4.91
+~RR/SETUP-RR.TP2~ #0 #12 // 增强影贼公会: v4.91
+~RR/SETUP-RR.TP2~ #0 #999 // 让 RR 使用 BG2 风格的图标: v4.91
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #100 // 恢复半兽人角色天生的夜视能力 (汉化：魔术师): v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #101 // 使骷髅和非实体形态的亡灵生物不受灵吸怪的噬脑术攻击的影响: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #110 // 让魔法箭矢获得与它们附魔等级一样的伤害加成: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #120 // 恢复圣骑士天生的疾病免疫能力: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #130 // 额外的矮人种族特性: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #140 // 额外的侏儒种族特性: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #160 // PnP 亡灵: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #180 // PnP 魔蝠: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #185 // PnP 精类生物: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #186 // 修订召唤林地生物术: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #190 // PnP 元素: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #191 // 提高元素王子的生命骰数: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #200 // 让破解术能够破坏由物品获得的石肤术效果: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #201 // 无法打断战士系职业施展的技能: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #203 // 无法打断德鲁伊的变身: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #212 // 让明了阵营魔法更准确: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #213 // 矮人、侏儒和半身人能够从体质上获得更多的豁免加成: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #262 // 调整开锁，解除陷阱和抄录卷轴时获得的经验值 -> 开锁，解除陷阱和抄录卷轴无经验值: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #270 // 更公正的任务报酬: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #300 // 将博德之门的次元门动画更改为冰风谷风格 -> 快速的动画 (冰风谷风格): v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #302 // 改变维克纳之袍的外观: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #315 // 独特的生物声音集: v4.51 BWP Fix
+~ATWEAKS/SETUP-ATWEAKS.TP2~ #0 #510 // 多样化的神殿服务: v4.51 BWP Fix
+~RANDOMISER/RANDOMISER.TP2~ #0 #500 // 将剑湾传奇中增强智慧属性的“理解之书”随机替换为增强6项属性书/手册其中一本。: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #520 // 使康葛斯的封印更严密: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #560 // 更多法术护盾卷轴: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #570 // 诅咒物品外观随机变动: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #1100 // 物品位置随机模组（汉化：c4_angel） -> 模式1：由游戏内脚本决定进行随机处理，所有物品不会丢失（均能获取）: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #10100 // 将“防护不死生物卷轴”从商店中移除 -> 移除所有商店中的卷轴: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #10210 // 灰矮人商人: proto-7 170206
+~RANDOMISER/RANDOMISER.TP2~ #0 #10300 // 防止观察者堡垒第一层的雕像消失（避免随机物品丢失）: proto-7 170206
+~TB#TWEAKS/TB#TWEAKS.TP2~ #0 #7500 // 允许人物升级时获得额外的属性点 -> 通关前一共获得五点，所有人物的最终属性值不能超越其种族的限制: TB#Tweaks, v2.60
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #0 // Level 1 NPCs：列出可加入队伍的 NPC 清单: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #3 // 让可招入的 NPC 的经验值和当前玩家角色的经验值更相符 -> 只在第一次加入队伍时生效: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #55 // BG1 NPC 的 Dudleyfix: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #60 // 修正 BG1 NPC 的法术和天赋技能: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #100 // 更新游戏中关于 NPC 的职业/宗派参考信息: v1.9 BWP Fix
+~SETUP-NSCPORTRAITS.TP2~ #0 #0 // Portraits for BG1(BGT): v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #1 // Portraits for BG2 and ToB: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #305 // Portraits for Lure of the Sirines Call: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #310 // Portraits for Grey Clan Episode I: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #1360 // Portraits for Tales of the Deep Gardens: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #1500 // Portraits for Longer Road: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #5000 // Alternate Female Character-Creation Portraits: v3.0
+~SETUP-NSCPORTRAITS.TP2~ #0 #5010 // Alternate Male Character-Creation Potraits: v3.0
+~ACEALTMUSIC/SETUP-ACEALTMUSIC.TP2~ #0 #0 // BGII Alternate Soundtrack
+~SETUP-BP-BGT-WORLDMAP.TP2~ #0 #0 // 博得之门全景地图 (汉化：lksnake，zj1985): v10.2.1 - Nightfarer's new map Fix
+~SETUP-BP-BGT-WORLDMAP.TP2~ #0 #1 // 巴尔王座的世界地图 -> 使用新世界地图: v10.2.1 - Nightfarer's new map Fix
+~1PP_HQ_MUSIC_BGT/1PP_HQ_MUSIC_BGT.TP2~ #0 #0 // 1pp: High quality music for BGT -> Patch BGT and BGII areas to make full use of updated music (Recommended)
+~AREA_PATCHER/SETUP-AREA_PATCHER.TP2~ #0 #0 // Area Patcher: ALPHA 16
+~AREA_PATCHER/SETUP-AREA_PATCHER.TP2~ #0 #5000 // Fix BG1NPC X#AJR1.ARE: ALPHA 16
+~AREA_PATCHER/SETUP-AREA_PATCHER.TP2~ #0 #5001 // Fix BG1NPC X#CH11.ARE: ALPHA 16
+~AREA_PATCHER/SETUP-AREA_PATCHER.TP2~ #0 #6000 // Fix BGSPAWN Near Areas: ALPHA 16
+~ITEM_PATCHER/SETUP-ITEM_PATCHER.TP2~ #0 #0 // Install Marker: ALPHA 3
+~ITEM_PATCHER/SETUP-ITEM_PATCHER.TP2~ #0 #112 // Gives some TDD items the Droppable Flag: ALPHA 3
+~ITEM_PATCHER/SETUP-ITEM_PATCHER.TP2~ #0 #113 // Gives some Tashia items the Droppable Flag: ALPHA 3
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #0 // Area Stuff - MAJESTIC Area Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #1 // Creature Stuff - Creature Resource Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #2 // Creature Stuff - Inventory Unborker (removes spurious references to the item table): 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #3 // Creature Stuff - Inventory Cleaner (removes items that don't exist and converts them into already present items where applicable): 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #4 // Creature Stuff - Inventory Overhauler (moves invalid but equippable items to inventory and equips anything in the inventory to a free slot): 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #5 // Creature Stuff - MAJESTIC Creature Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #6 // Creature Stuff - Duplicate Creature Effect Remover: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #7 // Item Stuff - Item Resource Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #8 // Item Stuff - MAJESTIC Item Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #10 // Item Stuff - Proper Immunity Assigner: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #11 // Item Stuff - Duplicate Item Effect Remover: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #12 // Item Stuff - MAJESTIC Item Checker: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #13 // Spell Stuff - Spell Resource Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #14 // Spell Stuff - MAJESTIC Spell Fixer: 19022016
+~LOLFIXER/SETUP-LOLFIXER.TP2~ #0 #15 // Store Stuff - MAJESTIC Store Fixer: 19022016
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1 // 调整职业的武器特长: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1201 // 艾黎: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1218 // 阿詹提斯·伊弗斯塔: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1219 // 阿罗拉: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1220 // 布朗温: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1203 // 瑟恩: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1221 // 科朗: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1222 // 戴娜黑: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1204 // 艾德温·奥狄塞伦: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1223 // 亚多士·克龙: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1224 // 法多: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1225 // 加瑞克: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1205 // 海尔达利: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1206 // 爱蒙: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1207 // 贾希拉: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1208 // 姚恩·姚森: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1226 // 凯根: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1209 // 凯东·费尔康: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1227 // 卡立德: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1228 // 齐冯: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1210 // 寇根·血斧: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1211 // 玛兹·芬顿: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1212 // 明斯克: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1229 // 蒙塔罗: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1230 // 奎里: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1231 // 莎法娜: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1232 // 莎儿-蒂尔·都森: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1233 // 史姬·银盾: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1234 // 提亚斯: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1235 // 撒恩: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1236 // 萨尔: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1237 // 亚斯力克·欧罗塞: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1217 // 沙洛佛克·安基夫: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1214 // 瓦里格·寇萨拉: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #1216 // 攸旭摩: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #2200 // 克洛伊: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #2320 // 菲德: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #2700 // 琼·艾瑞尼卡斯: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #2985 // 席娜: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #3000 // 索劳纷: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #3150 // 塔西娅: v1.9 BWP Fix
+~LEVEL1NPCS/LEVEL1NPCS.TP2~ #0 #3200 // 维兰: v1.9 BWP Fix
+~C4SWORDNSHIELD/SETUP-C4SWORDNSHIELD.TP2~ #1 #100 // 强化剑盾武器模式: v3.2
+~GENERALIZED_BIFFING/GENERALIZED_BIFFING.TP2~ #0 #0 // Generalized Biffing: v2.2 BWP Fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #991 // 文本修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #992 // 全局修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #993 // 全局设定: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #101 // 队友属性、宗派职业修改: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #102 // 敌对生物属性调整: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #103 // 掉落修改和修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #104 // 其他修改和修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #201 // 物品说明和效果修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #202 // 物品可用性调整: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #203 // 物品属性全局修改: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #204 // 特殊物品属性修订: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #301 // 错误的法术说明和效果修正: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #302 // 魔法攻防系统调整: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #303 // 其他法术修订: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #401 // 区域设置: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #402 // 商店相关: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #403 // 合成升级: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #404 // 任务与剧情: c4fix
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #444000 // 独立模组: c4fix
+~C4AI/C4AI.TP2~ #1 #1 // c4AI 游戏辅助脚本 v4.1 核心组件
+~CABOB_UTILITY/CABOB_UTILITY.TP2~ #0 #999999 // Make Biff: c4fix
