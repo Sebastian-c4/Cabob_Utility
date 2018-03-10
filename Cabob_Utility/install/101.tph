@@ -348,7 +348,7 @@ COPY_EXISTING qpal3.spl override qwar1.spl override
 		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=180 target=1 timing=9 parameter1=9382 parameter2=0 probability1=100 probability2=0 resist_dispel=0 savingthrow=0 STR_VAR resource=~%item%~ END
 	END
 	
-COPY_EXISTING vn00.spl override
+COPY_EXISTING vn02.spl override
 	PHP_EACH darts AS item => int BEGIN
 		LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=180 target=1 timing=9 parameter1=9382 parameter2=0 probability1=100 probability2=0 resist_dispel=0 savingthrow=0 STR_VAR resource=~%item%~ END
 	END

@@ -49,8 +49,14 @@ OUTER_FOR (i=0;i<=Resist_total;++i) BEGIN
 		/* 母法术 */
 		COPY_EXISTING ~c4!res%x1%.spl~ override
 			/* 施放单项抗性法术 */
-			LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=146 parameter1=0 parameter2=1 STR_VAR resource=~c4!%type%%x1%~ END
+			FOR (k=i;k>0;k -=1) BEGIN
+				PATCH_IF k<10 BEGIN
+					TEXT_SPRINT xx1 ~0%k%~
+				END ELSE TEXT_SPRINT xx1 ~%k%~
+				LPF CLONE_EFFECT INT_VAR match_opcode=engine_mark_type opcode=146 parameter1=0 parameter2=1 STR_VAR resource=~c4!%type%%xx1%~ END
+			END
 		
+		/* 子法术 */
 		COPY_EXISTING spcl131.spl ~override/c4!%type%%x1%.spl~
 			/* 次要类型 */
 			WRITE_BYTE 0x27 c4EnhancedEnemies
