@@ -53,14 +53,16 @@ ACTION_FOR_EACH spell IN vnq vne vn5 BEGIN
 		
 	//将恢复法术的目标改成单个生物，添加重置变量的效果，再加一个移除法术效果作保险
 	ACTION_PHP_EACH ~%spell%_var~ AS skill => delay BEGIN
-		LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=0 STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$0~ END
-		OUTER_SPRINT restore ~%skill_0%~
-		COPY_EXISTING ~%restore%.spl~ override
-			LPF ALTER_SPELL_HEADER INT_VAR target=1 END
-			LPF ALTER_EFFECT INT_VAR target=2 END
-			LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=177 parameter1=0 parameter2=2 STR_VAR resource=~%spell%$0~ END
-			LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=172 END
-			BUT_ONLY
+		ACTION_IF ~%skill_1%~=1 BEGIN
+			LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=0 STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$0~ END
+			OUTER_SPRINT restore ~%skill_0%~
+			COPY_EXISTING ~%restore%.spl~ override
+				LPF ALTER_SPELL_HEADER INT_VAR target=1 END
+				LPF ALTER_EFFECT INT_VAR target=2 END
+				LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=177 parameter1=0 parameter2=2 STR_VAR resource=~%spell%$0~ END
+				LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=172 END
+				BUT_ONLY
+		END
 	END
 	
 END
