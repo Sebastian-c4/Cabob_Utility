@@ -1,0 +1,109 @@
+
+////改善暗夜猎手技能冷却机制，技能不再丢失
+INCLUDE ~Cabob_Utility/lib/_functions.tpa~ //调用函数库，烤肉内置，有些是自己写的有些是别处抄的
+
+//记录法术的CD、恢复用法术、添加用于记录的效果和法术
+ACTION_FOR_EACH spell IN vnq vne vn5 BEGIN
+
+	//局部变量的值：0=未施放/已恢复，1-5=闪避等级，其他都是1，-1=冷却中
+	//冷却中
+	LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=~-1~ STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$~ END // 创建外部EFF来记录局部变量
+	// 记录局部变量的法术，我习惯拿spcl151当成创建新法术的根法术，只有一个头部一个效果，EE12和IWDEE里面都有，不用改名字
+	COPY_EXISTING spcl151.spl ~override/%spell%$.spl~
+		LPF ALTER_EFFECT INT_VAR opcode=177 parameter1=0 parameter2=2 STR_VAR resource=~%spell%$~ END
+	
+	//根法术
+	COPY_EXISTING ~%spell%.spl~ override
+		//顺手把146的施法等级改了
+		LPF ALTER_EFFECT INT_VAR match_opcode=146 parameter1=0 END
+		
+		SET headnum=0
+		GET_OFFSET_ARRAY header SPL_V10_HEADERS //读取每个头部的信息
+		PHP_EACH header AS int => index BEGIN
+			SET headnum+=1
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_BYTE offset+0xc timing
+				PATCH_IF opcode=146 && timing=4 BEGIN
+					READ_LONG offset+0xe delay
+					READ_ASCII offset+0x14 restore
+					PATCH_IF ~%spell%~ STR_CMP ~vnq~ BEGIN // 恶魔审判或终极时刻只记录一次
+						PATCH_IF VARIABLE_IS_SET ~%spell%_saved~ =0 BEGIN
+							SET ~%spell%_saved~ =1
+							PATCH_DEFINE_ASSOCIATIVE_ARRAY ~%spell%_var~ BEGIN ~%restore%~, 1 => ~%delay%~ END
+							INNER_ACTION BEGIN
+								LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=1 STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$1~ END
+							END
+						END
+					END ELSE BEGIN
+						PATCH_DEFINE_ASSOCIATIVE_ARRAY ~%spell%_var~ BEGIN ~%restore%~, ~%headnum%~ => ~%delay%~ END
+						INNER_ACTION BEGIN
+							LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=~%headnum%~ STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$%headnum%~ END
+						END
+					END
+				END
+			END
+		END
+		//将延迟施放的效果改成调用EFF
+		PHP_EACH ~%spell%_var~ AS skill => delay BEGIN
+			LPF ALTER_EFFECT INT_VAR match_opcode=146 match_timing=4 match_duration=delay opcode=177 timing=1 parameter1=0 parameter2=2 STR_VAR resource=~%spell%$%skill_1%~ END
+		END
+		BUT_ONLY
+		
+	//将恢复法术的目标改成单个生物，添加重置变量的效果，再加一个移除法术效果作保险
+	ACTION_PHP_EACH ~%spell%_var~ AS skill => delay BEGIN
+		LAF CREATE_EFFECT INT_VAR opcode=187 target=2 timing=1 parameter1=0 STR_VAR variable=~vnRestoreSkill%spell%~ name=~%spell%$0~ END
+		OUTER_SPRINT restore ~%skill_0%~
+		COPY_EXISTING ~%restore%.spl~ override
+			LPF ALTER_SPELL_HEADER INT_VAR target=1 END
+			LPF ALTER_EFFECT INT_VAR target=2 END
+			LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=177 parameter1=0 parameter2=2 STR_VAR resource=~%spell%$0~ END
+			LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=172 END
+			BUT_ONLY
+	END
+	
+END
+
+//脚本：创建不可见的生物跑脚本，猎手放法术时设置局部变量，根据法术和局部变量的值设置计时器并将变量设为-1，计时器到期或睡觉之后恢复法术同时变量归零
+<<<<<<<< ./vn_skill.baf
+IF
+	Kit(Player%n%,vn)
+	TriggerOverride(Player%n%,Global("vnRestoreSkill%spell%","Locals",%level%))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("vnRestoreSkill%spell%Timer","Locals",%timer%)
+		ReallyForceSpellRES("%spell%$",Player%n%)
+END
+
+IF
+	Kit(Player%n%,vn)
+	TriggerOverride(Player%n%,Global("vnRestoreSkill%spell%","Locals",-1))
+	!TriggerOverride(Player%n%,HaveSpellRES("%spell%"))
+	OR(2)
+		PartyRested()
+		GlobalTimerExpired("vnRestoreSkill%spell%Timer","Locals")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("%restore%",Player%n%)
+END
+>>>>>>>>
+<<<<<<<< ./notvn.baf
+IF
+	!Kit(Player%n%,vn)
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+>>>>>>>>
+
+LAF create_observer STR_VAR name=~vnskill~ conditions=~Kit(Player%slot%,vn)~ END
+OUTER_FOR (n=1;n<7;++n) BEGIN
+	EXTEND_BOTTOM ~vnskill%n%.bcs~ ~./notvn.baf~ EVAL
+	ACTION_FOR_EACH spell IN vnq vne vn5 BEGIN
+		ACTION_PHP_EACH ~%spell%_var~ AS restore => timer BEGIN
+			OUTER_SET level = ~%restore_1%~
+			EXTEND_BOTTOM ~vnskill%n%.bcs~ ~./vn_skill.baf~ EVAL
+		END
+	END
+END
