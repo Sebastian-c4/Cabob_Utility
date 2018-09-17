@@ -33,7 +33,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override ~.*\.spl~ override
 	END
 BUT_ONLY
 
-//优化物品随机进程
+/* //优化物品随机进程
 OUTER_TEXT_SPRINT ~refine~ ~%LIBS%/Randomiser_Refine~
 
 //直接开始TOB时设定变量
@@ -81,7 +81,7 @@ COPY ~%refine%/observer_00.baf~ ~%refine%/observer.baf~
 	REPLACE_TEXTUALLY ~Global("skipDone","Global",1)~ ~~
 	
 LAF create_one_observer STR_VAR name=rmrefine END
-EXTEND_BOTTOM ~rmrefine.bcs~ ~%refine%/observer.baf~
+EXTEND_BOTTOM ~rmrefine.bcs~ ~%refine%/observer.baf~ */
 
 //BG1矿坑魔法塞子的钥匙在杀死达瓦恩之后直接进入主角背包
 COPY_EXISTING AR8603.bcs override
@@ -163,8 +163,8 @@ COPY_EXISTING kruin.dlg override
 	END
 			
 //直接从soa最终战进入tob不再卡剧情
-EXTEND_TOP baldur.bcs ~%SCRIPTS%/tobcheck.baf~
-EXTEND_TOP baldur25.bcs ~%SCRIPTS%/tobcheck25.baf~
+// EXTEND_TOP baldur.bcs ~%SCRIPTS%/tobcheck.baf~
+// EXTEND_TOP baldur25.bcs ~%SCRIPTS%/tobcheck25.baf~
 			
 //森林幽魂不再反复给经验
 COMPILE ~%SCRIPTS%/head.d~
